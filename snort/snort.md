@@ -14,7 +14,7 @@ sudo yum install -y http://mirror.centos.org/centos/7/os/x86_64/Packages/libdnet
 sudo yum install -y http://mirror.centos.org/centos/7/os/x86_64/Packages/libdnet-devel-1.12-13.1.el7.x86_64.rpm
 ```
 #### dap
-使用默认daq模块  
+- 默认daq模块  
 ```
 wget https://www.snort.org/downloads/snort/daq-2.0.7.tar.gz
 tar -zxvf daq-2.0.7.tar.gz
@@ -33,7 +33,7 @@ tar -zxvf daq-2.0.7.tar.gz
 ![dpdk初始化失败](../resources/images/snort/dpdk_init_failed.png)
  
 
-基于dpdk的daq模块安装
+- 基于dpdk的daq模块安装
 ```
 wget https://www.snort.org/downloads/snort/daq-2.0.7.tar.gz
 tar -zxvf daq-2.0.7.tar.gz
@@ -69,9 +69,19 @@ tar -zxvf barnyard2.tar.gz
 #### 样本检测网站
 ## snort
 #### snort规则
-[快速了解snort规则](../resources/files/snort/snort_rules_desc.pdf)
+[快速了解snort规则](../resources/files/snort/snort_rules_desc.pdf)  
+[snort2规则说明-官方文档](http://manual-snort-org.s3-website-us-east-1.amazonaws.com/)
+
+可以通过一下图片简要理解snort规则
+![snort规则解析1](../resources/images/snort/snort_rules_pic1.png)
+![snort规则解析1](../resources/images/snort/snort_rules_pic2.png)
+![snort规则解析1](../resources/images/snort/snort_rules_pic3.png)
+
 #### snort主要工作流程
+![snort主要工作流程图](../resources/images/snort/snort_working_flow.jpg)
 #### snort告警事件落库
 ## daq模块
 #### daq模块主要工作流程
+![dap模块流程图]()
 #### 基于dpdk的daq模块
+![dpdk dap模块流程图]()
