@@ -73,15 +73,21 @@ tar -zxvf barnyard2.tar.gz
 [snort2规则说明-官方文档](http://manual-snort-org.s3-website-us-east-1.amazonaws.com/)
 
 可以通过一下图片简要理解snort规则
-![snort规则解析1](../resources/images/snort/snort_rules_pic1.png)
-![snort规则解析1](../resources/images/snort/snort_rules_pic2.png)
-![snort规则解析1](../resources/images/snort/snort_rules_pic3.png)
+<img src="../resources/images/snort/snort_rules_pic1.png" width="75%" height="75%" title="snort规则解析1"></img>
+  
+<img src="../resources/images/snort/snort_rules_pic2.png" width="75%" height="75%" title="snort规则解析2"></img>
+  
+<img src="../resources/images/snort/snort_rules_pic3.png" width="75%" height="75%" title="snort规则解析3"></img>
+  
 
 #### snort主要工作流程
-![snort主要工作流程图](../resources/images/snort/snort_working_flow.jpg)
+<img src="../resources/images/snort/snort_working_flow.jpg" width="100%" height="100%" title="snort主要工作流程图"></img>
+  
 #### snort告警事件落库
 ## daq模块
 #### daq模块主要工作流程
-![dap模块流程图]()
+<img src="./../resources/images/hello-world.png" width="100%" height="100%" title="dap模块流程图"></img>
+  
 #### 基于dpdk的daq模块
-![dpdk dap模块流程图]()
+<img src="./../resources/images/hello-world.png" width="100%" height="100%" title="dpdk dap模块流程图"></img>
+  
