@@ -46,9 +46,12 @@ mondoarchive -OU -d /dev/sdd -s 64g -G
 
 > boot: nuke
 
-还原完成后，拔出系统U盘，插上数据U盘。在shell界面输入:exit 进行重启。在启动界面，选择U盘启动盘。  
+还原完成后，拔出系统U盘，在shell界面输入:exit 进行重启。在启动界面，选择启动盘就行了。:sunglasses:
+  
+***
 
-重启指令界面  
+1. 重启指令界面  
+  
 <img src="./../resources/images/mondo/res-mondo-4.png" width="60%" height="60%" title="重启指令界面"></img> 
 
 这时可以进入BIOS界面禁用系统盘启动，禁用后，设备重启，数据盘的还原界面可以直接打开了。等到数据盘还原后再恢复就行了  
@@ -57,7 +60,8 @@ mondoarchive -OU -d /dev/sdd -s 64g -G
 
 <img src="./../resources/images/mondo/res-mondo-6.png" width="60%" height="60%" title=""></img> 
 
-* 逻辑分区的制作  
+2. 逻辑分区的制作  
+  
 等待加载完成后，就可以进行数据盘合并了(把两个8T的硬盘合并为16T的大盘)  
 可以手动指定命令，也可以执行脚本进行数据盘的合并。脚本路径/opt/netvine/shell/create_lvm.sh  
 
