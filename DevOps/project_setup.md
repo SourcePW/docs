@@ -143,11 +143,11 @@ mysql> FLUSH PRIVILEGES;
 ```
 docker pull redis:5.0
 
-docker run -itd --name redis -p 6379:6379 --restart=always redis:5.0 --requirepass 'Netvine123#@!'
+docker run -itd --name redis -p 6379:6379 --restart=always redis:5.0 --requirepass 'mima123#@!'
 
 #进入镜像 redis-cli 设置密码
-# 审计平台密码 Netvine123#@!
-> config set requirepass Netvine123#@!
+# 审计平台密码 mima123#@!
+> config set requirepass mima123#@!
 
 ```
 
@@ -170,9 +170,9 @@ docker exec -it mongo mongo admin
 # 创建audit数据库
 > use audit;
 
-# 创建一个名为 audit，密码为 audit!@#netvine 的数据库用户。 
+# 创建一个名为 audit，密码为 audit!@#mima 的数据库用户。 
 # readWrite 所有数据库
-> db.createUser({ user: 'audit', pwd: 'audit!@#netvine', roles: [{ role: "readWrite", db: "audit" }] });
+> db.createUser({ user: 'audit', pwd: 'audit!@#mima', roles: [{ role: "readWrite", db: "audit" }] });
 
 # 查看表格
 > show dbs;
@@ -236,13 +236,13 @@ MONGODB_CONFIG = {
     'host': '192.168.0.100',
     'port': 27017,
     'user': "audit",
-    'password': 'audit!@#netvine'
+    'password': 'audit!@#mima'
 }
 
 REDIS_CONFIG = {
     'host': '192.168.0.100',
     'port': 6379,
-    'passwd': 'Netvine123#@!',
+    'passwd': 'mima123#@!',
     'channel': 'sensorinfo'
 }
 PAGE_PER_TOTAL = 5
@@ -322,7 +322,7 @@ spring:
   redis:
     host: ${REDIS_HOST:p1}
     port: ${REDIS_PORT:6379}
-    password: ${REDIS_PASSWORD:Netvine123#@!}
+    password: ${REDIS_PASSWORD:mima123#@!}
     jedis:
       pool:
         max-idle: 8
@@ -386,7 +386,7 @@ jetcache:
         maxTotal: 50
       host: ${REDIS_HOST:p1}
       port: ${REDIS_PORT:6379}
-      password: ${REDIS_PASSWORD:Netvine123#@!}
+      password: ${REDIS_PASSWORD:mima123#@!}
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
@@ -432,11 +432,11 @@ http://Server-IP:15672
 ```
 docker pull redis:5.0
 
-docker run -itd --name redis -p 6379:6379 --restart=always redis:5.0 --requirepass 'Netvine123#@!'
+docker run -itd --name redis -p 6379:6379 --restart=always redis:5.0 --requirepass 'mima123#@!'
 
 #进入镜像 redis-cli 设置密码
-# 审计平台密码 Netvine123#@!
-> config set requirepass Netvine123#@!
+# 审计平台密码 mima123#@!
+> config set requirepass mima123#@!
 
 ```
 
@@ -469,7 +469,7 @@ docker exec -it mongo mongo admin
 # 创建nvsp数据库
 > use nvsp;
 
-# 创建一个名为 audit，密码为 audit!@#netvine 的数据库用户。
+# 创建一个名为 audit，密码为 audit!@#mima 的数据库用户。
 > db.createUser({ user: 'nvsp', pwd: '123456', roles: [{ role: "readWrite", db: "nvsp" }] });
 
 # 查看表格
