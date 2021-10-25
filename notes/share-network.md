@@ -20,6 +20,13 @@
 </div>
 <br>
 
+> 这里需要注意网络顺序的问题，要优先wifi,其次才是LAN才行!  
+> 在网络界面找到"设定服务顺序",wifi要优先与LAN  
+> <div align=center>
+> <img src="./../resources/images/notes/network-sort.png" width="60%" height="60%" title="mac网络共享"></img>  
+> </div>
+> <br>
+
 
 最终把centos配置成dhcp,配置如下:  
 ```
