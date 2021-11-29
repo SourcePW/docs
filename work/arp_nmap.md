@@ -1,11 +1,26 @@
 # arp
 ## 安装
-下载源码: https://github.com/royhills/arp-scan/releases/download/1.9/arp-scan-1.9.tar.gz  
-
 安装依赖:
 - libpcap  
-wget http://www.tcpdump.org/release/libpcap-1.9.1.tar.gz  
-编译: ./configure && make && make install  
+  **yum install libpcap-devel**  
+  Running transaction    
+  正在安装    : 14:libpcap-1.5.3-12.el7.x86_64  
+  正在安装    : 14:libpcap-devel-1.5.3-12.el7.x86_64  
+
+安装arp-scan   
+下载源码:wget https://github.com/royhills/arp-scan/releases/download/1.9/arp-scan-1.9.tar.gz  
+./configure && make && make install  
+
+用于更新MAC地址，便于在扫描时知道使用的是那个厂商的网卡
+`get-oui -v`  
+Fetching OUI data from http://standards.ieee.org/develop/regauth/oui/oui.txt  
+get-oui -u http://standards-oui.ieee.org/oui/oui.txt  
+
+扫描结果
+```
+
+```
+
 
 参考: [arpme](https://github.com/lrstanley/arpme)
 
