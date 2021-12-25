@@ -1,6 +1,4 @@
-# jni 
-## vscode 监测JVM状态
-
+# jni
 ## jni搭建
 ### java 方法
 ```
