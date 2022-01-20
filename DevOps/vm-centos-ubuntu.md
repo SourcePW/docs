@@ -6,7 +6,9 @@ sudo yum install -y epel-release
 sudo yum install -y dkms hpijs 
 ```
 
-centos8安装parallels tools, 需要执行如下脚本
+> 如果某些指令找不到，比如`makeinfo`, 可以通过`yum provides makeinfo`查找
+
+centos8安装parallels tools, 如果出现问题，可以执行如下脚本
 ```shell
 #!/usr/bin/env bash
 
@@ -32,6 +34,10 @@ sudo ./install
 echo "Remove /tmp/parallels_fixed"
 rm -rf /tmp/parallels_fixed
 ```
+
+clion远程调试:
+- [cmake](https://blog.jetbrains.com/clion/2018/09/initial-remote-dev-support-clion/)  
+- [makefile]()  
 
 ## vm安装ubuntu
 
