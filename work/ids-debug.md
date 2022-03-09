@@ -196,7 +196,7 @@ Missing separate debuginfos, use: debuginfo-install bzip2-libs-1.0.6-13.el7.x86_
 - packet detail
 - packet bytes
 
-![wireshark-searc](resources/images/work/wireshark-search.png)  
+![wireshark-searc](../resources/images/work/wireshark-search.png)  
 
 ## vscode flask 调试  
 
