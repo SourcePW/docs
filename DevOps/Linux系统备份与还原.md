@@ -28,6 +28,9 @@ mkdosfs -F 32 /dev/sdd1
 # -U USB
 # -s U盘大小
 mondoarchive -OU -d /dev/sdd -s 64g -G
+
+# 后台执行
+nohup "mondoarchive -OU -d /dev/sdd -s 64g -G" > output.log 2>&1 &
 ```
 
 制作完成后信息(一定要确保完成) :sob:  
