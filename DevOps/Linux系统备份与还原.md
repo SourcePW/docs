@@ -30,7 +30,10 @@ mkdosfs -F 32 /dev/sdd1
 mondoarchive -OU -d /dev/sdd -s 64g -G
 
 # 后台执行
-nohup "mondoarchive -OU -d /dev/sdd -s 64g -G" > output.log 2>&1 &
+echo -e '#!/bin/bash \necho " start "' > restore.sh 
+echo -e 'mondoarchive -OU -d /dev/sdd -s 64g -G' >> restore.sh
+chmod +x restore.sh
+nohup restore.sh > restore.log 2>&1 &
 ```
 
 制作完成后信息(一定要确保完成) :sob:  
