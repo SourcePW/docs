@@ -83,7 +83,7 @@ vgcreate DATA_LVM /dev/sdb
 vgextend DATA_LVM /dev/sdc
 
 #创建逻辑卷 lvcreate -L[自定义分区大小] -n[自定义分区名称] [vg名称]  删除指令是pvremove DATA_LVM/DATA,  16T只是一般值，具体根据free space为准
-lvcreate -L16T -n DATA  DATA_LVM
+lvcreate -L16T -n DATA DATA_LVM
 
 #格式化分区，默认回车就行
 mkfs.ext4 /dev/DATA_LVM/DATA
