@@ -5,6 +5,6 @@
 - ## DevOps
   - ### [linux系统备份及还原](DevOps/linux-backup-restore.md)  
   - ### [jenkins构建](DevOps/jenkins-build.md) 
-
+  - ### [bash learn](DevOps/bash-learn.md) 
 
 
