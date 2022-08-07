@@ -70,8 +70,12 @@ Subsystem sftp internal-sftp
 
 #在添加如下配置
 Match User taxue,root
-ChrootDirectory /data
+ChrootDirectory /          # 这里需要配置根目录，如果不配置根目录，ssh登录时找不到/bin/bash
 ForceCommand internal-sftp
+
+# 打开ssh、sftp
+AllowTcpForwarding yes      # 设置为yes,否则ssh无法登陆
+#ForceCommand internal-sftp
 ```
 
 `systemctl restart sshd` 重启
@@ -96,7 +100,7 @@ vscode sftp配置
     "port": 22,
     "username": "root",
     "password": "Netvine123",
-    "remotePath": "/work/build-scripts",
+    "remotePath": "/data/work/build-scripts",
     "connectTimeout": 20000,
     "uploadOnSave": true
 }
@@ -172,7 +176,10 @@ node –version  # node v12.22.12 , npm 6.14.16
 <img src="../resources/images/jenkins-gitlab-token.png" width="70%"></img>
 </div>
 
-### 
+### 通过脚本获取数据作为参数
+目前的需求是通过jenkins界面选择升级包的路径，升级包路径在服务器，需要通过指令列举指定路径下所有文件夹
+
+
 
 ## bash 
 ### 引用脚本
@@ -223,7 +230,11 @@ build-scripts/
 > `source` `.` 相当于把其他脚本文件内容直接放到引用脚本内。所以工具类都不要引用脚本文件，全由`调用脚本`引用。  
 
 
-
+最终调用
+```shell
+bash /data/jenkins-audit/build-scripts/update_script.sh
+bash /data/jenkins-audit/build-scripts/build.sh $device_ips
+```
 
 
 
