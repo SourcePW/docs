@@ -113,7 +113,7 @@ vscode sftp配置
 
 如图:  
 <div align=center>
-<img src="../resources/images/ftp-config.png" width="70%"></img>
+<img src="../resources/images/sftp-config.png" width="100%"></img>
 </div>
 
 ### 指令提示补全
