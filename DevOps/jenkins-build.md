@@ -71,7 +71,6 @@ Subsystem sftp internal-sftp
 #在添加如下配置
 Match User taxue,root
 ChrootDirectory /          # 这里需要配置根目录，如果不配置根目录，ssh登录时找不到/bin/bash
-ForceCommand internal-sftp
 
 # 打开ssh、sftp
 AllowTcpForwarding yes      # 设置为yes,否则ssh无法登陆
