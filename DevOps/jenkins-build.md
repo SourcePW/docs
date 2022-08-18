@@ -161,7 +161,10 @@ node –version  # node v12.22.12 , npm 6.14.16
 ```
 
 ## jenkins任务构建
+- ### [jenkins handbook](https://www.jenkins.io/doc/book/)  
 ### 参数
+[官方文档](https://plugins.jenkins.io/uno-choice/) 
+
 多选参数，需要安装`Extended Choice Parameter` 插件
 <div align=center>
 <img src="../resources/images/jenkins-params.jpg" width="70%"></img>
@@ -178,7 +181,30 @@ node –version  # node v12.22.12 , npm 6.14.16
 ### 通过脚本获取数据作为参数
 目前的需求是通过jenkins界面选择升级包的路径，升级包路径在服务器，需要通过指令列举指定路径下所有文件夹
 
+### 工作空间及编译结果  
+每个Jenkins都有工作空间`WorkSpace`, 可以通过编译后的操作`Archive the artifacts`,过滤出自己需要展示并下载的文件 
 
+<div align=center>
+<img src="../resources/images/jenkins-workspace.png" width="60%"></img>
+</div>
+
+### 远程访问  
+Jobs with parameters
+You merely need to perform an HTTP POST on `JENKINS_URL/job/JOBNAME/build`. 
+
+
+Jobs with parameters  
+```shell
+# String Parameters
+curl JENKINS_URL/job/JOB_NAME/buildWithParameters \
+  --user USER:TOKEN \
+  --data id=123 --data verbosity=high
+
+# File Parameter
+curl JENKINS_URL/job/JOB_NAME/buildWithParameters \
+  --user USER:PASSWORD \
+  --form FILE_LOCATION_AS_SET_IN_JENKINS=@PATH_TO_FILE
+```
 
 ## bash 
 ### 引用脚本
@@ -188,7 +214,6 @@ source config/config.sh
 source git/git_utils.sh
 source build/build_soft.sh
 ```
-
 
 通过jenkins调用时
 ```shell
