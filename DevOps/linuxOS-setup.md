@@ -83,6 +83,8 @@
 
 - swap - Swap 分区被用来支持虚拟内存。换句话说，当内存不足以贮存系统正在处理的数据时，会将其写入 swap 分区。  
 
+> 分区的文件类型不是固定的，比如`swap`可以使用`标准分区`，也可以使用`LVM`,根目录文件系统可以使用`xfs`，也可以使用`ext4`  
+
 ## PXE无人值守系统安装  
 [参考文章](https://blog.csdn.net/ghost_leader/article/details/52985811)  
 
