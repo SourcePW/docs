@@ -85,6 +85,22 @@
 
 > 分区的文件类型不是固定的，比如`swap`可以使用`标准分区`，也可以使用`LVM`,根目录文件系统可以使用`xfs`，也可以使用`ext4`  
 
+最后的分区详情
+```shell
+#
+# /etc/fstab
+# Created by anaconda on Tue Aug 23 04:51:14 2022
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/centos-root /                       xfs     defaults        0 0
+UUID=2e3e7b3b-9501-4664-9b84-98ded37d3dc7 /boot                   xfs     defaults        0 0
+/dev/mapper/centos-swap swap                    swap    defaults        0 0
+/dev/mapper/DATA_LVM-DATA /data                 ext4    defaults        0 0
+```
+
+
 ## PXE无人值守系统安装  
 [参考文章](https://blog.csdn.net/ghost_leader/article/details/52985811)  
 
