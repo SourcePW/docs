@@ -149,7 +149,7 @@ firewall-cmd --zone=public --list-ports
 ### 串口设置(centos7)
 [csdn参考文章](https://blog.csdn.net/mao2553319/article/details/79496684)  
 
-1. 修改`etc/default/grub`
+1. 修改`/etc/default/grub`
 
 追加
 ```shell
@@ -164,3 +164,34 @@ GRUB_CMDLINE_LINUX_DEFAULT="console=tty1 console=ttyS0,115200"
 grub2-mkconfig -o /boot/grub2/grub.cfg
 ```
 
+### 系统无法启动  
+`dracut`,还有找不到`/dev/mapper/centos-swap`,可能之前`/etc/default/grub`被人修改过  
+
+增加串口后的配置
+```shell
+GRUB_TIMEOUT=5
+GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"
+GRUB_DEFAULT=saved
+GRUB_DISABLE_SUBMENU=true
+GRUB_TERMINAL_OUTPUT="console"
+GRUB_CMDLINE_LINUX="crashkernel=auto spectre_v2=retpoline rd.lvm.lv=centos/root rd.lvm.lv=centos/swap  net.ifnames=0 biosdevname=0 rhgb quiet"
+GRUB_CMDLINE_LINUX_DEFAULT="console=tty0 console=ttyS0,115200"
+GRUB_DISABLE_RECOVERY="true"
+```
+
+重新执行`grub2-mkconfig -o /boot/grub2/grub.cfg`  
+```shell
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-3.10.0-1160.el7.x86_64
+Found initrd image: /boot/initramfs-3.10.0-1160.el7.x86_64.img
+Found linux image: /boot/vmlinuz-0-rescue-a8ffef200b50493c86e299323d4235df
+Found initrd image: /boot/initramfs-0-rescue-a8ffef200b50493c86e299323d4235df.img
+done
+```
+
+
+> 无法启动后，编辑启动参数  
+
+<div align=center>
+<img src="../resources/images/centos-boot-edit.png" width="60%"></img>
+</div>
