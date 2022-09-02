@@ -8,6 +8,7 @@
   - ### [jenkins构建](DevOps/jenkins-build.md) 
   - ### [bash learn](DevOps/bash-learn.md) 
   - ### [minicom](DevOps/minicom.md) 
+  - ### [linux 内存占用分析](DevOps/linux-mem.md) 
 - ## 工具
   - ### [jni](work/jni.md)  
   - ### [加解密](work/Encryption.md)
