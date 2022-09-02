@@ -10,17 +10,26 @@ Swap:           18G        9.5G        9.5G
 ## top 
 ```shell
   PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                                                                                                
-23315 root      20   0  565200  17972   2488 S  31.2  0.1  47:01.57 Southwest_Engin                                                                                                                                                        
-   66 root      20   0       0      0      0 S  12.5  0.0   1:43.29 kswapd0                                                                                                                                                                
- 1961 mysql     20   0 4755208 327676   3484 S   6.2  2.0 589:46.31 mysqld                                                                                                                                                                 
-    1 root      20   0  191152   1768   1184 S   0.0  0.0   0:02.72 systemd                                                                                                                                                                
+23315 root      20   0  565200  20068   2700 S  25.0  0.1  52:49.99 Southwest_Engin                                                                                                                                                        
+ 1738 root      20   0   17.8g  14.2g   3612 S   6.2 92.1 151:18.56 audit-server                                                                                                                                                           
+21325 root      20   0  162128   2272   1548 R   6.2  0.0   0:00.02 top                                                                                                                                                                    
+    1 root      20   0  191152   1228    636 S   0.0  0.0   0:02.78 systemd                                                                                                                                                                
     2 root      20   0       0      0      0 S   0.0  0.0   0:00.01 kthreadd                                                                                                                                                               
     4 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/0:0H                                                                                                                                                           
-    6 root      20   0       0      0      0 S   0.0  0.0   0:00.83 ksoftirqd/0                                                                                                                                                            
+    6 root      20   0       0      0      0 S   0.0  0.0   0:00.84 ksoftirqd/0                                                                                                                                                            
     7 root      rt   0       0      0      0 S   0.0  0.0   0:00.03 migration/0                                                                                                                                                            
     8 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcu_bh                                                                                                                                                                 
-    9 root      20   0       0      0      0 S   0.0  0.0   1:25.68 rcu_sched                                                                                                                                                              
-   10 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 lru-add-drain 
+    9 root      20   0       0      0      0 S   0.0  0.0   1:29.39 rcu_sched                                                                                                                                                              
+   10 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 lru-add-drain                                                                                                                                                          
+   11 root      rt   0       0      0      0 S   0.0  0.0   0:00.16 watchdog/0                                                                                                                                                             
+   12 root      rt   0       0      0      0 S   0.0  0.0   0:00.15 watchdog/1                                                                                                                                                             
+   13 root      rt   0       0      0      0 S   0.0  0.0   0:00.05 migration/1                                                                                                                                                            
+   14 root      20   0       0      0      0 S   0.0  0.0   0:02.95 ksoftirqd/1                                                                                                                                                            
+   15 root      20   0       0      0      0 S   0.0  0.0   0:00.74 kworker/1:0                                                                                                                                                            
+   16 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/1:0H                                                                                                                                                           
+   17 root      rt   0       0      0      0 S   0.0  0.0   0:00.13 watchdog/2                                                                                                                                                             
+   18 root      rt   0       0      0      0 S   0.0  0.0   0:00.06 migration/2                                                                                                                                                            
+   19 root      20   0       0      0      0 S   0.0  0.0   0:20.99 ksoftirqd/2     
 ```
 
 ## 内存使用分类
