@@ -79,6 +79,8 @@ AllowTcpForwarding yes      # 设置为yes,否则ssh无法登陆
 
 `systemctl restart sshd` 重启
 
+> 如果重启sshd失败，可以把配置放在最后面试试  
+
 测试登录:
 ```
 sftp root@ip
