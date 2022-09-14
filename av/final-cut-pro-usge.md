@@ -9,3 +9,11 @@ HDR转SDR
 <div align=center>
 <img src="../resources/images/av/hdr-tool.png" width="100%"></img>
 </div>
+
+## 自动生成字幕  
+
+[blibli教程](https://www.bilibili.com/video/BV1wq4y1f76a/?vd_source=dc948f9711ac4b8904200dc545cd72d7)  
+
+通过剪映自动识别字幕，导出视频。到final cut中选择融合方式为“相加”。  
+
+

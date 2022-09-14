@@ -1,6 +1,7 @@
 # 学习笔记及文档整理
 
 - ## 音视频处理
+  - ### [自媒体](av/We-Media.md)   
   - ### [Final Cut Pro使用](av/final-cut-pro-usge.md)  
 - ## 网络  
   - ### [snort](./snort/snort.md)  
