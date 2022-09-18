@@ -20,3 +20,31 @@ HDR转SDR
 可以通过遮罩转场  
 
 
+## 变速  
+
+选择切割速度，然后选择速度   
+
+## 编辑字幕  
+
+在字幕中选择“基础字幕”
+
+## 声音处理
+[教程](https://www.youtube.com/watch?v=d1LSyKAYGZM)  
+
+首先是响度要满足`-16LUFS`的标准  
+
+- 电平 限制器
+- 电平 Noise Gate
+- 专用 MultiMeter  
+
+
+
+
+## 导出视频
+
+导出为MP4
+
+
+
+
+
