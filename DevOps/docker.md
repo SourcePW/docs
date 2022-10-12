@@ -1,5 +1,4 @@
 - # docker
-
 ## 把系统备份打包为docker镜像  
 
 ```shell
@@ -102,8 +101,13 @@ docker push harbor域名地址:端口号/cicd/nginx
 
 ### 常用命令
 ```shell
+# 通过dockerfile构建镜像(本地)
 docker build -f DockerfileProd -t server-prod:latest .
+
+# 打tag
 docker tag server-prod:latest 10.25.10.111/license/server-prod:latest
+
+# 上传到私有仓库  
 docker push 10.25.10.111/license/server-prod:latest
 ```
 
