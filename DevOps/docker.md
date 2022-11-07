@@ -478,13 +478,40 @@ UUID=`uuidgen`
 echo -e "TYPE=\"Bridge\"\nUUID=\"${UUID}\"\nDEVICE=\"br0\"\nONBOOT=\"yes\"" > /etc/sysconfig/network-scripts/ifcfg-br0
 
 echo -e "BRIDGE=\"br0\"" > /etc/sysconfig/network-scripts/ifcfg-eth0
+
+# 重启网卡
+service network restart
+
+# 
 ```
 
 ### 运行配置
 ```shell
-docker run --privileged -itd -p 443:443 -p 3306:3306 -p 6379:6379 --restart=always --name centos_audit centos_audit:4.0 /usr/sbin/init
+# docker import centos_audit_4.0.tar centos_audit:4.0
+docker load --input centos_audit_4.0.tar
+
+docker run --privileged -itd -p 443:443 -p 3305:3306 -p 6378:6379 --restart=always --name centos_audit centos_audit:4.0 /usr/sbin/init
 ```
 
+启动异常，找不到启动文件`/usr/sbin/init`
+```
+[root@d1 data]# docker run --privileged -itd --restart=always --name centos_audit1.0 centos_audit:1.0 /usr/sbin/init
+a9d9637ba4fb39be1b6efda6ec8cd39a14057db56495e72284dc141bf4ce795d
+docker: Error response from daemon: OCI runtime create failed: container_linux.go:380: starting container process caused: exec: "/usr/sbin/init": stat /usr/sbin/init: no such file or directory: unknown.
+```
+
+
+官方回复
+
+`import` is used with the tarball which are created with `docker export`. `load` is used with the tarball which are created with `docker save`. If you want to look at those options check the below article.
+
+```shell
+[root@localhost work]# docker load --input centos_audit_4.0.tar 
+174f56854903: Loading layer [==================================================>]  211.7MB/211.7MB
+df315b7ffdda: Loading layer [==================================================>]  2.409GB/2.409GB
+9912ff886c76: Loading layer [==================================================>]  3.168GB/3.168GB
+Loaded image: centos_audit:4.0
+```
 
 
 ## 把系统备份打包为docker镜像  
