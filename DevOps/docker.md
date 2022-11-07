@@ -2,6 +2,7 @@
 
 - [系统安装docker](#系统安装docker)
 - [docker安装centos，再次打包为镜像](#docker安装centos再次打包为镜像)
+- [iptables转发流量到docker容器](#iptables转发流量到docker容器)
 - [手动制作自定义centos镜像包](#手动制作自定义centos镜像包)
   - [安装环境](#安装环境)
     - [C端](#c端)
@@ -51,6 +52,77 @@ docker run --name centos7 -itd -v path/to/data:/root/work centos:7.9.2009
 解压数据到docker
 ```shell
 sudo tar -xvpzf backup.tar.gz -C / --numeric-owner  
+```
+
+## iptables转发流量到docker容器
+
+[参考文章](https://yeasy.gitbook.io/docker_practice/advanced_network/bridge)  
+
+docker服务启动时，会有一个默认网桥
+```shell
+docker0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+        inet6 fe80::42:cbff:feca:454f  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:cb:ca:45:4f  txqueuelen 0  (Ethernet)
+        RX packets 1568  bytes 17640614 (16.8 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 3844  bytes 452141 (441.5 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+```
+
+容器配置端口的的转发规则:  
+```shell
+$ iptables -nvL
+
+Chain DOCKER (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 ACCEPT     tcp  --  !docker0 docker0  0.0.0.0/0            172.17.0.2           tcp dpt:6379
+    0     0 ACCEPT     tcp  --  !docker0 docker0  0.0.0.0/0            172.17.0.2           tcp dpt:3306
+   18  1152 ACCEPT     tcp  --  !docker0 docker0  0.0.0.0/0            172.17.0.2           tcp dpt:443
+```
+
+如果想通过网口流量直接转发`eth1->docker-audit`  
+
+除了默认的 `docker0` 网桥，用户也可以指定网桥来连接各个容器。  
+在启动 Docker 服务的时候，使用 `-b BRIDGE`或`--bridge=BRIDGE` 来指定使用的网桥。  
+
+安装工具:`yum install bridge-utils`  
+
+删除网卡
+```shell
+$ sudo ip link set dev br0 down
+$ sudo brctl delbr br0
+```
+
+设置网卡为混杂模式
+```shell
+sudo ifconfig enp2s0 promisc
+```
+
+```shell
+# 创建网桥
+sudo brctl addbr br0
+
+# 添加物理网卡
+sudo brctl addif br0 enp2s0
+
+# 设置up状态
+sudo ip link set dev br0 up
+
+# 查看网卡状态
+ip addr show br0
+
+# 关闭docker原网桥
+sudo systemctl stop docker
+sudo ifconfig docker0 down
+
+sudo systemctl start docker
+
+vim /etc/docker/daemon.json
+{
+  "bridge": "br0"
+}
+
 ```
 
 
