@@ -13,6 +13,7 @@
   - ### [搭建自动化测试:jenkins+python+allure](DevOps/auto-test.md) 
   - ### [漏扫结果修改](DevOps/holes.md) 
   - ### [docker](DevOps/docker.md) 
+  - ### [linux软件安装流程](DevOps/linux-install.md) 
 - ## 工具
   - ### [jni](work/jni.md)  
   - ### [加解密](work/Encryption.md)
