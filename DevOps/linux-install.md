@@ -78,9 +78,9 @@ deb http://cn.archive.ubuntu.com/ubuntu focal main restricted
 
 apt install 流程
 
-1. 扫描本地存放的软件包更新列表（由“apt-get update”命令刷新更新列表，也就是/var/lib/apt/lists/），找到最新版本的软件包；
+1. 扫描本地存放的软件包更新列表（由“apt-get update”命令刷新更新列表，也就是 `/var/lib/apt/lists/` ），找到最新版本的软件包；
 2. 进行软件包依赖关系检查，找到支持该软件正常运行的所有软件包；
-3. 从软件源所指 的镜像站点中，下载相关软件包，并存放在/var/cache/apt/archive；
+3. 从软件源所指 的镜像站点中，下载相关软件包，并存放在 `/var/cache/apt/archives`；
 4. 解压软件包，并自动完成应用程序的安装和配置。
 
 软件包列表文件:`/var/lib/apt/lists/cn.archive.ubuntu.com_ubuntu_dists_focal-updates_universe_binary-amd64_Packages`  
@@ -126,6 +126,52 @@ filename:`pool/universe/p/python2.7/python2.7-minimal_2.7.18-1~20.04.3_amd64.deb
 http://archive.ubuntu.com/ubuntu/pool/universe/p/python2.7/python2.7-minimal_2.7.18-1~20.04.3_amd64.deb  
 
 
+下载的软件包
+```
+ls -l /var/cache/apt/archives | grep -i python2.7
+-rw-r--r-- 1 root root    248228 Jul 14 20:54 python2.7_2.7.18-1~20.04.3_amd64.deb
+-rw-r--r-- 1 root root   1279592 Jul 14 20:54 python2.7-minimal_2.7.18-1~20.04.3_amd64.deb
+```
+
+
+## 安装问题
+### python or pycompile not found in public_modules.rtinstall hook.
+
+```shell
+# sudo apt-get install npm -y
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  gyp node-gyp python-pkg-resources python2
+Suggested packages:
+  python-setuptools python2-doc python-tk
+The following NEW packages will be installed:
+  gyp node-gyp npm python-pkg-resources python2
+0 upgraded, 5 newly installed, 0 to remove and 6 not upgraded.
+2 not fully installed or removed.
+Need to get 0 B/1,009 kB of archives.
+After this operation, 5,523 kB of additional disk space will be used.
+Setting up python2.7-minimal (2.7.18-1~20.04.3) ...
+dpkg-query: warning: files list file for package 'libpython2.7-minimal:amd64' missing; assuming package has no files currently installed
+python2.7-minimal: can't get files for byte-compilation
+Linking and byte-compiling packages for runtime python2.7...
+python or pycompile not found in public_modules.rtinstall hook.
+dpkg: error processing package python2.7-minimal (--configure):
+ installed python2.7-minimal package post-installation script subprocess returned error exit status 1
+dpkg: dependency problems prevent configuration of python2-minimal:
+ python2-minimal depends on python2.7-minimal (>= 2.7.17~rc1-1~); however:
+  Package python2.7-minimal is not configured yet.
+
+dpkg: error processing package python2-minimal (--configure):
+ dependency problems - leaving unconfigured
+Errors were encountered while processing:
+ python2.7-minimal
+ python2-minimal
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+```
+
+找不到`python`, 解决版本:`ln -s /usr/bin/python2.7 /usr/bin/python`  
 
 
 
