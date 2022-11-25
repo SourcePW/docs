@@ -151,33 +151,33 @@ docker exec -it centos7 bash
 打包成镜像
 ```shell
 # 提交
-$ docker commit 13745a0f939b cetnos_self:1.0
+$ docker commit 13745a0f939b centos_self:1.0
 sha256:769c93d51d0b74cfd39ae0623abec17f440c2c71737d45b36e3c177de10be5ea
 
 REPOSITORY                                      TAG                IMAGE ID       CREATED              SIZE
-cetnos_self                                     1.0                769c93d51d0b   About a minute ago   442MB
+centos_self                                     1.0                769c93d51d0b   About a minute ago   442MB
 # 
 
 # 打包
-$ docker save -o cetnos_self_1.0.tar cetnos_self:1.0
+$ docker save -o centos_self_1.0.tar centos_self:1.0
 
 
 # 拷贝到目标设备，导入运行
 $ docker load --input centos_self_1.0.tar
 174f56854903: Loading layer [==================================================>]  211.7MB/211.7MB
 58ba7edb40a1: Loading layer [==================================================>]  241.7MB/241.7MB
-Loaded image: cetnos_self:1.0
+Loaded image: centos_self:1.0
 
 
 # 再次运行
-docker run --name centos7 -itd -v /root/work/docker/data:/root/work cetnos_self:1.0
+docker run --name centos7 -itd -v /root/work/docker/data:/root/work centos_self:1.0
 
 # 安装抓包工具
 yum install net-tools tcpdump  
 yum install wget sudo 
 ```
 
-> 如果遇到权限问题:`Failed to get D-Bus connection: Operation not permitted`, docker run --name centos7.1 `--privileged=true` -itd -v /root/work/docker/data:/root/work cetnos_self:2.0 `/usr/sbin/init`  
+> 如果遇到权限问题:`Failed to get D-Bus connection: Operation not permitted`, docker run --name centos7.1 `--privileged=true` -itd -v /root/work/docker/data:/root/work centos_self:2.0 `/usr/sbin/init`  
 
 
 ### 安装环境
@@ -235,13 +235,13 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH/usr/local/lib64/
 mkdir /data/socket/
 mkdir /data/allow-list/
 mkdir /data/self-proto/
-mkdir -p /opt/netvine/orangin/backend
-mkdir -p /opt/netvine/orangin/frontend
-mkdir -p /opt/netvine/orangin/ids
+mkdir -p /opt/root/orangin/backend
+mkdir -p /opt/root/orangin/frontend
+mkdir -p /opt/root/orangin/ids
 
 
 # 软连接目录
-ln -s /opt/netvine/origin/backend /opt/audit
+ln -s /opt/root/origin/backend /opt/audit
 
 
 mkdir /data 
@@ -369,9 +369,9 @@ $ grep password /var/log/mysqld.log
 2022-11-03T09:21:57.020473Z 1 [Note] A temporary password is generated for root@localhost: 4tFfHg7ul3<O
 
 # 修改密码:
-alter user 'root'@'localhost' identified by 'Netvine123#@!';
+alter user 'root'@'localhost' identified by 'root123#@!';
 
-create user 'root'@'%' identified by 'Netvine@123'; 
+create user 'root'@'%' identified by 'root@123'; 
 grant all privileges on *.* to 'root'@'%';
 flush privileges;
 
@@ -483,7 +483,7 @@ vim redis.conf
 
 bind 0.0.0.0	# 把 127.0.0.1 改为 0.0.0.0，监听所有 IPV4 地址，可以根据需求设置
 daemonize no
-requirepass Netvine123#@!
+requirepass root123#@!
 
 ```
 
