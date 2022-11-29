@@ -13,7 +13,8 @@
     - [使用交换机模拟路由器](#使用交换机模拟路由器)
   - [路由器](#路由器)
 
-
+- [网络二层基础讲解 pdf](../resources/files/network/网络二层基础讲解.pdf)  
+- [网络三层基础讲解 pdf ](../resources/files/network/网络三层路由讲解.pdf) 
 ## 环境搭建 
 
 安装界面
@@ -200,6 +201,8 @@ GNS3 一直都不能使用交换机 IOS 镜像的！如果你想用 GNS3 来模�
 > Cisco IOS，最早称为互联网操作系统（英语：Internetwork Operating System，简称IOS）是思科公司（Cisco System）为其网络设备开发的操作维护系统。用户可以透过命令行界面对网络设备进行功能设置.  
 > IOU 的意思是 IOS On Unix，即是可以在 Unix 系統上運行 IOS。IOU 不但可以模擬 Router，還可以模擬 L3 Switch.  
 
+> CISCO NM-16ESW是一款思科品牌的局域网模块。1个16端口10/100以太交换网络模块  
+
 <div align=center>
 <img src="../resources/images/network/gns3-9.png" width="90%"></img>
 </div>
@@ -366,7 +369,418 @@ Exec commands:
   xconnect         Xconnect EXEC commands
 ```
 
+### 常用指令
+
+### 模式
+```shell
+ >enable    #从用户模式切换到特权模式，权限最低，可以说是无功能，啥也不能做。
+ #   　　　　#特权模式，可以进行查看端口的IP配置信息，查看主机表等，重启路由器等等操作。 
+ 
+ #configure terminal  　　#从特权模式切换到全局配置模式，权限最高，可以在这里配置vlan等等
+ Enter configuration commands, one per line. End with CNTL/Z. (config)#
+ 
+ (config)#exit    　　　　　#从全局配置模式切换到特权模式，如果想要切换到用户模式继续敲击exit即可。
+ #
+ %SYS-5-CONFIG_I: Configured from console by console
+```
+
+#### 修改主机名
+```shell
+(config)#hostname ymm   #注意：需要在全局配置模式下敲击哟
+```
+
+### 查看常用指令
+```shell
+R1#show hosts # 主机名
+Default domain is not set
+Name/address lookup uses static mappings
+
+Codes: UN - unknown, EX - expired, OK - OK, ?? - revalidate
+       temp - temporary, perm - permanent
+       NA - Not Applicable None - Not defined
+
+Host                      Port  Flags      Age Type   Address(es)
+R1#
+*Nov 29 14:15:46.871: %SYS-5-CONFIG_I: Configured from console by console
+R1#show ip interface # 接口及状态
+FastEthernet0/0 is administratively down, line protocol is down
+  Internet protocol processing disabled
+GigabitEthernet1/0 is administratively down, line protocol is down
+  Internet protocol processing disabled
+GigabitEthernet2/0 is administratively down, line protocol is down
+  Internet protocol processing disabled
+GigabitEthernet3/0 is administratively down, line protocol is down
+  Internet protocol processing disabled
+R1#show ip route  # 路由表
+Codes: C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+ESW1#show mac-address-table  # 交换机的mac表  
+Destination Address  Address Type  VLAN  Destination Port
+-------------------  ------------  ----  --------------------
+c402.43ab.0000		Self	      1	    Vlan1
+```
+
+#### vlan操作
+```shell
+ESW1#vlan data   # 进入vlan模式
+ESW1(vlan)#vlan 300 name vlan-test-300   # 创建
+VLAN 300 added:
+    Name: vlan-test-300
+ESW1(vlan)#no vlan 300     # 删除
+Deleting VLAN 300...
+ESW1(vlan)#exit
+APPLY completed.
+Exiting....
+ESW1#show vlan-switch        # 查看
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa1/2, Fa1/3, Fa1/4, Fa1/5
+                                                Fa1/6, Fa1/7, Fa1/8, Fa1/9
+                                                Fa1/10, Fa1/11, Fa1/12, Fa1/13
+                                                Fa1/14, Fa1/15
+200  VLAN0200                         active    Fa1/0, Fa1/1
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+
+VLAN Type  SAID       MTU   Parent RingNo BridgeNo Stp  BrdgMode Trans1 Trans2
+---- ----- ---------- ----- ------ ------ -------- ---- -------- ------ ------
+1    enet  100001     1500  -      -      -        -    -        1002   1003
+200  enet  100200     1500  -      -      -        -    -        0      0   
+1002 fddi  101002     1500  -      -      -        -    -        1      1003
+1003 tr    101003     1500  1005   0      -        -    srb      1      1002
+1004 fdnet 101004     1500  -      -      1        ibm  -        0      0   
+1005 trnet 101005     1500  -      -      1        ibm  -        0      0  
+```
+
+将交换机接口添加到vlan中
+```shell
+ESW1#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+ESW1(config)#interface f1/0
+ESW1(config-if)#switchport mode access
+ESW1(config-if)#switchport access vlan 200
+ESW1(config-if)#exit
+ESW1(config)#interface f1/1
+ESW1(config-if)#switchport mode access
+ESW1(config-if)#switchport access vlan 200
+ESW1(config-if)#exit
+ESW1(config)#exit
+```
+
+将接口从vlan中删除
+```shell
+ESW1(config)#interface range FastEthernet 1/1
+ESW1(config-if-range)#no switchport access vlan 200
+ESW1(config-if-range)#exit
+ESW1(config)#interface range FastEthernet 1/2
+ESW1(config-if-range)#no switchport access vlan 200
+ESW1(config-if-range)#exit
+
+ESW1#show vlan-switch
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa1/0, Fa1/1, Fa1/2, Fa1/3
+                                                Fa1/4, Fa1/5, Fa1/6, Fa1/7
+                                                Fa1/8, Fa1/9, Fa1/10, Fa1/11
+                                                Fa1/12, Fa1/13, Fa1/14, Fa1/15
+200  VLAN0200                         active    
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+```
+
+添加和删除vlan的管理ip
+```shell
+ESW1(config)#interface vlan 200
+ESW1(config-if)#ip add 192.168.2.1 255.255.255.0 
+ESW1(config-if)#no ip address
+ESW1(config-if)#exit
+```
+
+#### 
+
+### 设备间配置
+
+PC1
+```shell
+ip 192.168.1.2 24 192.168.1.1
+
+PC1> show ip
+
+NAME        : PC1[1]
+IP/MASK     : 192.168.1.2/24
+GATEWAY     : 192.168.1.1
+DNS         : 
+MAC         : 00:50:79:66:68:00
+LPORT       : 20028
+RHOST:PORT  : 127.0.0.1:20029
+MTU         : 1500
+```
+
+PC2
+```shell
+ip 192.168.1.3 24 192.168.1.1
+```
 
 
+PC3
+```shell
+ip 10.25.1.2 24 10.25.1.1
+```
 
 
+PC4
+```shell
+ip 10.25.1.3 24 10.25.1.1
+```
+
+
+ESW1
+```shell
+-- 关闭路由
+ESW1#config
+Configuring from terminal, memory, or network [terminal]? 
+Enter configuration commands, one per line.  End with CNTL/Z.
+ESW1(config)#no ip routing
+ESW1(config)#exit 
+
+-- 查看vlan  
+ESW1#vlan ?
+  database  Configure VLAN database
+ESW1#vlan database
+ESW1(vlan)#show
+  VLAN ISL Id: 1
+    Name: default
+    Media Type: Ethernet
+    VLAN 802.10 Id: 100001
+    State: Operational
+    MTU: 1500
+    Translational Bridged VLAN: 1002
+    Translational Bridged VLAN: 1003
+...
+
+-- 查看vlan帮助
+ESW1(vlan)#?
+VLAN database editing buffer manipulation commands:
+  abort  Exit mode without applying the changes
+  apply  Apply current changes and bump revision number
+  exit   Apply changes, bump revision number, and exit mode
+  no     Negate a command or set its defaults
+  reset  Abandon current changes and reread current database
+  show   Show database information
+  vlan   Add, delete, or modify values associated with a single VLAN
+  vtp    Perform VTP administrative functions.
+
+-- 查看vlan
+ESW1#show vlan-switch
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa1/0, Fa1/1, Fa1/2, Fa1/3
+                                                Fa1/4, Fa1/5, Fa1/6, Fa1/7
+                                                Fa1/8, Fa1/9, Fa1/10, Fa1/11
+                                                Fa1/12, Fa1/13, Fa1/14, Fa1/15
+200  VLAN0200                         active    
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+
+VLAN Type  SAID       MTU   Parent RingNo BridgeNo Stp  BrdgMode Trans1 Trans2
+---- ----- ---------- ----- ------ ------ -------- ---- -------- ------ ------
+1    enet  100001     1500  -      -      -        -    -        1002   1003
+200  enet  100200     1500  -      -      -        -    -        0      0   
+1002 fddi  101002     1500  -      -      -        -    -        1      1003
+1003 tr    101003     1500  1005   0      -        -    srb      1      1002
+1004 fdnet 101004     1500  -      -      1        ibm  -        0      0   
+1005 trnet 101005     1500  -      -      1        ibm  -        0      0 
+
+-- 划分vlan
+ESW1#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+ESW1(config)#interface f1/0
+ESW1(config-if)#switchport mode access
+ESW1(config-if)#switchport access vlan 200
+ESW1(config-if)#exit
+ESW1(config)#interface f1/1
+ESW1(config-if)#switchport mode access
+ESW1(config-if)#switchport access vlan 200
+ESW1(config-if)#exit
+ESW1(config)#exit
+
+ESW1#show vlan-switch
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa1/2, Fa1/3, Fa1/4, Fa1/5
+                                                Fa1/6, Fa1/7, Fa1/8, Fa1/9
+                                                Fa1/10, Fa1/11, Fa1/12, Fa1/13
+                                                Fa1/14, Fa1/15
+200  VLAN0200                         active    Fa1/0, Fa1/1
+
+-- 查看是否生效
+ESW1#ping 192.168.1.2
+% Unrecognized host or address, or protocol not running.
+
+-- 查看mac地址表
+ESW1#show mac-address-table
+Destination Address  Address Type  VLAN  Destination Port
+-------------------  ------------  ----  --------------------
+c402.43ab.0000		Self	      1	    Vlan1
+
+-- 查看配置信息
+R1#show run
+interface FastEthernet1/0
+ switchport access vlan 200
+ duplex full
+ speed 100
+!
+interface FastEthernet1/1
+ switchport access vlan 200
+ duplex full
+ speed 100
+
+ interface Vlan200
+ ip address 192.168.1.10 255.255.255.0
+!
+ip forward-protocol nd
+
+```
+
+R1
+```shell
+-- show ip 帮助文档
+R1#show ip ?
+  access-lists            List IP access lists
+  accounting              The active IP accounting database
+  admission               Network Admission Control information
+  aliases                 IP alias table
+  arp                     IP ARP table
+  as-path-access-list     List AS path access lists
+  auth-proxy              Authentication Proxy information
+  bgp                     BGP information
+  cache                   IP fast-switching route cache
+  cef                     Cisco Express Forwarding
+  community-list          List community-list
+  ddns                    Dynamic DNS
+  device                  Show IP Tracking Hosts
+  dfp                     DFP information
+  dhcp                    Show items in the DHCP database
+  dns                     Show DNS information
+  drp                     Director response protocol
+  dvmrp                   DVMRP information
+  eigrp                   IP-EIGRP show commands
+  explicit-paths          Show IP explicit paths
+  extcommunity-list       List extended-community list
+  flow                    NetFlow switching
+  helper-address          helper-address table
+  host-list               Host list
+  http                    HTTP information
+  icmp                    ICMP information
+  igmp                    IGMP information
+  inspect                 CBAC (Context Based Access Control) information
+  interface               IP interface status and configuration
+  ips                     IPS (Intrusion Prevention System) information
+  irdp                    ICMP Router Discovery Protocol
+  local                   IP local options
+  masks                   Masks associated with a network
+  mcache                  IP multicast fast-switching cache
+  mobile                  IP Mobility information
+  mpacket                 Display possible duplicate multicast packets
+  mrm                     IP Multicast Routing Monitor information
+  mroute                  IP multicast routing table
+  msdp                    Multicast Source Discovery Protocol (MSDP)
+  multicast               Multicast global information
+  nat                     IP NAT information
+  nbar                    Network-Based Application Recognition
+  nhrp                    NHRP information
+  ospf                    OSPF information
+  pgm                     PGM Reliable Transport Protocol
+  pim                     PIM information
+  policy                  Policy routing
+  policy-list             List IP Policy list
+  port-map                Port to Application Mapping (PAM) information
+  prefix-list             List IP prefix lists
+  protocols               IP routing protocol process parameters and statistics
+  redirects               IP redirects
+  rip                     IP RIP show commands
+  route                   IP routing table
+  rpf                     Display RPF information for multicast source
+  rsvp                    RSVP information
+  rtp                     RTP/UDP/IP header-compression statistics
+  sap                     Session Announcement Protocol cache
+  sdee                    SDEE (Security Device Event Exchange) information
+  sla                     Service Level Agreement (SLA)
+  slb                     SLB information
+  snat                    IP NAT SNAT information
+  ssh                     Information on SSH
+  tcp                     TCP/IP header-compression statistics
+  traffic                 IP protocol statistics
+  traffic-export          Show ip traffic-export statistics
+  trigger-authentication  Trigger-authentication host table
+  urlfilter               IOS URL Filtering Information
+  virtual-reassembly      IP Virtual Fragment Reassembly (VFR) information
+  vrf                     VPN Routing/Forwarding instance information
+  wccp                    WCCP information
+  
+-- 查看路由表
+R1#show ip route
+Codes: C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+-- 添加ip
+R1(config)#interface GigabitEthernet 1/0  
+R1(config-if)#ip address 192.168.1.12 255.255.255.0
+R1(config-if)#no shutdown
+R1(config-if)#exit
+R1(config)#interface GigabitEthernet 2/0  
+R1(config-if)#ip address 10.25.1.12 255.255.255.0
+R1(config-if)#no shutdown
+
+-- 配置动态路由
+R1(config)#router rip
+R1(config-router)#version 2
+R1(config-router)#no auto-summary 
+R1(config-router)#network 192.168.1.0
+R1(config-router)#network 10.25.1.0  
+
+-- 查看配置信息
+R1#show run
+interface FastEthernet0/0
+ no ip address
+ shutdown
+ duplex half
+!
+interface GigabitEthernet1/0
+ ip address 192.168.1.12 255.255.255.0
+ negotiation auto
+!
+interface GigabitEthernet2/0
+ ip address 10.25.1.12 255.255.255.0
+ negotiation auto
+!         
+interface GigabitEthernet3/0
+ no ip address
+ shutdown
+ negotiation auto
+```
