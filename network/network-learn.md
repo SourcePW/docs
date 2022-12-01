@@ -19,8 +19,10 @@
   - [查看常用指令](#查看常用指令)
     - [vlan操作](#vlan操作)
   - [设备间配置](#设备间配置)
+  - [动态路由配置](#动态路由配置)
+- [设备操作](#设备操作)
+  - [华为交换机操作界面](#华为交换机操作界面)
 - [思科指令汇总](#思科指令汇总)
-
 
 
 - [网络二层基础讲解 pdf](../resources/files/network/网络二层基础讲解.pdf)  
@@ -1014,6 +1016,27 @@ PC6> ping 10.25.12.2
 84 bytes from 10.25.12.2 icmp_seq=2 ttl=62 time=55.092 ms
 84 bytes from 10.25.12.2 icmp_seq=3 ttl=62 time=30.493 ms
 ```
+
+## 设备操作
+### 华为交换机操作界面
+设备概览
+<div align=center>
+<img src="../resources/images/network/交换机管理界面-1.png" width="100%"></img>
+</div>
+
+进阶配置->镜像口配置
+<br>
+<div align=center>
+<img src="../resources/images/network/交换机管理界面-2.png" width="100%"></img>
+</div>
+
+辅助配置->Trace Route
+<br>
+<div align=center>
+<img src="../resources/images/network/交换机管理界面-3.png" width="100%"></img>
+</div>
+
+
 
 
 ## 思科指令汇总
