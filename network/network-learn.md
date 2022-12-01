@@ -1019,6 +1019,7 @@ PC6> ping 10.25.12.2
 
 ## 设备操作
 ### 华为交换机操作界面
+[华为官方文档](https://support.huawei.com/hedex/hdx.do?docid=EDOC1100276020&lang=zh&idPath=24030814%7C21782164%7C21782167%7C22318634%7C6635912)  
 设备概览
 <div align=center>
 <img src="../resources/images/network/交换机管理界面-1.png" width="100%"></img>
