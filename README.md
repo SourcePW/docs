@@ -15,6 +15,7 @@
   - ### [漏扫结果修改](DevOps/holes.md) 
   - ### [docker](DevOps/docker.md) 
   - ### [linux软件安装流程](DevOps/linux-install.md) 
+  - ### [Ubuntu基础环境搭建](DevOps/ubuntu-base.md) 
 - ## 工具
   - ### [jni](work/jni.md)  
   - ### [加解密](work/Encryption.md)
