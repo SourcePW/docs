@@ -1,0 +1,18 @@
+# 通用配置
+ansible_python_interpreter: /usr/bin/python3 # 需要指定python版本，不然mysql模块默认查找python3  
+
+# mysql 配置
+mysql:
+  mysql_package_url: https://downloads.mysql.com/archives/get/p/23/file/mysql-server_5.7.37-1ubuntu18.04_amd64.deb-bundle.tar
+  mysql_package: mysql-server_5.7.37-1ubuntu18.04_amd64.deb-bundle.tar
+  mysql_db_name: firewall
+  mysql_tmp_dirs: /tmp/mysql
+  sql_root_user: root
+  sql_root_password: "Netvine123#@!"
+  socket: /run/mysqld/mysqld.sock
+  data_dir: /data/mysql
+
+soft:
+  origin_path: /opt/netvine/origin
+  watcher_path: /opt/watcher
+  device_path: /data/device

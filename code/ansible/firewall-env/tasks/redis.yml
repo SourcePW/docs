@@ -1,0 +1,9 @@
+- name: stop redis
+  service: 
+    name: redis 
+    state: stopped 
+  ignore_errors: true
+
+# 要注意权限问题. redis:redis  
+- name: cover redis conf
+  copy: src=redis/redis.conf dest=/etc/redis/redis.conf owner=redis group=redis

@@ -1,0 +1,41 @@
+# 自定义软件安装
+- name: rm origin file
+  shell: rm -fr "{{ soft.origin_path }}"
+
+- name: create dirs
+  file: 
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /opt/firewall         # 当前版本  
+    - /opt/origin/firewall   # 最初版本
+    - /data/logs/superv-engine
+    - /data/logs/superv-redis
+    - /data/logs/superv-server
+    - /data/logs/superv-web
+    - /data/logs/superv-watcher
+    - /data/logs/fw-engine
+    - /data/socket
+    - "{{ soft.origin_path }}"
+    - "{{ soft.watcher_path }}"
+    - "{{ soft.device_path }}"
+
+- name: unzip soft package 
+  unarchive:
+    src: soft/firewall_update.zip
+    dest: "{{ soft.origin_path }}"  
+    mode: 0755
+
+- name: create a link to /opt/firewall/ 
+  shell: |
+    rm -fr /opt/firewall
+    ln -s "{{ soft.origin_path }}/" /opt/firewall
+
+- name: 升级变成sidecar
+  unarchive:
+    src: soft/watcher-product-firewall.zip
+    dest: "{{ soft.watcher_path }}"  
+    mode: 0755
+
+- name: 拷贝device_info.conf 文件
+  copy: src=soft/device_info.conf dest="{{ soft.device_path }}" owner=root group=root

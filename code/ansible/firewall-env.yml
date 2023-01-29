@@ -1,0 +1,9 @@
+# 主要流程
+# code: language=ansible
+# 需要指定host: -e variable_host=server1
+- hosts: target
+  remote_user: root
+  
+  roles:
+    - firewall-env
+      

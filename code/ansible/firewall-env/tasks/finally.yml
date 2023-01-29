@@ -1,0 +1,25 @@
+- name: add 443 rule
+  ufw:
+    rule: allow
+    port: 443
+
+- name: add 22 rule
+  ufw:
+    rule: allow
+    port: 22
+
+- name: start ufw
+  service: 
+    name: ufw 
+    state: started
+  ignore_errors: true
+
+- name: enable ufw
+  ufw:
+    state: enabled
+    policy: allow
+
+# 最后操作
+- name: reboot system wait 5s
+  reboot:
+    post_reboot_delay: 5
