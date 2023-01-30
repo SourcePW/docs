@@ -19,6 +19,7 @@
     - "{{ soft.origin_path }}"
     - "{{ soft.watcher_path }}"
     - "{{ soft.device_path }}"
+    - /data/logs/fw-nft
 
 - name: unzip soft package 
   unarchive:
@@ -45,3 +46,32 @@
 
 - name: 拷贝device_info.conf 文件
   copy: src=soft/device_info.conf dest="{{ soft.device_path }}" owner=root group=root
+
+# 日志管理
+- name: change owner and mode
+  shell: |
+    chown root:syslog /data/logs/fw-nft
+    chmod g+w /data/logs/fw-nft
+    touch /data/logs/fw-nft/nft.log
+    chown syslog:adm /data/logs/fw-nft/nft.log
+    chmod 640 /data/logs/fw-nft/nft.log
+
+- name: config rsyslog
+  copy:
+    src=log/19-nft.conf dest=/etc/rsyslog.d/ owner=root group=root
+
+- name: config logrotate
+  copy:
+    src=log/nft dest=/etc/logrotate.d/ owner=root group=root
+
+- name: Ensure a job that runs every 5 minute. Create an entry like "*/5 * * * * /bin/bash /opt/firewall/ips/bin/logrotate-nft.sh"
+  ansible.builtin.cron:
+    name: "logrotate-nft"
+    minute: "*/5"
+    job: "/bin/bash /opt/firewall/ips/bin/logrotate-nft.sh >/dev/null 2>&1"
+
+- name: restart rsyslog and cron
+  service: name={{ item }} state=restarted
+  with_items:
+    - rsyslog
+    - cron

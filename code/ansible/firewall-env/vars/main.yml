@@ -16,3 +16,6 @@ soft:
   origin_path: /opt/netvine/origin
   watcher_path: /opt/watcher
   device_path: /data/device
+  # 直接下载最新版本
+  watcher_git_url: https://gitlab.inetvine.com/web/watcher-product/-/archive/firewall/watcher-product-firewall.tar.gz
+  soft_update_git_url: https://gitlab.inetvine.com/firewall-web/firewall-web-server/-/archive/develop/firewall-web-server-develop.tar.gz

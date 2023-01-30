@@ -1,3 +1,9 @@
+- name: remove current mysql 
+  shell: apt autoremove mysql-* -y
+
+- name: remove mysql data
+  shell: rm -fr /var/lib/mysql
+
 # get_url下载403，使用离线文件 
 # dpkg-deb -c mysql-apt-config_0.8.6-1_all.deb 
 # ./usr/share/doc/mysql-apt-config/
@@ -20,6 +26,11 @@
     - /etc/mysql/mysql.conf.d
     # - /data/mysql
 
+- name: check mysqld bin file
+  stat:
+    path: /usr/sbin/mysqld
+  register: mysqld_file
+
 - name: download mysql package
   shell: wget -O  /tmp/{{ mysql.mysql_package }} {{ mysql.mysql_package_url }}
 
@@ -34,11 +45,6 @@
   args:
     chdir: "{{ mysql.mysql_tmp_dirs }}"
 
-- name: check mysqld bin file
-  stat:
-    path: /usr/sbin/mysqld
-  register: mysqld_file
-
 - name: install mysql
   shell: dpkg -i mysql-*.deb 
   args:
@@ -49,7 +55,6 @@
 
 - name: timed wait 5s
   pause: seconds=5
-
 
 - name: cover mysql config file
   copy: src=mysql/mysqld.cnf dest=/etc/mysql/mysql.conf.d/mysqld.cnf
@@ -63,7 +68,7 @@
 #   shell: mv /var/lib/mysql "{{ mysql.data_dir }}"
 #   when: mysql_origin_path.stat.exists
 
-- name: enable and restart mysql 
+- name: enable and restart mysql
   service: 
     name: mysql 
     state: restarted

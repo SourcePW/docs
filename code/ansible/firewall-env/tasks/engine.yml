@@ -39,6 +39,13 @@
     - libreadline-dev
     - libncurses-dev
 
+- name: install debug env
+  apt: name={{ item }} state=present
+  with_items:
+    - linux-tools-common
+    - linux-tools-generic
+    - linux-cloud-tools-generic
+
 - name: copy deb
   copy: src=engine/ld_netvine_fw.conf dest=/etc/ld.so.conf.d/ owner=root group=root
 

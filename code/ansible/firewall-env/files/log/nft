@@ -1,0 +1,15 @@
+/data/logs/fw-nft/nft.log {
+        su root root
+        rotate 1
+        hourly
+        size 200M
+        missingok
+        notifempty
+        #compress
+        #delaycompress
+        sharedscripts
+        create 640 syslog adm
+        postrotate
+                invoke-rc.d rsyslog rotate >/dev/null 2>&1 || true
+        endscript
+}
