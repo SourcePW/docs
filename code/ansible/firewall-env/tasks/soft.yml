@@ -31,11 +31,17 @@
     rm -fr /opt/firewall
     ln -s "{{ soft.origin_path }}/" /opt/firewall
 
-- name: 升级变成sidecar
+- name: 删除之前边车程序
+  shell: rm -fr {{ soft.watcher_path }}
+
+- name: 拷贝sidecar升级包到/tmp
   unarchive:
     src: soft/watcher-product-firewall.zip
-    dest: "{{ soft.watcher_path }}"  
+    dest: /tmp
     mode: 0755
+
+- name: 升级sidecar到{{ soft.watcher_path }}
+  shell: mv /tmp/watcher-product-firewall {{ soft.watcher_path }}
 
 - name: 拷贝device_info.conf 文件
   copy: src=soft/device_info.conf dest="{{ soft.device_path }}" owner=root group=root
