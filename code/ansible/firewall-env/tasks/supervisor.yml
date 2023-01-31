@@ -22,6 +22,9 @@
     enabled: false
   ignore_errors: true
 
+- name: clean conf
+  shell: rm -fr /etc/supervisor/conf.d/*
+
 - name: copy supervisor conf
   copy: src=supervisor/ dest=/etc/supervisor/conf.d/ owner=root group=root
 

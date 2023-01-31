@@ -1,4 +1,10 @@
 # 防火墙操作
+- name: disable and stop ufw.service
+  service: 
+    name: ufw 
+    state: stopped
+    enabled: false
+
 # - name: add 443 rule
 #   ufw:
 #     rule: allow

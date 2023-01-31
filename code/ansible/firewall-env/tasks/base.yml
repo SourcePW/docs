@@ -9,6 +9,7 @@
 
 - name: apt update
   shell: apt update
+  ignore_errors: true
 
 - name: common env
   apt: name={{ item }} state=present

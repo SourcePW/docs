@@ -2,6 +2,9 @@
 - name: rm origin file
   shell: rm -fr "{{ soft.origin_path }}"
 
+- name: rm old logs
+  shell: rm -fr /data/logs
+
 - name: create dirs
   file: 
     path: "{{ item }}"
