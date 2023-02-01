@@ -10,7 +10,7 @@
     path: "{{ item }}"
     state: directory
   with_items:
-    - /opt/firewall         # 当前版本  
+    - /opt/firewall          # 当前版本  
     - /opt/origin/firewall   # 最初版本
     - /data/logs/superv-engine
     - /data/logs/superv-redis
@@ -19,16 +19,28 @@
     - /data/logs/superv-watcher
     - /data/logs/fw-engine
     - /data/socket
-    - "{{ soft.origin_path }}"
-    - "{{ soft.watcher_path }}"
     - "{{ soft.device_path }}"
+    - "{{ soft.origin_path }}"
     - /data/logs/fw-nft
 
-- name: unzip soft package 
-  unarchive:
-    src: soft/firewall_update.zip
-    dest: "{{ soft.origin_path }}"  
-    mode: 0755
+- name: copy key to device
+  copy: 
+    src: git/git_id_rsa 
+    dest: "{{ soft.git_key_file }}"
+    mode: '0400'
+    owner: root
+    group: root
+
+- name: soft git clone code
+  git:
+    accept_hostkey: yes
+    key_file: "{{ soft.git_key_file }}"
+    repo: "{{ soft.soft_git_repo }}"
+    dest: "{{ soft.soft_temp_path }}"
+    version: "{{ soft.soft_git_branch }}"
+
+- name: unzip soft package to dest
+  shell: unzip -d "{{ soft.origin_path }}" "{{ soft.soft_temp_path }}/{{ soft.soft_package_file }}"
 
 - name: create a link to /opt/firewall/ 
   shell: |
@@ -38,14 +50,24 @@
 - name: 删除之前边车程序
   shell: rm -fr {{ soft.watcher_path }}
 
-- name: 拷贝sidecar升级包到/tmp
-  unarchive:
-    src: soft/watcher-product-firewall.zip
-    dest: /tmp
-    mode: 0755
+- name: wathcer git clone code
+  git:
+    accept_hostkey: yes
+    key_file: "{{ soft.git_key_file }}"
+    repo: "{{ soft.watcher_git_repo }}"
+    dest: "{{ soft.watcher_path }}"
+    version: "{{ soft.watcher_git_branch }}"
 
-- name: 升级sidecar到{{ soft.watcher_path }}
-  shell: mv /tmp/watcher-product-firewall {{ soft.watcher_path }}
+- name: rm git dir
+  shell: |
+    rm -fr  "{{ soft.origin_path }}/.git*"
+    rm -fr  "{{ soft.watcher_path }}/.git*"
+
+- name: modify dir permission
+  shell: chmod +x "{{ soft.watcher_path }}/watcher"
+
+- name: delete key from device
+  shell: rm -fr "{{ soft.git_key_file }}"
 
 - name: 拷贝device_info.conf 文件
   copy: src=soft/device_info.conf dest="{{ soft.device_path }}" owner=root group=root
