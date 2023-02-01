@@ -11,6 +11,9 @@
   shell: apt update
   ignore_errors: true
 
+- name: remove old soft 
+  shell: apt autoremove redis -y
+
 - name: common env
   apt: name={{ item }} state=present
   with_items:  # apt-cache madison nginx 查看可用版本
