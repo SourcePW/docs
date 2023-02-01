@@ -10,8 +10,6 @@
     path: "{{ item }}"
     state: directory
   with_items:
-    - /opt/firewall          # 当前版本  
-    - /opt/origin/firewall   # 最初版本
     - /data/logs/superv-engine
     - /data/logs/superv-redis
     - /data/logs/superv-server
@@ -19,7 +17,7 @@
     - /data/logs/superv-watcher
     - /data/logs/fw-engine
     - /data/socket
-    - "{{ soft.device_path }}"
+    - "{{ soft.device_path }}"  # 最初版本
     - "{{ soft.origin_path }}"
     - /data/logs/fw-nft
 
@@ -42,10 +40,10 @@
 - name: unzip soft package to dest
   shell: unzip -d "{{ soft.origin_path }}" "{{ soft.soft_temp_path }}/{{ soft.soft_package_file }}"
 
-- name: create a link to /opt/firewall/ 
+- name: create a link to origin soft
   shell: |
-    rm -fr /opt/firewall
-    ln -s "{{ soft.origin_path }}/" /opt/firewall
+    rm -fr {{ soft.current_link_path }}
+    ln -s "{{ soft.origin_path }}/" {{ soft.current_link_path }}
 
 - name: 删除之前边车程序
   shell: rm -fr {{ soft.watcher_path }}

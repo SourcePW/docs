@@ -305,4 +305,4 @@ fatal: [server1]: FAILED! => {
 }
 ```
 
-## [Demo实例](../code/ansible/firewall-env.yml)  
+## [Demo实例](../code/ansible/main.yml)  

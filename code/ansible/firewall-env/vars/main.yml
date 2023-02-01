@@ -18,6 +18,7 @@ soft:
   git_key_file: /tmp/tmp_id_rsa 
   soft_temp_path: /tmp/soft_packages
   soft_package_file: firewall_update_v1.0.0_20230131-162153_md5d0bf93903c6a270ff9735104db2ed28a.zip
+  current_link_path: /opt/firewall
   origin_path: /opt/netvine/origin
   watcher_path: /opt/watcher
   device_path: /data/device
