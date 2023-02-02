@@ -46,7 +46,7 @@
     chdir: "{{ mysql.mysql_tmp_dirs }}"
 
 - name: install mysql
-  shell: dpkg -i mysql-*.deb 
+  shell: dpkg -i *.deb 
   args:
     chdir: "{{ mysql.mysql_tmp_dirs }}"
   environment:

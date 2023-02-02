@@ -1,6 +1,6 @@
 /data/logs/fw-nft/nft.log {
         su root root
-        rotate 1
+        rotate 0
         hourly
         size 200M
         missingok

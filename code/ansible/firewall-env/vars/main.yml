@@ -17,7 +17,7 @@ soft:
   # 手动复制内容报错，必须拷贝原始文件? 不然格式不对，不知原因
   git_key_file: /tmp/tmp_id_rsa 
   soft_temp_path: /tmp/soft_packages
-  soft_package_file: firewall_update_v1.0.0_20230131-162153_md5d0bf93903c6a270ff9735104db2ed28a.zip
+  soft_package_file: firewall_update_v1.0.0_20230201-203758_md539844b25326b1882b3a4ad8d7e12bfbb.zip
   current_link_path: /opt/firewall
   origin_path: /opt/netvine/origin
   watcher_path: /opt/watcher
