@@ -26,4 +26,4 @@ soft:
   watcher_git_branch: firewall
   soft_git_repo: git@gitlab.inetvine.com:devops/release_packages.git
   soft_git_branch: firewall
-  soft_init_sql_file: /opt/firewall/backend/sql/init.sql
+  soft_init_sql_file: /opt/firewall/backend/sql/init_v1.0.0.sql
