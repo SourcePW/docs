@@ -1,0 +1,34 @@
+- name: install debug env
+  apt: name={{ item }} state=present
+  with_items:
+    - linux-tools-common
+    - linux-tools-generic
+    - linux-cloud-tools-generic
+
+- name: install engine env
+  apt: name={{ item }} state=present
+  with_items:
+    - gcc
+    - pkg-config
+    - libpcre3
+    - libpcre3-dev
+    - libyaml-dev
+    - libjansson-dev
+    - libpcap-dev
+    - libcap-ng-dev
+    - libnspr4-dev
+    - libnss3-dev
+    - libmagic-dev
+    - liblz4-dev
+    - make
+    - zlib1g
+    - zlib1g-dev
+    - libnet1-dev
+    - libnetfilter-queue-dev
+    - libnetfilter-queue1
+    - libhyperscan-dev
+    - automake
+    - libreadline-dev
+    - libncurses-dev
+    - rustc
+    - cargo

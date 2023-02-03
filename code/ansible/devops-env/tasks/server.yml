@@ -1,0 +1,27 @@
+- name: rm go package 
+  shell:  rm -fr /tmp/{{ server.go_package_name }}
+
+- name: install server env
+  apt: name={{ item }} state=present
+  with_items:
+    - libnftables-dev=0.9.3-2
+
+- name: download go package 
+  shell:  wget -O  /tmp/{{ server.go_package_name }} {{ server.go_package_url }}
+
+- name: uncompress go tar 
+  shell: tar -zxvf "/tmp/{{ server.go_package_name }}" -C "{{ server.go_install_path }}"
+
+- name: update go to .profile
+  lineinfile:
+    path: ~/.profile
+    line: '{{ item }}'
+    create: yes
+  with_items:
+    - 'export GOPATH="$HOME/go"'
+    - 'export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"'
+    - 'export GOPROXY=https://goproxy.cn'
+
+- name: install swag
+  shell: /bin/bash -c "source ~/.profile && go install github.com/swaggo/swag/cmd/swag@latest"
+

@@ -50,7 +50,7 @@
   args:
     chdir: "{{ mysql.mysql_tmp_dirs }}"
   environment:
-        DEBIAN_FRONTEND: noninteractive
+    DEBIAN_FRONTEND: noninteractive
   when: mysqld_file.stat.exists == false
 
 - name: timed wait 5s
