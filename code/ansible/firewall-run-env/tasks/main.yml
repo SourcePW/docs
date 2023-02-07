@@ -1,0 +1,23 @@
+# 基础环境
+- import_tasks: base.yml
+
+# 自定义软件安装
+- import_tasks: soft.yml
+
+# 安装引擎运行环境
+- import_tasks: engine.yml
+
+# mysql 安装及配置
+- import_tasks: mysql.yml
+
+# nginx配置
+- import_tasks: nginx.yml
+
+# redis配置
+- import_tasks: redis.yml
+
+# supervisor配置
+- import_tasks: supervisor.yml
+
+# 最后的处理
+- import_tasks: finally.yml

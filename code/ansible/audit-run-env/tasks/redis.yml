@@ -1,0 +1,24 @@
+- name: download redis
+  shell: wget -O  /tmp/{{ redis.package_name }} {{ redis.package_url }}
+
+- name: Decompress
+  shell: |
+    mkdir {{ redis.temp_dirs }}
+    tar xvf /tmp/{{ redis.mysql_package }} -C {{ redis.temp_dirs }}
+
+- name: build redis
+  shell:  make && make install PREFIX=/usr/local/redis 
+  args:
+    chdir: "{{ redis.temp_dirs }}"
+
+- name: add redis cli
+  lineinfile:
+    path: ~/.bash_profile
+    line: '{{ item }}'
+    create: yes
+  with_items:
+    - 'export PATH="$PATH:/usr/local/redis/bin"'
+
+# 要注意权限问题. redis:redis  
+- name: cover redis conf
+  copy: src=redis/redis.conf dest=/etc/redis/redis.conf owner=redis group=redis

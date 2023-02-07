@@ -1,0 +1,25 @@
+- name: update epel
+  yum:
+    name: epel-release
+    state: present
+
+- name: update
+  shell: yum update -y
+
+- name: common env
+  yum: name={{ item }} state=present
+  with_items:  # apt-cache madison nginx 查看可用版本
+    - gdb
+    - unzip
+    - ntp
+    - net-tools
+
+# timedatectl 可以查看当前时区, 查看时间 Z=Asia/Shanghai date
+- name: Set timezone to Asia/Shanghai
+  timezone:
+    name: Asia/Shanghai
+  ignore_errors: true
+  
+- name: 同步时间 ntp.ntsc.ac.cn
+  shell: ntpdate -u ntp.ntsc.ac.cn
+  ignore_errors: true

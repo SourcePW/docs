@@ -1,3 +1,6 @@
+# 运行指令
+# ansible-playbook code/ansible/main.yml -i /etc/ansible/hosts -vv
+
 # 主要流程
 # code: language=ansible
 # 需要指定host: -e variable_host=server1
@@ -5,5 +8,5 @@
   remote_user: root
   
   roles:
-    - devops-env
+    - audit-run-env
       
