@@ -62,6 +62,7 @@
 - name: cover mysql debug config file
   copy: src=mysql/mysqld.cnf dest=/etc/my.cnf
 
+# 可以使用软连接，真实存储在目的目录  
 # - name: Check mysql origin data path exists
 #   stat:
 #     path: /var/lib/mysql

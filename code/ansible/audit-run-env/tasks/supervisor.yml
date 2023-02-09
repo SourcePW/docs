@@ -41,12 +41,12 @@
     state: restarted
     enabled: true
 
-- name: restart redis 
+- name: restart redis
   supervisorctl:
     name: superv-redis
     state: restarted
 
-- name: restart engine 
+- name: restart engine
   supervisorctl:
     name: superv-engine
     state: restarted
@@ -56,7 +56,7 @@
     name: superv-server
     state: restarted
 
-- name: restart nginx web 
+- name: restart nginx web
   supervisorctl:
     name: superv-web
     state: restarted

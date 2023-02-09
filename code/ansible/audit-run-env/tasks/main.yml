@@ -1,3 +1,6 @@
+# 硬件设备相关
+- import_tasks: device.yml
+
 # 基础环境
 - import_tasks: base.yml
 
