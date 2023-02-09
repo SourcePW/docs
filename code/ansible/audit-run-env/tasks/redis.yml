@@ -1,15 +1,25 @@
-- name: download redis
-  shell: wget -O  /tmp/{{ redis.package_name }} {{ redis.package_url }}
+- name: clean redis package
+  shell: rm -fr  /tmp/{{ redis.package_name }}.tar.gz {{ redis.temp_dirs }}
 
-- name: Decompress
+- name: create redis config dirs
+  file: 
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /etc/redis
+
+- name: download redis
+  shell: wget -O  /tmp/{{ redis.package_name }}.tar.gz {{ redis.package_url }}
+
+- name: Decompress nginx
   shell: |
     mkdir {{ redis.temp_dirs }}
-    tar xvf /tmp/{{ redis.mysql_package }} -C {{ redis.temp_dirs }}
+    tar xvf /tmp/{{ redis.package_name }}.tar.gz -C {{ redis.temp_dirs }}
 
 - name: build redis
   shell:  make && make install PREFIX=/usr/local/redis 
   args:
-    chdir: "{{ redis.temp_dirs }}"
+    chdir: "{{ redis.temp_dirs }}/{{ redis.package_name }}"
 
 - name: add redis cli
   lineinfile:
@@ -21,4 +31,4 @@
 
 # 要注意权限问题. redis:redis  
 - name: cover redis conf
-  copy: src=redis/redis.conf dest=/etc/redis/redis.conf owner=redis group=redis
+  copy: src=redis/redis.conf dest=/etc/redis/redis.conf owner=root group=root

@@ -34,7 +34,7 @@
 - name: download mysql package
   shell: wget -O  /tmp/{{ mysql.mysql_package }} {{ mysql.mysql_package_url }}
 
-- name: Decompress
+- name: Decompress mysql
   shell: |
     mkdir {{ mysql.mysql_tmp_dirs }}
     tar xvf /tmp/{{ mysql.mysql_package }} -C {{ mysql.mysql_tmp_dirs }}
@@ -60,7 +60,7 @@
   pause: seconds=5
 
 - name: cover mysql debug config file
-  copy: src=mysql/mysqld-debug.cnf dest=/etc/my.cnf
+  copy: src=mysql/mysqld.cnf dest=/etc/my.cnf
 
 # - name: Check mysql origin data path exists
 #   stat:
@@ -78,21 +78,15 @@
     enabled: yes
   ignore_errors: true
 
-- name: modify mysql password
-  shell: mysql -u{{ mysql.sql_root_user }} -e "update mysql.user set authentication_string=password('{{ mysql.sql_root_password }}') where user='root' and Host = 'localhost';"
+- name: get mysql temp password
+  shell: cat /var/log/mysqld.log | grep -i "A temporary password" | tail -n 1 | awk '{print $NF}'
+  register: mysql_temp_password
 
-- name: cover mysql config file
-  copy: src=mysql/mysqld.cnf dest=/etc/my.cnf
-
-- name: enable and restart mysql again
-  service: 
-    name: mysqld 
-    state: restarted
-    enabled: yes
-  ignore_errors: true
+- debug:
+    var: mysql_temp_password.stdout
 
 - name: modidy password again 
-  shell: mysql -u{{ mysql.sql_root_user }} -p{{ mysql.sql_root_password }} -e "update mysql.user set authentication_string=password('{{ mysql.sql_root_password }}') where user='root' and Host = 'localhost';"
+  shell: mysql --connect-expired-password -u{{ mysql.sql_root_user }} -p"{{ mysql_temp_password.stdout }}" -e "SET GLOBAL validate_password_policy = 0; SET GLOBAL validate_password_length=4; alter user 'root'@'localhost' identified by '{{ mysql.sql_root_password }}'; flush privileges;"
 
 - name: CreateMysqlDatabase
   mysql_db:
@@ -105,17 +99,6 @@
 
 # A MySQL module is required: for Python 2.7 either PyMySQL, or MySQL-python, or for Python 3.X mysqlclient or PyMySQL
 # select User,authentication_string,Host from mysql.user;   查看当前用户信息
-- name: update mysql root password for all root accounts
-  mysql_user: 
-    login_unix_socket: "{{ mysql.socket }}"
-    config_file: "{{ mysql.config_file }}"
-    login_user: "{{ mysql.sql_root_user }}" 
-    login_password: "{{ mysql.sql_root_password }}"
-    login_host: "localhost"
-    user: "{{ mysql.sql_root_user }}" 
-    password: "{{ mysql.sql_root_password }}"
-    state: present
-
 - name: add root remote user
   mysql_user: 
     login_unix_socket: "{{ mysql.socket }}"
@@ -145,3 +128,4 @@
     name: "{{ mysql.mysql_db_name }}"
     state: import
     target: "{{ soft.soft_init_sql_file }}"
+  ignore_errors: true

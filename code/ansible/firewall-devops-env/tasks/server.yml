@@ -25,3 +25,5 @@
 - name: install swag
   shell: /bin/bash -c "source ~/.profile && go install github.com/swaggo/swag/cmd/swag@latest"
 
+- name: swag link
+  shell: /bin/bash -c "ln -s /root/go/bin/swag /usr/bin/swag"

@@ -8,7 +8,7 @@ mysql:
   mysql_db_name: audit
   mysql_tmp_dirs: /tmp/mysql
   sql_root_user: root
-  sql_root_password: "Netvine123#@!"
+  sql_root_password: "root"
   socket: /var/lib/mysql/mysql.sock
   data_dir: /data/mysql
   config_file: /etc/my.cnf
@@ -27,11 +27,11 @@ soft:
   watcher_git_branch: audit
   soft_git_repo: git@gitlab.inetvine.com:devops/release_packages.git
   soft_git_branch: audit
-  soft_init_sql_file: /opt/audit/backend/sql/init.sql
+  soft_init_sql_file: /opt/audit/backend/sql/audit_ddl_v1.1.sql
 
 redis:
   package_url: https://download.redis.io/releases/redis-5.0.14.tar.gz?_gl=1*rokq71*_ga*MTYzNTcwMzY2NC4xNjc1Njc4OTAx*_ga_8BKGRQKRPV*MTY3NTY3ODkwMC4xLjEuMTY3NTY3OTY0MC4wLjAuMA..
-  package_name: redis-5.0.14.tar.gz
+  package_name: redis-5.0.14
   temp_dirs: /tmp/redis
   config_file: /etc/redis/redis.conf
 

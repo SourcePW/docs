@@ -13,6 +13,7 @@
     - /data/log/engines/dpi/
     - /data/configuration/southwest_engines
     - /usr/local/etc/southwest_engine/
+    - /usr/local/var/run/southwest_engine/
 
 - name: create file
   file: 
@@ -57,7 +58,6 @@
     - file-devel
     - libyaml-devel
     - sqlite-devel
-    # - awk
     - bison
     - flex
     - mawk
@@ -74,8 +74,18 @@
 - name: copy config to /data 
   unarchive:
     src: engine/config.zip
-    dest: /data/configuration/southwest_engines
+    dest: /data/configuration/
     mode: '0755'
+
+- name: common env
+  yum: name={{ item }} state=present
+  with_items:
+    - sysstat
+    - zip
+    - unzip 
+    - graphviz
+    - lm_sensors
+    - libzmf
 
 - name: copy threshold 
   copy:

@@ -13,6 +13,7 @@
     - unzip
     - ntp
     - net-tools
+    - tree
 
 # timedatectl 可以查看当前时区, 查看时间 Z=Asia/Shanghai date
 - name: Set timezone to Asia/Shanghai
