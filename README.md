@@ -24,6 +24,7 @@
   - ### [macos wifi共享网络给有线](notes/share-network.md)   
   - ### [vscode 插件开发](notes/vscode-plugin-dev.md)   
 - ## 个人
+  - ### [开发存档](notes/my.md)  
   - ### [刺激与回应的空间](notes/刺激与回应的空间.md) 
   - ### [五天学会绘画](notes/五天学会绘画.md)  
   - ### [健康普及ppt](resources/files/notes/南京市健康普及.pptx)  
@@ -32,5 +33,3 @@
   - ### [自媒体](av/We-Media.md)   
   - ### [Final Cut Pro使用](av/final-cut-pro-usge.md)  
   - ### [手机摄影](av/iphone-video.md)  
-
-
