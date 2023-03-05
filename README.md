@@ -24,6 +24,7 @@
   - ### [加解密](work/Encryption.md)
   - ### [macos wifi共享网络给有线](notes/share-network.md)   
   - ### [vscode 插件开发](notes/vscode-plugin-dev.md)   
+  - ### [安装指定版本的macos](notes/macos-install.md)   
 - ## 个人
   - ### [开发存档](notes/my.md)  
   - ### [刺激与回应的空间](notes/刺激与回应的空间.md) 

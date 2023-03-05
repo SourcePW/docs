@@ -32,7 +32,7 @@
 安装界面
 
 <div align=center>
-<img src="../resources/images/network/gns3-1.png" width="70%"></img>
+  <img src="../resources/images/network/gns3-1.png" width="70%"></img>
 </div>
 
 <div align=center>
