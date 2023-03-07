@@ -1,6 +1,407 @@
-- # 开发存档
+- # 个性化配置
 
-- [vscode/idea快捷键](#vscodeidea快捷键)
+## vscode
 
-## vscode/idea快捷键
-- vscode快捷键冲突时，需要删除其他快捷键  
+### vscode 插件管理器连接失败  
+
+具体错误:`XHR failed` 
+
+```
+sudo chown $USER ~/Library/Caches/com.microsoft.VSCode.ShipIt/
+```
+
+
+
+### setting.json
+
+```
+{
+    "workbench.colorTheme": "One Dark Pro Darker",
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "editor.fontSize": 14,
+    "window.zoomLevel": 0.5,
+    "redhat.telemetry.enabled": true,
+    "terminal.integrated.fontSize": 14,
+    "maven.terminal.useJavaHome": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "terminal.integrated.env.linux": {
+        "GRAALVM_HOME": ""
+    },
+    "netbeans.jdkhome": "",
+    "terminal.integrated.env.osx": {
+        "GRAALVM_HOME": ""
+    },
+    "extensions.ignoreRecommendations": true,
+    "cmake.configureOnOpen": false,
+    "go.toolsManagement.autoUpdate": true,
+    "workbench.editor.enablePreview": false,
+    "markdown.extension.toc.updateOnSave": false,
+    "git.ignoreLegacyWarning": true,
+    "explorer.confirmDragAndDrop": false,
+    "remote.SSH.connectTimeout": 30,
+    "debug.javascript.autoAttachFilter": "disabled",
+    "code-runner.fileDirectoryAsCwd": true,
+    "formatFiles.excludedFolders": [
+        "node_modules",
+        ".vscode",
+        ".git",
+        "dist",
+        ".chrome",
+        ".js",
+        "public"
+    ],
+    "[shellscript]": {
+        "editor.formatOnSave": true,
+        "files.eol": "\n"
+    },
+    "gitlens.advanced.messages": {
+        "suppressGitVersionWarning": true
+    },
+    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"/Users/ymm/.vscode/extensions/vscjava.vscode-lombok-1.0.1/server/lombok.jar\"",
+    "[markdown]": {
+        "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+    },
+    "sonarlint.rules": {
+        "python:S1542": {
+            "level": "off"
+        }
+    },
+    "editor.renderWhitespace": "all",
+    "hardhat.telemetry": false,
+    "netbeans.javaSupport.enabled": false,
+    "debug.onTaskErrors": "abort",
+    "ansible.validation.lint.enabled": false,
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "solidity.telemetry": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "C_Cpp.loggingLevel": "Debug",
+}
+```
+
+
+
+### 快捷键
+
+这的的快捷键不是自带的，而是idea导出并转为vscode格式的
+
+首先安装插件: `IntelliJ IDEA Keybindings`  
+
+#### Import keymaps XML
+
+1. Launch Code
+2. Open command pallet `Ctrl`-`Shift`-`P` (Windows) or `Cmd`-`Shift`-`P` (macOS)
+3. Choose `Import IntelliJ Keybindings (XML)`
+4. Copy & Paste it into `keybindings.json` 
+
+```sh
+```
+
+
+
+### 插件
+
+- Markdown All in One
+- Bash Debug
+- C/C++
+- GO
+- Hex Editor
+- One Dark Pro 
+- Python
+- SFTP
+- vue
+- XML
+- YAML
+- Remote SSH
+
+
+
+## 软件安装  
+
+### Homebrew
+
+```sh
+/bin/bash -c "$(curl -fsSL https://gitee.com/ineo6/homebrew-install/raw/master/install.sh)"
+```
+
+
+
+> 可以开启增强模式，科学上网!  
+
+
+
+### git  
+
+首先安装自动补全依赖
+
+```
+brew install bash-completion
+```
+
+
+
+> Add the following line to your ~/.bash_profile:
+>
+>  [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+
+
+
+查看安装状态
+
+```sh
+$ brew info bash-completion
+
+==> bash-completion: stable 1.3 (bottled)
+Programmable completion for Bash 3.2
+https://salsa.debian.org/debian/bash-completion
+Conflicts with:
+  bash-completion@2 (because each are different versions of the same formula)
+/usr/local/Cellar/bash-completion/1.3_3 (189 files, 608.3KB) *
+  Poured from bottle using the formulae.brew.sh API on 2023-03-06 at 16:53:11
+From: https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/bash-completion.rb
+==> Caveats
+Add the following line to your ~/.bash_profile:
+  [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+```
+
+
+
+删除之前预装的git
+
+```
+sudo rm -fr /usr/bin/git*
+Password:
+rm: git: Operation not permitted
+rm: git-receive-pack: Operation not permitted
+rm: git-shell: Operation not permitted
+rm: git-upload-archive: Operation not permitted
+rm: git-upload-pack: Operation not permitted
+```
+
+
+
+To delete a file in /usr/bin/, you need to disable SIP (System Integrity Protection) by following below steps:
+
+Turn off your Mac (Apple > Shut Down).
+Hold down Command-R and press the Power button. Keep holding Command-R until the Apple logo appears. Wait for OS X to boot into the OS X Utilities window.
+Choose Utilities > Terminal. Enter `csrutil disable`. Enter `reboot`.
+To enable SIP again, repeating the above steps (2 first steps), enter csrutil enable and reboot your Mac OS.
+
+
+
+查看状态
+
+```sh
+csrutil status
+System Integrity Protection status: disabled.
+```
+
+
+
+关闭`SIP`之后，仍然无法删除
+
+```sh
+sudo rm -fr git*
+Password:
+rm: git: Read-only file system
+rm: git-receive-pack: Read-only file system
+rm: git-shell: Read-only file system
+rm: git-upload-archive: Read-only file system
+rm: git-upload-pack: Read-only file system
+```
+
+
+
+
+
+安装git
+
+```sh
+brew install git
+```
+
+
+
+> if \[ -f ~/.git-completion.bash \]; then
+>
+>   . ~/.git-completion.bash
+>
+> fi
+
+
+
+git自动补全
+
+> 只要安装`OhMySh`后就可以自动补全了.  
+
+
+
+
+
+### OhMySh 
+
+https://ohmyz.sh/
+
+安装
+
+```sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+
+
+### 终端主题 
+
+先安装基础主题,比如现在使用的`OneHalfDark`主题  
+
+访问:  https://github.com/mbadolato/iTerm2-Color-Schemes/tree/master/terminal 然后通过终端导入主题， 并设置为默认   
+
+
+
+#### OhMySh主题
+
+主题目录为`~/.oh-my-zsh/themes`
+
+选择主题，通过修改文件`~/.zshrc`  
+
+```sh
+ZSH_THEME="robbyrussell"
+```
+
+
+
+> 另外有些主题，需要特殊字体的。  
+
+
+
+**终端vim支持复制**
+
+Mac自带的terminal也会有这个问题，在 **View > Allow Mouse Reporting** 去掉勾选即可
+
+
+
+内置的不是很好看，我替换为: https://github.com/romkatv/powerlevel10k  
+
+设置: `ZSH_THEME="powerlevel10k/powerlevel10k"`  ， `p10k configure` 配置详情  
+
+恢复默认配置: https://github.com/ohmyzsh/ohmyzsh/blob/master/templates/zshrc.zsh-template  
+
+
+
+### nvm
+
+```sh
+# 安装
+brew install nvm
+
+# You should create NVM's working directory if it doesn't exist:
+mkdir ~/.nvm
+
+# Add the following to your shell profile e.g. ~/.bash_profile or ~/.zshrc:
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+```
+
+
+
+### node/npm
+
+```sh
+# 查看发行版本
+nvm ls-remote 
+
+# 安装指定版本
+nvm install v12.22.12
+
+# 使用该版本
+nvm use v12.22.12
+```
+
+
+
+查看版本
+
+```sh
+nvm ls
+->    v12.22.12
+default -> v12.22.12
+iojs -> N/A (default)
+unstable -> N/A (default)
+node -> stable (-> v12.22.12) (default)
+stable -> 12.22 (-> v12.22.12) (default)
+lts/* -> lts/hydrogen (-> N/A)
+lts/argon -> v4.9.1 (-> N/A)
+lts/boron -> v6.17.1 (-> N/A)
+lts/carbon -> v8.17.0 (-> N/A)
+lts/dubnium -> v10.24.1 (-> N/A)
+lts/erbium -> v12.22.12
+lts/fermium -> v14.21.3 (-> N/A)
+lts/gallium -> v16.19.1 (-> N/A)
+lts/hydrogen -> v18.14.2 (-> N/A)
+```
+
+
+
+- #### npm 替换源
+
+  ```sh
+  npm config set registry http://registry.npm.taobao.org/
+  ```
+
+  
+
+### Idea
+
+官网下载升级包安装之后，需要安装插件
+
+- go
+- python
+- vue.js
+- Markdown
+
+
+
+另外需要导入idea配置及按键映射
+
+```sh
+```
+
+
+
+
+
+## Go
+
+https://go.dev/
+
+
+
+修改代理:
+
+```sh
+$ go env -w GO111MODULE=on
+$ go env -w GOPROXY=https://goproxy.cn,direct
+```
+
+
+
+### Java
+
+安装jdk8，下载安装包时，需要登录账号  
+
+### **BetterTouchTool**
+
+需要设置开机启动!  
+
+
+
+
