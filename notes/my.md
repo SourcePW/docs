@@ -1,5 +1,26 @@
 - # 个性化配置
 
+- [vscode](#vscode)
+  - [vscode 插件管理器连接失败](#vscode-插件管理器连接失败)
+  - [setting.json](#settingjson)
+  - [快捷键](#快捷键)
+    - [Import keymaps XML](#import-keymaps-xml)
+  - [插件](#插件)
+  - [主题](#主题)
+- [软件安装](#软件安装)
+  - [Homebrew](#homebrew)
+  - [git](#git)
+  - [OhMySh](#ohmysh)
+  - [终端主题](#终端主题)
+    - [OhMySh主题](#ohmysh主题)
+  - [nvm](#nvm)
+  - [node/npm](#nodenpm)
+  - [Idea](#idea)
+- [Go](#go)
+  - [Java](#java)
+  - [**BetterTouchTool**](#bettertouchtool)
+
+
 ## vscode
 
 ### vscode 插件管理器连接失败  
@@ -9,7 +30,6 @@
 ```
 sudo chown $USER ~/Library/Caches/com.microsoft.VSCode.ShipIt/
 ```
-
 
 
 ### setting.json
@@ -122,7 +142,10 @@ sudo chown $USER ~/Library/Caches/com.microsoft.VSCode.ShipIt/
 - YAML
 - Remote SSH
 
+### 主题
 
+使用 `One Dark Pro`  
+idea的相同主题地址:  https://plugins.jetbrains.com/plugin/11938-one-dark-theme/versions/stable  
 
 ## 软件安装  
 
