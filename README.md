@@ -19,6 +19,7 @@
   - ### [Ubuntu基础环境搭建](DevOps/ubuntu-base.md) 
   - ### [Ansible自动化部署](DevOps/ansible.md) 
   - ### [linux 软件安装流程](DevOps/linux-install.md) 
+  - ### [git常用操作](DevOps/git.md) 
 - ## 工具
   - ### [jni](work/jni.md)  
   - ### [加解密](work/Encryption.md)
