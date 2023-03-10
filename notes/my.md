@@ -147,6 +147,36 @@ sudo chown $USER ~/Library/Caches/com.microsoft.VSCode.ShipIt/
 使用 `One Dark Pro`  
 idea的相同主题地址:  https://plugins.jetbrains.com/plugin/11938-one-dark-theme/versions/stable  
 
+#### ubuntu bash 主题
+
+https://github.com/Bash-it/bash-it  
+
+```sh
+git clone --depth=1 https://github.com/Bash-it/bash-it.git
+
+cd bash-it/ && ./install.sh
+```
+
+输出
+```sh
+Profile 'default' enabled!
+
+Installation finished successfully! Enjoy bash-it!
+To start using it, open a new tab or 'source ~/.bashrc'.
+```
+
+修改主题:
+```sh
+sudo vim ~/.bashrc
+
+# # location /.bash_it/themes/
+# powerline-plain    oh-my-posh
+export BASH_IT_THEME='powerline-plain'
+```
+
+> 主题列表 https://bash-it.readthedocs.io/en/latest/themes-list/  
+
+
 ## 软件安装  
 
 ### Homebrew

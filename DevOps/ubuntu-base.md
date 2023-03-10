@@ -104,7 +104,7 @@ wget https://go.dev/dl/go1.18.9.linux-amd64.tar.gz
 tar -zxvf go1.18.9.linux-amd64.tar.gz -C /usr/local/
 
 # 添加到环境变量
-vim vim ~/.bashrc 
+vim ~/.bashrc 
 PATH=$PATH:/usr/local/go/bin
 
 source ~/.bashrc 
