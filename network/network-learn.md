@@ -74,13 +74,10 @@ total 1953656
 ### 添加模版  
 
 <div align=center>
-<img src="../resources/images/network/gns3-6.png" width="90%"></img>
+<img src="../resources/images/network/gns3-66.png" width="90%"></img>
 </div>
 
-
-<div align=center>
-<img src="../resources/images/network/gns3-7.png" width="90%"></img>
-</div>
+> 选择`update from online registry`
 
 
 ## demo学习  
