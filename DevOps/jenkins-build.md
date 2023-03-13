@@ -1,4 +1,29 @@
-# jenkins构建
+- # jenkins构建
+
+- [增加节点](#增加节点)
+  - [认证方式](#认证方式)
+  - [安装JDK8](#安装jdk8)
+- [开发调试](#开发调试)
+  - [vscode shell脚本](#vscode-shell脚本)
+  - [vscode sftp](#vscode-sftp)
+  - [指令提示补全](#指令提示补全)
+  - [升级git](#升级git)
+  - [shell脚本之间引用](#shell脚本之间引用)
+  - [npm安装](#npm安装)
+- [jenkins任务构建](#jenkins任务构建)
+  - [参数](#参数)
+  - [gitlab-token](#gitlab-token)
+  - [通过脚本获取数据作为参数](#通过脚本获取数据作为参数)
+  - [工作空间及编译结果](#工作空间及编译结果)
+  - [远程访问](#远程访问)
+- [pipeline使用及调试](#pipeline使用及调试)
+  - [环境搭建](#环境搭建)
+  - [vscode jenkins pipeline debug](#vscode-jenkins-pipeline-debug)
+  - [jenkins jack(微软)](#jenkins-jack微软)
+- [bash](#bash)
+  - [引用脚本](#引用脚本)
+
+
 ## 增加节点
 ### 认证方式
 - Launch agents via SSH 使用ssh协议，从master向slave发起连接，由master主动发起请求
@@ -180,6 +205,13 @@ node –version  # node v12.22.12 , npm 6.14.16
 <img src="../resources/images/jenkins-gitlab-token.png" width="70%"></img>
 </div>
 
+使用凭据
+git 插件支持Jenkins 凭证插件提供的`用户名/密码凭证`和`私钥凭证`。它不支持其他凭证类型，如秘密文本、秘密文件或证书。  
+
+当使用HTTP 或 HTTPS 协议访问远程存储库时，插件需要用户名/密码凭据。其他凭证类型不适用于 HTTP 或 HTTPS 协议。  
+
+当使用ssh 协议访问远程存储库时，插件需要`ssh 私钥凭证`。其他凭证类型不适用于 ssh 协议。  
+
 ### 通过脚本获取数据作为参数
 目前的需求是通过jenkins界面选择升级包的路径，升级包路径在服务器，需要通过指令列举指定路径下所有文件夹
 
@@ -189,6 +221,10 @@ node –version  # node v12.22.12 , npm 6.14.16
 <div align=center>
 <img src="../resources/images/jenkins-workspace.png" width="60%"></img>
 </div>
+
+> jenkins执行结果，需要依赖脚本返回值，只要返回值为非0就是失败的。  
+
+
 
 ### 远程访问  
 Jobs with parameters
@@ -207,6 +243,93 @@ curl JENKINS_URL/job/JOB_NAME/buildWithParameters \
   --user USER:PASSWORD \
   --form FILE_LOCATION_AS_SET_IN_JENKINS=@PATH_TO_FILE
 ```
+
+## pipeline使用及调试
+
+### 环境搭建
+
+[jenkins安装官方文档](https://www.jenkins.io/zh/doc/book/installing/) 
+
+```sh
+# 本地创建jenkins目录
+# 备份数据 docker cp $ID:/var/jenkins_home, 如果想使用本地数据:  -v jenkins:/var/jenkins_home
+docker run -p 8080:8080 -p 50000:50000 --name jenkins -itd jenkinsci/blueocean 
+```
+
+访问网址``
+查看密码
+```sh
+docker exec -it jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+a21fab6d39014246803f2a81ef446bf4
+```
+
+安装插件后重启即可。  
+
+
+### vscode jenkins pipeline debug
+
+- 安装groovy插件 `code-groovy`  
+- `Jenkinsfile Support`  
+- `Jenkins Pipeline Linter Connector`  
+
+获取jenkins 用户和密码  
+打开jenkins server -> 个人中心 -> 设置 -> API token
+拿到user id 和 api token  
+```sh
+vscode 116f25bd335afcbaf7e183890fa4c37634
+```
+
+配置`linter`插件的参数，连接`jenkins`的server 做校验
+command + ',' 打开 settings 搜索 jenkins 插件配置
+配置以下几部分内容
+```sh
+user = root
+token = 116f25bd335afcbaf7e183890fa4c37634
+url =  http://localhost:8080/pipeline-model-converter/validate
+```
+
+<div align=center>
+<img src="../resources/images/devops/jenkins-pipeline-1.png" width="90%"></img>
+</div>
+
+编写groovy
+- pipeline文件名称选择 .groovy结尾
+- 在文件首行声明 groovy解释器 #!groovy  
+
+```groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+    }
+}
+```
+
+### jenkins jack(微软)  
+
+可以在vscode的中管理jenkins，比如创建流水线，运行及调试等。  
+另外文件是保存到本地的，会上传到jenkins中，另外也可以下载jenkins任务的脚本，保存到本地，还是挺方便的。  
+
+<div align=center>
+<img src="../resources/images/devops/jenkins-pipeline-2.png" width="100%"></img>
+</div>
+
+> 脚本运行错误，需要允许。系统管理—>In-process Script Approval
 
 ## bash 
 ### 引用脚本
