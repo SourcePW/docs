@@ -176,6 +176,47 @@ export BASH_IT_THEME='powerline-plain'
 
 > 主题列表 https://bash-it.readthedocs.io/en/latest/themes-list/  
 
+### 快捷键  
+
+很多情况下会遇到快捷键冲突，如何解决呢？ 比如我使用`Markdown`的插件为`yzhang.markdown-all-in-one`, 文件关联选项:  
+
+可以查看用户设置`settings.json`, 通过`code`->`Preferences`->`Profiles`->`Show Centents`查看，另外可以通过快捷栏搜索，查看，有关markdown的配置如下:  
+
+```json
+{
+      "markdown.extension.toc.updateOnSave": false,
+      "[markdown]": {
+        "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+      },
+}
+```
+
+这说明编辑markdown是，默认编辑器是`yzhang.markdown-all-in-one`, 但是目前加粗`ctrl+B`，和右键中的`Go to Renferences`冲突, 那我们先查看快捷键`Keyboard Shortcuts`
+
+<div align=center>
+  <img src="./../resources/images/notes/vscode-key-1.png" width="90%" ></img>
+</div>
+
+> Intellij IDEA的快捷键是全局的，没有限制  
+
+我还是使用vscode(macos)的快捷键吧，把idea的快捷键也替换成vscode的，这样markdown的也能用。  
+
+- 注释：`cmd+/` 
+- 移动行：`cmd+up/down`  
+- 复制当前行：`shift + alt +up/down`  
+- 删除当前行：`shift + cmd + k`  
+- 控制台终端显示与隐藏：`ctrl + j` 
+- 查找文件/安装vs code 插件地址：`cmd + p` 
+- 导航栏: `shift + cmd + p`  
+- 代码格式化：`shift + alt +f` 
+- 新打开一个窗口 `shift + cmd + n`  
+- 切换同一的不同tab页 : `cmd + 1/2/3`
+- 切换窗口: `cmd + 1/2/3`, 临时打开窗口使用，很好用  
+- 全局查找文件：`cmd + shift + f`  
+- - 全局替换：`ctrl + shift + h`
+- 删除行 ： `cmd + shift + k`, 可以使用`cmd + del` 
+- 格式化选定代码 ：`shift + alt + f`
+- 打开最近打开的文件：`ctrl + r` 
 
 ## 软件安装  
 
