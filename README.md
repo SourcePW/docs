@@ -15,6 +15,7 @@
   - ### [搭建自动化测试:jenkins+python+allure](DevOps/auto-test.md) 
   - ### [漏扫结果修改](DevOps/holes.md) 
   - ### [docker安装及使用](DevOps/docker.md) 
+  - ### [portainer=>docker/Kubernetes管理](DevOps/portainer.md) 
   - ### [linux软件安装流程](DevOps/linux-install.md) 
   - ### [Ubuntu基础环境搭建](DevOps/ubuntu-base.md) 
   - ### [Ansible自动化部署](DevOps/ansible.md) 
