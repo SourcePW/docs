@@ -98,7 +98,7 @@ RUN apt-get install -y net-tools bash-completion
 RUN apt-get install -y iputils-ping
 RUN apt-get install -y tree
 RUN apt-get install -y bridge-utils
-RUN apt-get install -y vim
+RUN apt-get install -y vim git wget curl
 
 RUN mkdir -p /var/run/sshd
 RUN mkdir -p /root/.ssh/
@@ -154,7 +154,7 @@ tmp
 FROM centos:centos7.9.2009
 
 RUN yum install -y openssh openssh-server openssh-clients
-RUN yum install -y vim python python3 tree net-tools bash-completion
+RUN yum install -y vim python python3 tree net-tools bash-completion git wget curl
 RUN mkdir -p /var/run/sshd
 RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key
 RUN ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key
