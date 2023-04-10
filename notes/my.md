@@ -217,6 +217,7 @@ export BASH_IT_THEME='powerline-plain'
 - 删除行 ： `cmd + shift + k`, 可以使用`cmd + del` 
 - 格式化选定代码 ：`shift + alt + f`
 - 打开最近打开的文件：`ctrl + r` 
+- 后退(返回上一处光标)：`ctrl+-` 前进(返回下一处光标)：`ctrl+shift+-`  
 
 ## 软件安装  
 
