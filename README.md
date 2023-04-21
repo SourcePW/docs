@@ -8,6 +8,7 @@
   - ### [Network Namespace](network/namespace.md)  
 - ## DevOps
   - ### [linux系统备份及还原](DevOps/linux-backup-restore.md)  
+  - ### [Ubuntu 系统自动安装及部署](DevOps/ubuntu-auto.md)  
   - ### [jenkins构建与pipeline调试](DevOps/jenkins-build.md) 
   - ### [bash learn](DevOps/bash-learn.md) 
   - ### [minicom](DevOps/minicom.md) 
