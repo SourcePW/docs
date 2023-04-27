@@ -268,9 +268,13 @@ a21fab6d39014246803f2a81ef446bf4
 
 ### vscode jenkins pipeline debug
 
+> Pipeline是Jenkins2.X的最核心的特性，帮助Jenkins实现从CI到CD与DevOps的转变。Pipeline是一组插件，让Jenkins可以实现持续交付管道的落地和实施。  
 - 安装groovy插件 `code-groovy`  
 - `Jenkinsfile Support`  
 - `Jenkins Pipeline Linter Connector`  
+
+
+- ### https://github.com/jenkinsci/pipeline-examples  
 
 获取jenkins 用户和密码  
 打开jenkins server -> 个人中心 -> 设置 -> API token
@@ -291,6 +295,8 @@ url =  http://localhost:8080/pipeline-model-converter/validate
 <div align=center>
 <img src="../resources/images/devops/jenkins-pipeline-1.png" width="90%"></img>
 </div>
+
+在Jenkins JACK中打开脚本，编写完后，直接运行  
 
 编写groovy
 - pipeline文件名称选择 .groovy结尾
