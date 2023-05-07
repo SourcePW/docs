@@ -35,6 +35,4 @@
   - ### [健康普及ppt](resources/files/notes/南京市健康普及.pptx)  
 - ## 音视频处理
   记录美好生活! 生活不止眼前的苟且，还有诗和远方！
-  - ### [自媒体](av/We-Media.md)   
-  - ### [Final Cut Pro使用](av/final-cut-pro-usge.md)  
-  - ### [手机摄影](av/iphone-video.md)  
+  - ### [photoshop](av/photoshop.md)   
