@@ -1,0 +1,10 @@
+{
+    "name": "ansible-deploy",
+    "params": {
+        "device_ip": "",
+        "user": "root",
+        "passwd": "",
+        "start": "",
+        "branch": "firewall_deploy"
+    }
+}
