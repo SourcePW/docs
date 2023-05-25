@@ -12,7 +12,7 @@
     - [GNS3交换机模拟](#gns3交换机模拟)
     - [使用三层交换机IOU](#使用三层交换机iou)
     - [使用交换机模拟路由器](#使用交换机模拟路由器)
-  - [路由器](#路由器)
+  - [路由器](#路由器) v≥
   - [常用指令](#常用指令)
     - [模式](#模式)
     - [修改主机名](#修改主机名)
@@ -1014,6 +1014,259 @@ PC6> ping 10.25.12.2
 84 bytes from 10.25.12.2 icmp_seq=3 ttl=62 time=30.493 ms
 ```
 
+### linux vlan  
+
+> 在配置里面的添加节点插槽里面选择`NM-16ESW`, 这类型的接口才会有交换机功能  
+首先测试一下vlan中继是否可以使用，使用两台pc和两台交换机测试  
+PC1
+```sh
+ip 192.168.1.2 24 192.168.1.1
+```
+
+PC2
+```sh
+ip 192.168.1.3 24 192.168.1.1
+```
+
+执行: `ping 192.168.1.3`  
+
+
+ESW1/ESW2不用配置，可以看到mac地址表
+```sh
+# 查看接口状态 
+show ip int bri 
+show mac-address-table
+show arp
+
+# fe80::250:79ff:fe66:6800 PC1
+# fe80::250:79ff:fe66:6801 PC2
+
+ESW1#show mac-address-table
+Destination Address  Address Type  VLAN  Destination Port
+-------------------  ------------  ----  --------------------
+c401.06d0.0000		Self	      1	    Vlan1	
+0050.7966.6800		Dynamic	      1	    FastEthernet1/1	
+0050.7966.6801		Dynamic	      1	    FastEthernet1/0
+
+ESW2#show mac-address-table
+Destination Address  Address Type  VLAN  Destination Port
+-------------------  ------------  ----  --------------------
+c402.0796.0000		Self	      1	    Vlan1	
+0050.7966.6800		Dynamic	      1	    FastEthernet1/0	
+0050.7966.6801		Dynamic	      1	    FastEthernet1/1
+```
+
+<div align=center>
+<img src="../resources/images/network/gns3-11.png" width="100%"></img>
+</div>
+
+
+如果需要设置vlan和模式  
+- access 直连终端，只能加入一个vlan当中  
+- trunk 需要承载更多vlan信息时，需要使用trunk模式。会给包打上vlan标签  
+
+然后在增加一台ubuntu虚拟机和PC3，首先使用access模式  
+PC3
+```sh
+ip 192.168.1.4 24 192.168.1.1
+```
+
+Ubuntu20-1
+```sh
+# 安装
+apt install bridge-utils
+
+brctl addbr vlan1
+brctl addif vlan1 ens38
+brctl addif vlan1 ens39
+
+ip link set dev ens38 up
+ip link set dev ens39 up
+ip link set vlan1 up
+
+# 删除网桥
+ip link set vlan1 down
+brctl delbr vlan1
+```
+
+-----
+
+接下来使用vlan实现
+```sh
+apt install vlan
+modprobe 8021q
+lsmod |grep -i 8021q
+
+# 增加vlan
+vconfig add ens38 100
+vconfig add ens39 100
+
+vconfig rem ens38.100
+vconfig rem ens39.100
+```
+
+> vconfig 已经过时，设置后也不生效，之前使用iproute2结果一样  
+
+最终使用ovs 
+
+<div align=center>
+<img src="../resources/images/network/gns3-12.png" width="100%"></img>
+</div>
+
+```sh
+# 环境安装
+apt install openvswitch-switch
+
+# 创建一个switch
+ovs-vsctl add-br vswitch0
+
+# 增加port
+ovs-vsctl add-port vswitch0 ens38
+ovs-vsctl add-port vswitch0 ens39
+
+# 增加网卡并设置vlan， Database commands 
+# tag=100 不能等于所在的 vlan，不然会剥离vlan信息  
+ovs-vsctl set port ens38 VLAN_mode=access tag=100
+ovs-vsctl set port ens39 VLAN_mode=access tag=100
+
+# 查看流量
+ovs-ofctl dump-flows vswitch0
+
+# 查看ovs状态  
+ovs-vsctl show
+```
+
+查看access模式状态
+```sh
+root@matrix:~# ovs-vsctl show
+00f3380e-c6a6-4353-88ea-fbc2ae2f3c9e
+    Bridge vswitch0
+        Port ens38
+            tag: 100
+            Interface ens38
+        Port ens39
+            tag: 101
+            Interface ens39
+        Port vswitch0
+            Interface vswitch0
+                type: internal
+    ovs_version: "2.13.8"
+```
+
+trunk模式
+```sh
+# trunk=0,1,11 vlan_mode=native-tagged
+ovs-vsctl set port ens38 VLAN_mode=trunk trunk=100
+
+# ovs-vsctl set port ens38 VLAN_mode=native-untagged trunk=100
+```
+
+ESW2 设置f1/2为truck模式  
+```sh
+ESW2#vlan data
+ESW2(vlan)#vlan 100 name vlan-test-100
+VLAN 100 added:
+    Name: vlan-test-100
+ESW2(vlan)#exit
+APPLY completed.
+Exiting....
+ESW2#show vlan-switch 
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa1/0, Fa1/1, Fa1/2, Fa1/3
+                                                Fa1/4, Fa1/5, Fa1/6, Fa1/7
+                                                Fa1/8, Fa1/9, Fa1/10, Fa1/11
+                                                Fa1/12, Fa1/13, Fa1/14, Fa1/15
+100  vlan-test-100                    active    
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+
+VLAN Type  SAID       MTU   Parent RingNo BridgeNo Stp  BrdgMode Trans1 Trans2
+---- ----- ---------- ----- ------ ------ -------- ---- -------- ------ ------
+1    enet  100001     1500  -      -      -        -    -        1002   1003
+100  enet  100100     1500  -      -      -        -    -        0      0   
+1002 fddi  101002     1500  -      -      -        -    -        1      1003
+1003 tr    101003     1500  1005   0      -        -    srb      1      1002
+1004 fdnet 101004     1500  -      -      1        ibm  -        0      0   
+1005 trnet 101005     1500  -      -      1        ibm  -        0      0   
+ESW2#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+ESW2(config)#interface f1/0
+ESW2(config-if)#switchport mode access
+ESW2(config-if)#switchport access vlan 100
+ESW2(config-if)#exit
+ESW2(config)#interface f1/1
+ESW2(config-if)#switchport mode access
+ESW2(config-if)#switchport access vlan 100
+ESW2(config-if)#exit
+ESW2(config)#interface f1/2
+ESW2(config-if)#switchport mode trunk
+ESW2(config-if)#switchport trunk allowed vlan 100 
+Command rejected: Bad VLAN allowed list. You have to include all default vlans, e.g. 1-2,1002-1005.  # 需要包含所有vlan  
+ESW2(config-if)#witchport trunk allowed vlan 1-1006   # 可以是多个和范围10,20,30, 55-60  追加: add 70
+ESW2(config-if)#do show vlan-switch
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa1/3, Fa1/4, Fa1/5, Fa1/6
+                                                Fa1/7, Fa1/8, Fa1/9, Fa1/10
+                                                Fa1/11, Fa1/12, Fa1/13, Fa1/14
+                                                Fa1/15
+100  vlan-test-100                    active    Fa1/0, Fa1/1
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+
+VLAN Type  SAID       MTU   Parent RingNo BridgeNo Stp  BrdgMode Trans1 Trans2
+---- ----- ---------- ----- ------ ------ -------- ---- -------- ------ ------
+1    enet  100001     1500  -      -      -        -    -        1002   1003
+100  enet  100100     1500  -      -      -        -    -        0      0   
+1002 fddi  101002     1500  -      -      -        -    -        1      1003
+1003 tr    101003     1500  1005   0      -        -    srb      1      1002
+1004 fdnet 101004     1500  -      -      1        ibm  -        0      0   
+1005 trnet 101005     1500  -      -      1        ibm  -        0      0  
+```
+
+使用`192.168.1.2`ping`192.168.1.2`  
+可以查看到vlan信息:
+```sh
+Frame 15: 102 bytes on wire (816 bits), 102 bytes captured (816 bits) on interface -, id 0
+Ethernet II, Src: Private_66:68:02 (00:50:79:66:68:02), Dst: Private_66:68:00 (00:50:79:66:68:00)
+802.1Q Virtual LAN, PRI: 0, DEI: 0, ID: 100
+    000. .... .... .... = Priority: Best Effort (default) (0)
+    ...0 .... .... .... = DEI: Ineligible
+    .... 0000 0110 0100 = ID: 100
+    Type: IPv4 (0x0800)
+Internet Protocol Version 4, Src: 192.168.1.4, Dst: 192.168.1.2
+Internet Control Message Protocol
+```
+
+> IEEE 802.1Q（也被称为Dot1q）即Virtual Bridged Local Area Networks协议，规定了VLAN的实现标准。与标准的以太网数据帧相比，VLAN数据帧增加了1个4字节的VLAN标签。  
+
+
+PC4
+```sh
+ip 192.168.1.5 24 192.168.1.1
+```
+
+PC4
+```sh
+ovs-vsctl set port ens38 VLAN_mode=native-untagged tag=101-110
+ovs-vsctl: 101-110: 10 value(s) specified but the maximum number is 1
+ovs-vsctl set port ens38 VLAN_mode=native-untagged trunk=100
+```
+
+> native untagged模式：  
+> - 收：  
+>        报文带vlan，vlan必须在trunk vlan指定的范围或者trunk vlan为空(不用考虑报文携带的>vlan)  
+>        报文不带vlan，接收，并携带端口的native vlan进行后续转发  
+> - 发：  
+>      发出去的报文，如果报文本来带vlan，则携带原始vlan。如果报文不带vlan，则报文也不带vlan  
+
 ## 设备操作
 ### 华为交换机操作界面
 [华为官方文档](https://support.huawei.com/hedex/hdx.do?docid=EDOC1100276020&lang=zh&idPath=24030814%7C21782164%7C21782167%7C22318634%7C6635912)  
@@ -1033,8 +1286,6 @@ PC6> ping 10.25.12.2
 <div align=center>
 <img src="../resources/images/network/交换机管理界面-3.png" width="100%"></img>
 </div>
-
-
 
 
 ## 思科指令汇总

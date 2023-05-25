@@ -471,10 +471,55 @@ lts/hydrogen -> v18.14.2 (-> N/A)
 ```
 
 
+### python 
+
+macospython版本管理`pyenv`:
+```sh
+# 查看版本
+pyenv versions                                                                                                       ✔  at 11:05:43  
+  system
+  3.6.15
+  3.7.16
+* 3.8.16 (set by /Users/ymm/.pyenv/version)
+
+# 可用版本
+pyenv install --list
+
+# 安装版本
+pyenv install/uninstall 3.6.15
+
+# 对所有的Shell全局有效，会把版本号写入到~/.pyenv/version文件中
+pyenv global 3.6.3
+
+# 只对当前目录有效，会在当前目录创建.python-version文件
+pyenv local 3.6.3
+
+# 只在当前会话有效
+pyenv shell 3.6.3
+
+# 可通过配置PYENV_VERSION环境变量或编辑~/.python-version文件设置会话默认使用的python版本
+echo "3.6.3" > ~/.python-version
+# or
+echo 'export PYENV_VERSION="3.6.3"' >> ~/.zshrc && source ~/.zshrc
+```
+
+ubuntu管理python版本:  
+```sh
+update-alternatives --list python
+
+# 设置优先级
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1 
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.5 2
+
+# 选择版本
+sudo update-alternatives --config python
+
+# 查看版本
+python --version
+```
 
 
-
-## Go
+### Go
 
 https://go.dev/
 
