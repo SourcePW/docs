@@ -306,3 +306,26 @@ fatal: [server1]: FAILED! => {
 ```
 
 ## [Demo实例](../code/ansible/main.yml)  
+
+# 常用操作
+## 安装组件
+
+```sh
+ERROR! couldn't resolve module/action 'mysql_db'. This often indicates a misspelling, missing collection, or incorrect module path.
+
+ERROR! couldn't resolve module/action 'timezone'
+```
+
+```sh
+# mysql
+ansible-galaxy collection install community.mysql
+
+# 安装常用模块
+ansible-galaxy collection install rjlasko.ansible
+```
+
+## ssh配置
+`/etc/ssh/ssh_config`
+```sh
+   StrictHostKeyChecking no
+```
