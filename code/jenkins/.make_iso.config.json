@@ -1,0 +1,8 @@
+{
+    "name": "make_iso",
+    "params": {
+        "device_ip": "10.25.10.255",
+        "user": "root",
+        "passwd": ""
+    }
+}

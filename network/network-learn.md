@@ -1131,12 +1131,22 @@ ovs-vsctl add-port vswitch0 ens39
 ovs-vsctl set port ens38 VLAN_mode=access tag=100
 ovs-vsctl set port ens39 VLAN_mode=access tag=100
 
+# up
+ifconfig ens38 up
+ifconfig ens39 up
+
+# 删除
+ovs-vsctl del-br vswitch0
+
 # 查看流量
 ovs-ofctl dump-flows vswitch0
+ cookie=0x0, duration=34.099s, table=0, n_packets=10, n_bytes=912, priority=0 actions=NORMAL
 
 # 查看ovs状态  
 ovs-vsctl show
 ```
+
+> 如果不通，可以重启设置重试一下  
 
 查看access模式状态
 ```sh
@@ -1154,6 +1164,64 @@ root@matrix:~# ovs-vsctl show
                 type: internal
     ovs_version: "2.13.8"
 ```
+
+现在pc1就可以ping通pc3了。接下来设置nftables规则  
+```sh
+# 安装
+apt install nftables
+
+# ingress点测试
+table netdev test-dev-table {
+  chain base-rule-chain {
+		type filter hook ingress device "ens38" priority filter; policy drop;
+		log prefix "test nft" accept
+	}
+}
+
+# 监听日志
+tail -f /var/log/kern.log
+Jun  6 08:24:14 matrix kernel: [ 2165.874443] test nftIN=ens38 OUT= ARP HTYPE=1 PTYPE=0x0800 OPCODE=1 MACSRC=00:50:79:66:68:00 IPSRC=192.168.1.2 MACDST=ff:ff:ff:ff:ff:ff IPDST=192.168.1.4  
+
+# 设置规则 test.rule
+table ip test-table {
+  chain base-rule-chain {
+		type filter hook forward priority filter; policy drop;
+		log prefix "test nft" accept
+	}
+}
+
+nft -f test.rule
+
+# 查看规则
+nft list ruleset
+```
+
+查看日志
+```sh
+tail -f /var/log/kern.log
+```
+
+发现没有日志，那就使用linux网桥实现通明模式看看  
+```sh
+# 删除
+ovs-vsctl del-br vswitch0
+
+# 
+modprobe br_netfilter
+lsmod | grep -i netfilter
+
+# 增加
+brctl addbr ens38-ens39
+brctl addif ens38-ens39 ens38
+brctl addif ens38-ens39 ens39
+ip link set dev ens38 up
+ip link set dev ens39 up
+ip link set ens38-ens39  up
+
+# 删除
+brctl delbr ens38-ens39
+```
+
 
 trunk模式
 ```sh
