@@ -7,6 +7,7 @@
   - [telnet指令](#telnet指令)
     - [帮助文档](#帮助文档)
     - [ip 操作](#ip-操作)
+  - [arp(Address Resolution Protocol)](#arpaddress-resolution-protocol)
   - [交换机](#交换机)
     - [默认交换机](#默认交换机)
     - [GNS3交换机模拟](#gns3交换机模拟)
@@ -177,6 +178,87 @@ echo -n -e "\033]0;R1\007"; clear; PATH='/Applications/GNS3.app/Contents/MacOS:/
 ```
 
 > 不同的设备对应不对的端口.  
+
+### arp(Address Resolution Protocol)  
+首先使用一台PC1直连路由器R1，设置PC1的ip地址
+```sh
+ip 192.168.1.2/24 192.168.1.1 
+```
+
+设置IP时，也会发送APR，确认是否已存在该IP地址  
+```sh
+1	0.000000	Private_66:68:00	Broadcast	ARP	64	Gratuitous ARP for 192.168.1.2 (Request)
+Frame 1: 64 bytes on wire (512 bits), 64 bytes captured (512 bits) on interface -, id 0
+Ethernet II, Src: Private_66:68:00 (00:50:79:66:68:00), Dst: Broadcast (ff:ff:ff:ff:ff:ff)
+Address Resolution Protocol (request/gratuitous ARP)
+    Hardware type: Ethernet (1)
+    Protocol type: IPv4 (0x0800)
+    Hardware size: 6
+    Protocol size: 4
+    Opcode: request (1)
+    [Is gratuitous: True]
+    Sender MAC address: Private_66:68:00 (00:50:79:66:68:00)
+    Sender IP address: 192.168.1.2
+    Target MAC address: Broadcast (ff:ff:ff:ff:ff:ff)
+    Target IP address: 192.168.1.2
+```
+
+Gratuitous ARP也称为免费ARP，无故ARP。Gratuitous ARP不同于一般的ARP请求，它并非期待得到IP对应的MAC地址，而是当主机启动的时候，将发送一个Gratuitous arp请求，即请求自己的IP地址的MAC地址。  
+- 验证IP是否冲突  
+- 更换物理网卡  
+
+PC1跨网段访问  
+```sh
+PC1> ping 192.168.2.2
+```
+
+R1配置IP
+```sh
+R1#show ip int bri
+Interface                  IP-Address      OK? Method Status                Protocol
+FastEthernet0/0            unassigned      YES unset  administratively down down    
+FastEthernet0/1            unassigned      YES unset  administratively down down  
+R1#config t
+R1(config)#interface FastEthernet0/0
+R1(config-if)#ip address 192.168.1.1 255.255.255.0
+R1(config-if)#no shutdown
+R1(config-if)#exit
+R1(config)#do show ip int bri
+Interface                  IP-Address      OK? Method Status                Protocol
+FastEthernet0/0            192.168.1.1     YES manual up                    up      
+FastEthernet0/1            unassigned      YES unset  administratively down down  
+R1(config)#interface FastEthernet0/1
+R1(config-if)#ip address 192.168.2.1 255.255.255.0
+R1(config-if)#no shutdown
+R1(config)#do show ip int bri                  
+Interface                  IP-Address      OK? Method Status                Protocol
+FastEthernet0/0            192.168.1.1     YES manual up                    up      
+FastEthernet0/1            192.168.2.1     YES manual up                    up   
+```
+
+<div align=center>
+<img src="../resources/images/network/gns3-13.png" width="90%"></img>
+</div>
+
+> arp相当于一步一步转发，PC1先通过ARP 广播找到下一跳是否可达，如果可达，就先发送ICMP到R1，R1再根据直连路由，通过ARP广播找192.198.2.2的IP地址  
+
+PC1的ARP表就是存储R1的f0/0口  
+```sh
+PC1> show arp        
+
+c0:01:05:b7:00:00  192.168.1.1 expires in 116 seconds  
+```
+
+R1的ARP表  
+```sh
+R1#show arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  192.168.1.1             -   c001.05b7.0000  ARPA   FastEthernet0/0
+Internet  192.168.1.2             0   0050.7966.6800  ARPA   FastEthernet0/0
+Internet  192.168.2.1             -   c001.05b7.0001  ARPA   FastEthernet0/1
+Internet  192.168.2.2             0   Incomplete      ARPA   
+```
+
 
 ### 交换机
 
