@@ -328,4 +328,5 @@ ansible-galaxy collection install rjlasko.ansible
 `/etc/ssh/ssh_config`
 ```sh
    StrictHostKeyChecking no
+   UserKnownHostsFile /dev/null
 ```
