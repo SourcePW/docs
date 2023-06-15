@@ -310,6 +310,8 @@ fatal: [server1]: FAILED! => {
 # 常用操作
 ## 安装组件
 
+https://galaxy.ansible.com/search?deprecated=false&keywords=&order_by=-relevance
+
 ```sh
 ERROR! couldn't resolve module/action 'mysql_db'. This often indicates a misspelling, missing collection, or incorrect module path.
 
