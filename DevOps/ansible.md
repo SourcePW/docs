@@ -326,6 +326,20 @@ ansible-galaxy collection install community.mysql
 ansible-galaxy collection install rjlasko.ansible
 ```
 
+比如搜索`firewalld`模块，首选出现的是`poisx`  
+https://galaxy.ansible.com/ansible/posix  
+
+```sh
+Modules
+Name	Description
+ansible.posix.acl	Set and retrieve file ACL information.
+ansible.posix.at	Schedule the execution of a command or script file via the at command
+ansible.posix.authorized_key	Adds or removes an SSH authorized key
+ansible.posix.firewalld	Manage arbitrary ports/services with firewalld
+```
+
+`ansible.posix.firewalld`  也是可用的
+
 ## ssh配置
 `/etc/ssh/ssh_config`
 ```sh
