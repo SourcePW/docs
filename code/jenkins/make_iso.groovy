@@ -1,6 +1,6 @@
 #!groovy
 pipeline {
-    agent { label 'esxi-ids-build' }
+    agent { label 'exsi-make-iso' }
 
     parameters {
         string defaultValue: '10.25.10.126', description: '部署设备的IP地址', name: 'device_ip'
@@ -33,11 +33,21 @@ pipeline {
                     sh "rm -fr ${JOB_DIR}/backup.tar.gz"
 
                     remoteServer = GetRemoteServer(params.device_ip, params.user, params.passwd)
-                    sshCommand remote: remoteServer, command: 'rm -fr backup.tar.gz'
+                    sshCommand remote: remoteServer, command: 'rm -fr backup.tar.gz; rm -fr /var/log/journal/*; '
                     sshCommand remote: remoteServer, command: "tar   --exclude=backup.tar.gz   --exclude=/lost+found   --exclude=/proc --exclude=/mnt --exclude=/etc/fstab --exclude=/sys --exclude=/dev --exclude=/boot --exclude=/tmp --exclude=/var/cache/apt/archives --exclude=/run --warning=no-file-changed --exclude=/home --exclude=/usr/lib/debug --exclude=/var/lib/libvirt --exclude=/root --exclude=/swap.img --exclude=/etc/netplan --exclude=/root/ --exclude=/home/ -cvpzf backup.tar.gz /"
                     
-                    // 测试指令, 打包小文件夹
-                    // sshCommand remote: remoteServer, command: 'tar -cvpzf backup.tar.gz /root/snap'
+                    // 监测文件
+                    sh '''
+                        filename=/root/backup.tar.gz
+                        filesize=`ls -l $filename | awk '{ print $5 }'`
+                        maxsize=$((1024*1024*1024*4))
+                        if [ $filesize -gt $maxsize ]
+                        then
+                            echo "$filesize > $maxsize"
+                            echo "备份包不能大于4G"
+                            exit 1
+                        fi
+                    '''
                 }
             }
         }
@@ -57,7 +67,7 @@ pipeline {
                 dir("${CODE_DIR}") {
                     script {
                         sh "rm -fr ${ISO_FILE}"
-                        sh "bash ubuntu-autoinstall-generator.sh -a -u user-data.example -s ubuntu-20.04.5-live-server-amd64.iso -d ${ISO_FILE} -ed ${JOB_DIR}/backup.tar.gz"
+                        sh "bash -x ubuntu-autoinstall-generator.sh -a -u user-data.example -s ubuntu-20.04.5-live-server-amd64.iso -d ${ISO_FILE} -ed ${JOB_DIR}/backup.tar.gz"
                         sh "mv ${ISO_FILE} ${ISO_TARGET_DIR}/ubuntu_custom_${VERSION}.iso"
                         echo "拷贝iso: scp root@10.25.10.40:${ISO_TARGET_DIR}/ubuntu_custom_${VERSION}.iso ."
                     }
