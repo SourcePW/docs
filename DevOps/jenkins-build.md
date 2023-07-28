@@ -253,7 +253,7 @@ curl JENKINS_URL/job/JOB_NAME/buildWithParameters \
 ```sh
 # 本地创建jenkins目录
 # 备份数据 docker cp $ID:/var/jenkins_home, 如果想使用本地数据:  -v jenkins:/var/jenkins_home
-docker run -p 8080:8080 -p 50000:50000 --name jenkins -itd jenkinsci/blueocean 
+docker run  -u root -p 9898:8080 -p 50000:50000 --name jenkins -itd jenkinsci/blueocean 
 ```
 
 访问网址``
@@ -264,23 +264,43 @@ a21fab6d39014246803f2a81ef446bf4
 ```
 
 安装插件后重启即可。  
-
+> http://localhost:9898/restart   安装插件过程中报错，需要重启一下  
+> 用户密码: root/root
 
 ### vscode jenkins pipeline debug
 
 > Pipeline是Jenkins2.X的最核心的特性，帮助Jenkins实现从CI到CD与DevOps的转变。Pipeline是一组插件，让Jenkins可以实现持续交付管道的落地和实施。  
 - 安装groovy插件 `code-groovy`  
 - `Jenkinsfile Support`  
+- `Jenkins Jack`  
 - `Jenkins Pipeline Linter Connector`  
 
+> macos系统中vscode插件存储位置:`~/.vscode/extensions`  
 
 - ### https://github.com/jenkinsci/pipeline-examples  
+
+`Jenkins Jack`配置
+```json
+    "jenkins-jack.jenkins.connections": [
+        {
+            "name": "LocalJenkins",
+            "uri": "http://10.25.10.112:8096",
+            "username": "yangmingming",
+            "crumbIssuer": true,
+            "active": true
+        }
+    ],
+```
+
+> 如果Jack 连接不了jenkins，可能是jenkins的URL配置问题，最好使用IP访问。  
+
+`@ext:janjoerke.jenkins-pipeline-linter-connector`
 
 获取jenkins 用户和密码  
 打开jenkins server -> 个人中心 -> 设置 -> API token
 拿到user id 和 api token  
 ```sh
-vscode 116f25bd335afcbaf7e183890fa4c37634
+vscode 11503122041ab6fa6dd53a1724dee7e243
 ```
 
 配置`linter`插件的参数，连接`jenkins`的server 做校验

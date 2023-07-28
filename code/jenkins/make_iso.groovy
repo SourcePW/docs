@@ -1,4 +1,5 @@
 #!groovy
+/* groovylint-disable NestedBlockDepth */
 pipeline {
     agent { label 'exsi-make-iso' }
 
@@ -6,6 +7,7 @@ pipeline {
         string defaultValue: '10.25.10.126', description: '部署设备的IP地址', name: 'device_ip'
         choice choices: ['root'], description: '登录用户', name: 'user'
         password defaultValue: 'Netvine123', description: '密码: 默认N*****3', name: 'passwd'
+        extendedChoice description: '产品类型', multiSelectDelimiter: ',', name: 'product', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_RADIO', visibleItemCount: 5
     }
 
     environment {
@@ -33,9 +35,27 @@ pipeline {
                     sh "rm -fr ${JOB_DIR}/backup.tar.gz"
 
                     remoteServer = GetRemoteServer(params.device_ip, params.user, params.passwd)
+                    // 准备生产包环境
                     sshCommand remote: remoteServer, command: 'rm -fr backup.tar.gz; rm -fr /var/log/journal/*; '
-                    sshCommand remote: remoteServer, command: "tar   --exclude=backup.tar.gz   --exclude=/lost+found   --exclude=/proc --exclude=/mnt --exclude=/etc/fstab --exclude=/sys --exclude=/dev --exclude=/boot --exclude=/tmp --exclude=/var/cache/apt/archives --exclude=/run --warning=no-file-changed --exclude=/home --exclude=/usr/lib/debug --exclude=/var/lib/libvirt --exclude=/root --exclude=/swap.img --exclude=/etc/netplan --exclude=/root/ --exclude=/home/ -cvpzf backup.tar.gz /"
-                    
+
+                    if (product == 'firewall' || product == 'ids') {
+                        // 删除license
+                        sshCommand remote: remoteServer, command: "/bin/mysql -u root -p'Netvine123#@!' -e'truncate firewall.license_record'"
+                    }else if (product == 'audit'){
+                        // 删除license
+                        sshCommand remote: remoteServer, command: "/bin/mysql -u root -p'Netvine123#@!' -e'truncate audit.license_record'"
+                    }
+                    // 打包
+                    sshCommand remote: remoteServer, command: 'tar   --exclude=backup.tar.gz   --exclude=/lost+found   --exclude=/proc --exclude=/mnt --exclude=/etc/fstab --exclude=/sys --exclude=/dev --exclude=/boot --exclude=/tmp --exclude=/var/cache/apt/archives --exclude=/run --warning=no-file-changed --exclude=/home --exclude=/usr/lib/debug --exclude=/var/lib/libvirt --exclude=/root --exclude=/swap.img --exclude=/etc/netplan --exclude=/root/ --exclude=/home/ -cvpzf backup.tar.gz /'
+                }
+            }
+        }
+
+        stage('scp') {
+            steps {
+                echo 'scp'
+                script {
+                    sh "sshpass -p '${params.passwd}' scp -r ${params.user}@${params.device_ip}:/root/backup.tar.gz ."
                     // 监测文件
                     sh '''
                         filename=/root/backup.tar.gz
@@ -48,15 +68,6 @@ pipeline {
                             exit 1
                         fi
                     '''
-                }
-            }
-        }
-
-        stage('scp') {
-            steps {
-                echo 'scp'
-                script {
-                    sh "sshpass -p '${params.passwd}' scp -r ${params.user}@${params.device_ip}:/root/backup.tar.gz ."
                 }
             }
         }

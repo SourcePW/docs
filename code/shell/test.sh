@@ -5,3 +5,7 @@ if [[ "${params.start}" == "" ]]; then
 else
     ansible-playbook main.yml -i host --start=\"${params.start}\"
 fi
+
+if [ -f "/path/to/file" ]; then
+    echo "File \"/path/to/file\" exists"
+fi
