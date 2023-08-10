@@ -1419,6 +1419,25 @@ ovs-vsctl set port ens38 VLAN_mode=native-untagged trunk=100
 > - 发：  
 >      发出去的报文，如果报文本来带vlan，则携带原始vlan。如果报文不带vlan，则报文也不带vlan  
 
+## 虚拟机设置
+### VMware
+<br>
+<div align=center>
+	<img src="../resources/images/network/vm-connect-gns3.png" width="100%"></img>  
+</div>
+<br>
+
+### Virtual Box
+
+<br>
+<div align=center>
+	<img src="../resources/images/network/vb-connect-gns3.png" width="100%"></img>  
+</div>
+<br>
+
+> 主要是配置网卡类型  
+> 目前还没有解决虚拟机既能上网，宿主机又能访问虚拟机(子网ip)，现在使用的桥接模式。  
+
 ## 设备操作
 ### 华为交换机操作界面
 [华为官方文档](https://support.huawei.com/hedex/hdx.do?docid=EDOC1100276020&lang=zh&idPath=24030814%7C21782164%7C21782167%7C22318634%7C6635912)  
