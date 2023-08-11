@@ -2,6 +2,12 @@
 
 - [环境搭建](#环境搭建)
   - [配置](#配置)
+- [疑问](#疑问)
+  - [接口必须配置IP，所以需要选择，如果没有IP，无法配置](#接口必须配置ip所以需要选择如果没有ip无法配置)
+  - [Master模式日志](#master模式日志)
+  - [虚拟IP与Keepalive的关系](#虚拟ip与keepalive的关系)
+  - [master切换为backup](#master切换为backup)
+  - [广播、单播、组播](#广播单播组播)
 
 
 ## 环境搭建
@@ -239,8 +245,8 @@ vrrp_instance EXT {
 }
 ```
 
-### 疑问
-#### 接口必须配置IP，所以需要选择，如果没有IP，无法配置
+## 疑问
+### 接口必须配置IP，所以需要选择，如果没有IP，无法配置
 - 配置虚拟IP的接口必须配置IP
 ```sh
 Aug 09 08:34:25 matrix Keepalived_vrrp[1787]: (INT) Warning - nopreempt will not work with initial state MASTER - clearing
@@ -256,7 +262,7 @@ Aug 09 08:34:25 matrix Keepalived_vrrp[1787]: Registering gratuitous ARP shared 
 ```
 
 
-#### Master模式日志
+### Master模式日志
 
 ```sh
 Aug 09 08:37:26 matrix Keepalived_vrrp[1994]: Registering Kernel netlink reflector
@@ -283,11 +289,11 @@ ug 09 09:28:23 matrix Keepalived_vrrp[3955]: (INT) entering FAULT state
 Aug 09 09:28:23 matrix Keepalived_vrrp[3955]: (EXT) entering FAULT state
 ```
 
-#### 虚拟IP与Keepalive的关系
+### 虚拟IP与Keepalive的关系
 
 目前发现如果`keepalive`退出了，虚拟ip也就不存在了  
 
-#### master切换为backup
+### master切换为backup
 ```sh
 Aug 10 10:09:23 matrix Keepalived_vrrp[1448]: Registering gratuitous ARP shared channel
 Aug 10 10:09:23 matrix Keepalived_vrrp[1448]: (INT) Entering BACKUP STATE (init)
@@ -301,7 +307,7 @@ Aug 10 10:16:25 matrix Keepalived_vrrp[1448]: VRRP_Group(G1) Syncing instances t
 Aug 10 10:16:25 matrix Keepalived_vrrp[1448]: (EXT) Entering BACKUP STATE
 ```
 
-#### 广播、单播、组播
+### 广播、单播、组播
 - 单播(`unicast`)：在同一网络内，两个设备点对点的通信就是单播通信。
 - 组播(`multicast`)：在同一网络可达范围内，一个网络设备与关心其数据的部分设备进行通信就是组播。二层目标Mac是01-00-5e开头的或者三层目标ip地址是234~239之间的，例如224.5.5.5。
 - 广播(`broadcast`)：在同一网络可达范围内，一个网络设备向本网络内所有设备进行通信就是广播. 二层目标Mac全F或者IP地址是255.255.255.255.比如DHCP.
