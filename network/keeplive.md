@@ -94,17 +94,14 @@ vrrp_instance INT {
     priority 50
     advert_int 1
 
-    unicast_src_ip 10.10.10.2
-    unicast_peer {
-        10.10.10.3
-    }
     authentication {
         auth_type PASS
         auth_pass 1111
     }
     virtual_ipaddress {
-        10.10.10.210/24 dev ens38
+        10.10.10.254/24 dev ens38
     }
+
     nopreempt
     garp_master_delay 1
 }
@@ -115,16 +112,13 @@ vrrp_instance EXT {
     virtual_router_id 22
     priority 50
     advert_int 1
-    unicast_src_ip 10.20.20.2
-    unicast_peer {
-        10.20.20.3
-    }
+
     authentication {
         auth_type PASS
         auth_pass 1111
     }
     virtual_ipaddress {
-        10.20.20.211/24 dev ens39
+        10.20.20.254/24 dev ens39
     }
     nopreempt
     garp_master_delay 1
