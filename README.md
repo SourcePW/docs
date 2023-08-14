@@ -34,7 +34,4 @@
   - ### [个性化配置](notes/my.md)  
   - ### [刺激与回应的空间](notes/刺激与回应的空间.md) 
   - ### [五天学会绘画](notes/五天学会绘画.md)  
-  - ### [健康普及ppt](resources/files/notes/南京市健康普及.pptx)  
-- ## 音视频处理
-  记录美好生活! 生活不止眼前的苟且，还有诗和远方！
-  - ### [photoshop](av/photoshop.md)   
+  - ### [健康普及ppt](resources/files/notes/南京市健康普及.pptx)
