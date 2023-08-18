@@ -6,7 +6,8 @@ pipeline {
         string defaultValue: '10.25.10.126', description: '部署设备的IP地址', name: 'device_ip'
         choice choices: ['root'], description: '登录用户', name: 'user'
         password defaultValue: 'Netvine123', description: '密码: 默认N*****3', name: 'passwd'
-        choice choices: ['1','2'], description: '硬盘数量', name: 'disk_num'
+        choice choices: ['1', '2'], description: '硬盘数量', name: 'disk_num'
+        booleanParam description: '是否存在备份包，并且路径为: /root/backup.tar.gz', name: 'exist_backup_file'
     }
 
     environment {
@@ -29,13 +30,15 @@ pipeline {
                 echo 'backup'
 
                 script {
-                    // 删除当前备份包
-                    sh "mkdir -p ${ISO_TARGET_DIR}"
-                    sh "rm -fr ${JOB_DIR}/backup.tar.gz"
+                    if (!params.exist_backup_file) {
+                        // 删除当前备份包
+                        sh "mkdir -p ${ISO_TARGET_DIR}"
+                        sh "rm -fr ${JOB_DIR}/backup.tar.gz"
 
-                    remoteServer = GetRemoteServer(params.device_ip, params.user, params.passwd)
-                    sshCommand remote: remoteServer, command: 'rm -fr backup.tar.gz; rm -fr /var/log/journal/*; '
-                    sshCommand remote: remoteServer, command: "tar   --exclude=backup.tar.gz   --exclude=/lost+found   --exclude=/proc --exclude=/mnt --exclude=/etc/fstab --exclude=/sys --exclude=/dev --exclude=/boot --exclude=/tmp --exclude=/var/cache/apt/archives --exclude=/run --warning=no-file-changed --exclude=/home --exclude=/usr/lib/debug --exclude=/var/lib/libvirt --exclude=/root --exclude=/swap.img --exclude=/etc/netplan --exclude=/root/ --exclude=/home/ -cvpzf backup.tar.gz /"
+                        remoteServer = GetRemoteServer(params.device_ip, params.user, params.passwd)
+                        sshCommand remote: remoteServer, command: 'rm -fr backup.tar.gz; rm -fr /var/log/journal/*; '
+                        sshCommand remote: remoteServer, command: 'tar   --exclude=backup.tar.gz   --exclude=/lost+found   --exclude=/proc --exclude=/mnt --exclude=/etc/fstab --exclude=/sys --exclude=/dev --exclude=/boot --exclude=/tmp --exclude=/var/cache/apt/archives --exclude=/run --warning=no-file-changed --exclude=/home --exclude=/usr/lib/debug --exclude=/var/lib/libvirt --exclude=/root --exclude=/swap.img --exclude=/etc/netplan --exclude=/root/ --exclude=/home/ -cvpzf backup.tar.gz /'
+                    }
                 }
             }
         }
@@ -45,7 +48,7 @@ pipeline {
                 echo 'scp'
                 script {
                     sh "sshpass -p '${params.passwd}' scp -r ${params.user}@${params.device_ip}:/root/backup.tar.gz ."
-                                        
+
                     // 监测文件
                     sh '''
                         filename="/root/jenkins/workspace/make_iso/backup.tar.gz"
@@ -53,7 +56,7 @@ pipeline {
                             echo "备份包不存在"
                             exit 1
                         fi
-                        
+
                         filesize=`ls -l $filename | awk '{ print $5 }'`
                         maxsize=$((1024*1024*1024*4))
                         if [ $filesize -gt $maxsize ]
