@@ -9,6 +9,7 @@
   - ### [SSL与HTTPS](network/ssl-https.md)  
   - ### [双机热备](network/keeplive.md)  
   - ### [SNMP测试](network/snmp.md)  
+  - ### [漏扫问题](network/https-certificate.md)  
 - ## DevOps
   - ### [linux系统备份及还原](DevOps/linux-backup-restore.md)  
   - ### [Ubuntu 系统自动安装及部署](DevOps/ubuntu-auto.md)  

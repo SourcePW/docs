@@ -543,5 +543,34 @@ $ go env -w GOPROXY=https://goproxy.cn,direct
 需要设置开机启动!  
 
 
+## macos 常用功能
+### 磁盘清理  
 
+`du -sh * | sort -rh`   
+
+```sh
+du -sh * | sort -rh                                                             INT|255 ✘  took 33s   at 20:23:11  
+du: Library/Saved Application State/net.maxon.cinema4d.installer.savedState: Permission denied
+142G    Library
+ 22G    work
+5.8G    Documents
+3.5G    go
+1.3G    Movies
+899M    Pictures
+ 30M    Applications
+7.4M    GNS3
+4.0M    Downloads
+1.3M    Applications (Parallels)
+184K    Music
+100K    Cisco Packet Tracer 8.2.1
+ 20K    pprof
+8.0K    Desktop
+4.0K    cosign.pub
+4.0K    Sunlogin
+```
+
+根目录:
+```sh
+
+```
 
