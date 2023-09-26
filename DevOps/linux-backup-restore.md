@@ -67,6 +67,8 @@ sudo tar -cvpzf backup.tar.gz / \
     --exclude=/tmp \
     --exclude=/var/cache/apt/archives \
     --exclude=/run \
+    --exclude=/root \
+    --exclude=/home \
     --warning=no-file-changed 
 ```
 
