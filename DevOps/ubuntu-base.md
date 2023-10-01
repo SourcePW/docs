@@ -167,5 +167,35 @@ vscode工程demo地址: https://github.com/ymm135/tools/tree/main/my/vscode_prj 
 }
 ```
 
+多个设备的配置:
+```json
+[
+    {
+      "name": "server1",
+      "context": "server",
+      "host": "host",
+      "username": "root",
+      "password": "pass",
+      "remotePath": "/root/firewall-web-server/",
+      "profiles": {
+        "ud1": {
+          "name": "Ud1 Server",
+          "username": "root",
+          "password": "root",
+          "host": "ud1",
+          "uploadOnSave": false
+        },
+        "gs0": {
+          "name": "Gs0 Server",
+          "host": "gs0",
+          "remotePath": "/home/firewall-web-server/"
+        }
+      },
+      
+      "defaultProfile": "ud1"
+   }
+]
+```
+
 
 

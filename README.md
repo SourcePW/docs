@@ -11,6 +11,8 @@
   - ### [SNMP测试](network/snmp.md)  
   - ### [漏扫问题](network/https-certificate.md)  
 - ## DevOps
+  - ### [linux bash 汇总](https://github.com/ymm135/bash-tools)  
+  - ### [linux 系统知识](DevOps/linux-os.md)  
   - ### [linux系统备份及还原](DevOps/linux-backup-restore.md)  
   - ### [Ubuntu 系统自动安装及部署](DevOps/ubuntu-auto.md)  
   - ### [jenkins构建与pipeline调试](DevOps/jenkins-build.md) 
@@ -26,6 +28,7 @@
   - ### [Ansible自动化部署](DevOps/ansible.md) 
   - ### [linux 软件安装流程](DevOps/linux-install.md) 
   - ### [git常用操作](DevOps/git.md) 
+  - ### [airflow](DevOps/airflow.md) 
 - ## 工具
   - ### [jni](work/jni.md)  
   - ### [加解密](work/Encryption.md)
