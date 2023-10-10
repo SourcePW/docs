@@ -33,6 +33,40 @@ sudo apt install build-essential
 
 > 包括gcc,g++,和make  
 
+静态ip配置
+```sh
+# This is the network config written by 'subiquity'
+network:
+  ethernets:
+    ens33:
+      dhcp4: no
+      addresses:
+        - 10.25.17.233/24
+      gateway4: 10.25.17.1
+      nameservers:
+          addresses: [8.8.8.8, 114.114.114.114]
+  version: 2
+```
+
+## 更改源
+
+`mv /etc/apt/sources.list /etc/apt/sources.list.bak`  
+```sh
+deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+```
+
+更改后执行`apt update`  
+
+
 ## ssh 
 
 ```sh
@@ -77,7 +111,7 @@ curl -sSL https://get.daocloud.io/docker | sh
 
 添加git-core PPA
 ```sh
-sudo apt install software-properties-common
+sudo apt install software-properties-common -y
 sudo add-apt-repository ppa:git-core/ppa
 ```
 
@@ -116,7 +150,7 @@ go env -w  GOPROXY=https://goproxy.cn,direct
 
 ## gdb 
 ```sh
-apt install gdb 
+apt install gdb -y
 gdb --version
 GNU gdb (Ubuntu 9.2-0ubuntu1~20.04.1) 9.2
 ```
@@ -133,7 +167,16 @@ vscode工程demo地址: https://github.com/ymm135/tools/tree/main/my/vscode_prj 
 ### go环境
 安装插件`Go`
 
+dlv版本可能存在兼容问题:
+```sh
+# vscode默认安装最新
+github.com/go-delve/delve/cmd/dlv@latest 
 
+# 删除
+rm -fr $GOPATH/pkg/mod/github.com/go-delve/delve@v1.21.1/
+# 可能需要安装指定版本
+go install github.com/go-delve/delve/cmd/dlv@v1.8.3 
+```
 ### shell
 安装插件`Bash Debug` 断点调试，`shellman` shell不全，`shell-format`代码不全  
 
@@ -147,6 +190,23 @@ vscode工程demo地址: https://github.com/ymm135/tools/tree/main/my/vscode_prj 
 ```
 
 ### 宿主机安装sftp  
+
+安装`SFTP`插件
+
+`> SFTP: config` 打开sftp配置  
+
+
+Debug插件
+Debug
+    Open User Settings.
+
+On Windows/Linux - File > Preferences > Settings
+- On `macOS` - `Code` > `Preferences` > `Settings`
+- Set `sftp.debug` to true and reload vscode.
+
+View the `logs` in `View` > `Output` > `sftp`.
+
+
 安装`SFTP`插件  
 ```json
 {

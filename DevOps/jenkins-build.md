@@ -411,6 +411,113 @@ bash /data/jenkins-audit/build-scripts/update_script.sh
 bash /data/jenkins-audit/build-scripts/build.sh $device_ips
 ```
 
+## jenkins插件
+### 更改插件URL
+
+```sh
+Dashboard>>系统管理>>插件管理>>高级设置>>升级站点  
+默认是:https://updates.jenkins.io/update-center.json
+
+修改为:
+https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
+```
+
+### `jobConfigHistory`任务找回及配置历史  
+
+Job Configuration History  
+
+https://plugins.jenkins.io/jobConfigHistory/
+
+
+### `rebuild`重新构建
+https://plugins.jenkins.io/rebuild/
+
+
+### AnsiColor  
+官方地址：https://plugins.jenkins.io/ansicolor
+安装方式：在Jenkins插件当中直接搜索即可安装。
+功能说明：扩展支持我们在shell当中定义的echo -e指令，从而给一定的输出上颜色。
+使用方式：点此跳转到使用介绍。(opens new window)
+
+### user build vars  
+
+官方地址：https://wiki.jenkins.io/display/JENKINS/Build+User+Vars+Plugin
+安装方式：在Jenkins插件当中直接搜索即可安装。
+功能说明：通过此插件，让整个Jenkins系统中的用户参数成为一个可调用的变量。
+使用方式：在构建环境中选中Set Jenkins user build variables。
+
+
+### Active Choices Plugin
+
+官方地址：https://wiki.jenkins.io/display/JENKINS/Active+Choices+Plugin
+安装方式：在Jenkins插件当中直接搜索即可安装。
+功能说明：根据所选参数，自动调出对应参数所依赖的后续参数。
+使用方式：点此跳转到使用介绍。(opens new window)
+
+### build-name-setter 
+官方地址：http://wiki.jenkins.io/display/JENKINS/Build+Name+Setter+Plugin
+安装方式：在Jenkins插件当中直接搜索即可安装。
+功能说明：通过这个插件，可以动态更改项目构建的名称。不要小瞧这个功能，有时候合理应用对于工作的效率提升，可是非常高的。比如，常用的钉钉插件推送的信息过于简单，有一些信息无法从中得知，其实它推送的就是项目构建的名称，这个时候我们可以通过更改项目名称，来直接将一些构建的变量进行传递。
+
+<br>
+<div align=center>
+<img src="../resources/images/devops/jenkins-build-param.png" width="65%"></img>  
+</div>
+<br>
+
+全局变量参考: http://localhost:9898/job/ansible-deploy/pipeline-syntax/globals
+
+> 可以显示构建人  ${BUILD_USER}  
+
+### description setter
+
+官方地址：https://wiki.jenkins.io/display/JENKINS/Description+Setter+Plugin
+安装方式：在Jenkins插件当中直接搜索即可安装。
+功能说明：可以在构建名称下，定义一些描述信息的插件，也是非常好用的插件。
+
+
+<br>
+<div align=center>
+<img src="../resources/images/devops/build-name-setter-1.png" width="65%"></img>  
+</div>
+<br>
+
+### Email Extension Template
+官方地址：https://wiki.jenkins.io/display/JENKINS/Email-ext+plugin
+安装方式：在Jenkins插件当中直接搜索即可安装。
+功能说明：Jenkins部署状态邮件通知插件。
+
+### Git Parameter
+官方地址：http://wiki.jenkins-ci.org/display/JENKINS/Git+Parameter+Plugin
+安装方式：在Jenkins插件当中直接搜索即可安装。
+功能说明：在参数化构建步骤当中，可添加Git的branch或者tag来作为参数进行构建。
+
+### extended-choice-parameter  
+
+官方地址：https://plugins.jenkins.io/extended-choice-parameter
+安装方式：在Jenkins插件当中直接搜索即可安装。
+功能说明：提供了一种灵活地参数化能力。回滚使用的这个插件。
+使用方式：实现回滚版本选项列表的插件。
+
+### MySQL Database  
+
+官方地址：https://plugins.jenkins.io/database-mysql/
+安装方式：在Jenkins插件当中直接搜索即可安装。
+功能说明：提供了pipeline中调用MySQL进行增删改查的能力。
+
+### Configuration Slicing
+官方地址: https://plugins.jenkins.io/configurationslicing
+这个插件支持批量修改项目配置  
+
+### 
+
+
+
+
+
+
+
+
 
 
 

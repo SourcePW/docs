@@ -12,6 +12,7 @@
   - ### [漏扫问题](network/https-certificate.md)  
 - ## DevOps
   - ### [linux bash 汇总](https://github.com/ymm135/bash-tools)  
+  - ### [python 自动化](DevOps/python.md)  
   - ### [linux 系统知识](DevOps/linux-os.md)  
   - ### [linux系统备份及还原](DevOps/linux-backup-restore.md)  
   - ### [Ubuntu 系统自动安装及部署](DevOps/ubuntu-auto.md)  

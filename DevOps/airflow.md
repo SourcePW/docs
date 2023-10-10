@@ -657,6 +657,7 @@ Please take a look at these docs to improve your DAG import time:
 [2023-10-01T13:45:04.793+0000] {dag.py:3947} INFO - created dagrun <DagRun my_bash_operator @ 2023-10-01T13:44:33.694960+00:00: manual__2023-10-01T13:44:33.694960+00:00, state:running, queued_at: None. externally triggered: False>
 ```
 
+> 这个应该与调度器(Scheduler)的心跳机制（heartbeat）有关
 
 ### mysql操作  
 
@@ -895,6 +896,31 @@ trigger = TriggerDagRun(
    当代码执行到你设置的断点时，VS Code 的调试器将暂停执行，允许你查看变量、单步执行、观察调用堆栈等。
 
 注意: 调试 Airflow 可能比其他 Python 项目复杂一些，因为它涉及到多进程执行和调度。确保你的 Airflow 设置与调试环境相匹配，并且你正在调试的是正确的进程和执行路径。  
+
+### ETL是什么？
+
+https://www.bilibili.com/video/BV1V341167Ci  
+
+
+ETL 是 "Extract, Transform, Load" 的缩写，它描述了数据仓库的三个主要步骤：
+
+1. **Extract (提取)**: 从多个源系统中提取数据。这些源系统可以是数据库、API、文件系统等。
+2. **Transform (转换)**: 将提取出的数据进行清洗、转换和整合。这可能包括数据清洗、类型转换、应用业务逻辑、数据聚合等。
+3. **Load (加载)**: 将经过转换的数据加载到目标数据仓库或其他系统中，如关系型数据库、OLAP 数据库、Hadoop 或其他大数据平台。
+
+Apache Airflow 通常被用作 ETL 工具，因为它可以轻松地定义、组织和监视数据流程。使用 Airflow，你可以创建一个包含多个任务的 DAG (Directed Acyclic Graph)，其中每个任务可能对应 ETL 中的一个或多个步骤。
+
+尽管 ETL 过程是 Airflow 的主要应用之一，但 Airflow 本身并不局限于 ETL。它是一个更为通用的工作流程自动化和调度工具，可以用于各种复杂的数据处理和计算工作流程。
+
+总的来说，ETL 描述了数据处理的三个关键步骤，而 Airflow 提供了定义、执行和监控这些步骤的框架。
+
+
+### 一般使用场景  
+- 数据迁移、转储、备份  
+- 使用自己的operator，封装api  
+- 定期清理数据库、清理磁盘空间  
+- 开发、测试、生产环境的分离。  
+- 连接信息的统一管理。(数据库的地址、而不会在前端显示密码登)  
 
 
 
