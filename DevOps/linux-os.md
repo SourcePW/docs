@@ -4,6 +4,10 @@
 - [基础知识](#基础知识)
   - [逻辑卷](#逻辑卷)
   - [分区](#分区)
+  - [内核日志](#内核日志)
+  - [防火墙](#防火墙)
+  - [网络报文异常](#网络报文异常)
+    - [ICMP](#icmp)
 - [疑问拓展](#疑问拓展)
   - [系统依赖库的优先级](#系统依赖库的优先级)
 
@@ -173,6 +177,216 @@ sr0                        11:0    1 1024M  0 rom
 ```
 
 可以看到多分配的空间都在sda3上
+
+### 内核日志 
+
+> dmesg的日志来源  
+`dmesg` 是一个用于检查内核`环形缓冲区`的消息的命令。这些消息来自Linux内核本身，并提供了与硬件、设备驱动、以及其他内核子系统交互的关键信息。  
+>当您启动计算机或连接新的硬件设备时，内核将与硬件进行交互，并在环形缓冲区中生成日志消息。这些消息为管理员提供了关于硬件状态、驱动程序加载、硬件识别、错误、警告等的重要信息。  
+> 简而言之，`dmesg` 提供的日志直接来自Linux内核，是关于系统硬件和内核子系统状态的低级消息。这与`/var/log/syslog`或`/var/log/messages`中的日志略有不同，后者可能包含来自各种系统和应用程序的更广泛的消息，而不仅仅是内核消息。
+
+
+```sh
+dmesg --help
+
+Usage:
+ dmesg [options]
+
+Display or control the kernel ring buffer.
+
+Options:
+ -C, --clear                 clear the kernel ring buffer
+ -c, --read-clear            read and clear all messages
+ -D, --console-off           disable printing messages to console
+ -E, --console-on            enable printing messages to console
+ -F, --file <file>           use the file instead of the kernel log buffer
+ -f, --facility <list>       restrict output to defined facilities
+ -H, --human                 human readable output
+ -k, --kernel                display kernel messages
+ -L, --color[=<when>]        colorize messages (auto, always or never)
+                               colors are enabled by default
+ -l, --level <list>          restrict output to defined levels
+ -n, --console-level <level> set level of messages printed to console
+ -P, --nopager               do not pipe output into a pager
+ -p, --force-prefix          force timestamp output on each line of multi-line messages
+ -r, --raw                   print the raw message buffer
+ -S, --syslog                force to use syslog(2) rather than /dev/kmsg
+ -s, --buffer-size <size>    buffer size to query the kernel ring buffer
+ -u, --userspace             display userspace messages
+ -w, --follow                wait for new messages
+ -x, --decode                decode facility and level to readable string
+ -d, --show-delta            show time delta between printed messages
+ -e, --reltime               show local time and time delta in readable format
+ -T, --ctime                 show human-readable timestamp (may be inaccurate!)
+ -t, --notime                don't show any timestamp with messages
+     --time-format <format>  show timestamp using the given format:
+                               [delta|reltime|ctime|notime|iso]
+Suspending/resume will make ctime and iso timestamps inaccurate.
+
+ -h, --help                  display this help
+ -V, --version               display version
+
+Supported log facilities:
+    kern - kernel messages
+    user - random user-level messages
+    mail - mail system
+  daemon - system daemons
+    auth - security/authorization messages
+  syslog - messages generated internally by syslogd
+     lpr - line printer subsystem
+    news - network news subsystem
+
+Supported log levels (priorities):
+   emerg - system is unusable
+   alert - action must be taken immediately
+    crit - critical conditions
+     err - error conditions
+    warn - warning conditions
+  notice - normal but significant condition
+    info - informational
+   debug - debug-level messages
+
+For more details see dmesg(1).
+```
+
+- ### `/var/log/syslog`
+```sh
+# 杀死进程
+kill -9 1083
+
+# 查看日志
+tail -f /var/log/syslog
+Oct 17 19:44:32 netvine supervisord[862]: 2023-10-17 19:44:32,406 INFO exited: superv-server (terminated by SIGKILL; not expected)
+Oct 17 19:44:33 netvine supervisord[862]: 2023-10-17 19:44:33,416 INFO spawned: 'superv-server' with pid 78760
+```
+
+- ### `dmesg`  
+
+```sh
+# 查看最后
+dmesg | tail
+
+[94333.895551] systemd-journald[365]: /var/log/journal/c90819070a134b8387a5897b86411be1/system.journal: Journal file has been deleted, rotating.
+[94333.895894] systemd-journald[365]: Failed to create new system journal: No such file or directory
+[96133.643234] systemd-journald[365]: /var/log/journal/c90819070a134b8387a5897b86411be1/system.journal: Journal file has been deleted, rotating.
+[96133.643551] systemd-journald[365]: Failed to create new system journal: No such file or directory
+[104904.597918] systemd-sysv-generator[79153]: Overwriting existing symlink /run/systemd/generator.late/init_config.service with real service.
+[104905.592310] systemd-sysv-generator[79231]: Overwriting existing symlink /run/systemd/generator.late/init_config.service with real service.
+
+# 持续输出
+
+```
+
+### 防火墙  
+
+查看防火墙已有规则:
+```sh
+# firewall-cmd --list-all
+public (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: eth0 eth1
+  sources: 
+  services: dhcpv6-client ssh
+  ports: 5011/tcp 443/tcp 514/tcp 514/udp 8412/tcp 80/tcp
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+
+iptables -nL
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:53
+ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:67
+ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:67
+ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           
+INPUT_direct  all  --  0.0.0.0/0            0.0.0.0/0           
+INPUT_ZONES_SOURCE  all  --  0.0.0.0/0            0.0.0.0/0           
+INPUT_ZONES  all  --  0.0.0.0/0            0.0.0.0/0           
+DROP       all  --  0.0.0.0/0            0.0.0.0/0            ctstate INVALID
+REJECT     all  --  0.0.0.0/0            0.0.0.0/0            reject-with icmp-host-prohibited
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     all  --  0.0.0.0/0            192.168.122.0/24     ctstate RELATED,ESTABLISHED
+ACCEPT     all  --  192.168.122.0/24     0.0.0.0/0           
+ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           
+REJECT     all  --  0.0.0.0/0            0.0.0.0/0            reject-with icmp-port-unreachable
+REJECT     all  --  0.0.0.0/0            0.0.0.0/0            reject-with icmp-port-unreachable
+ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           
+FORWARD_direct  all  --  0.0.0.0/0            0.0.0.0/0           
+FORWARD_IN_ZONES_SOURCE  all  --  0.0.0.0/0            0.0.0.0/0           
+FORWARD_IN_ZONES  all  --  0.0.0.0/0            0.0.0.0/0           
+FORWARD_OUT_ZONES_SOURCE  all  --  0.0.0.0/0            0.0.0.0/0           
+FORWARD_OUT_ZONES  all  --  0.0.0.0/0            0.0.0.0/0           
+DROP       all  --  0.0.0.0/0            0.0.0.0/0            ctstate INVALID
+REJECT     all  --  0.0.0.0/0            0.0.0.0/0            reject-with icmp-host-prohibited
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:68
+ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           
+OUTPUT_direct  all  --  0.0.0.0/0            0.0.0.0/0           
+
+Chain FORWARD_IN_ZONES (1 references)
+target     prot opt source               destination         
+FWDI_public  all  --  0.0.0.0/0            0.0.0.0/0           [goto] 
+FWDI_public  all  --  0.0.0.0/0            0.0.0.0/0           [goto] 
+FWDI_public  all  --  0.0.0.0/0            0.0.0.0/0           [goto] 
+
+Chain FORWARD_IN_ZONES_SOURCE (1 references)
+target     prot opt source               destination         
+
+Chain IN_public_allow (1 references)
+target     prot opt source               destination         
+ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:22 ctstate NEW,UNTRACKED
+ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:5011 ctstate NEW,UNTRACKED
+ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:443 ctstate NEW,UNTRACKED
+ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:514 ctstate NEW,UNTRACKED
+ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:514 ctstate NEW,UNTRACKED
+ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:8412 ctstate NEW,UNTRACKED
+ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:80 ctstate NEW,UNTRACKED
+```
+
+### 网络报文异常  
+
+`[TCP ACKed unseen segment]`  
+
+<br>
+<div align=center>
+<img src="../resources/images/devops/tcp%E6%8A%A5%E6%96%87%E5%BC%82%E5%B8%B81.png" width="80%"></img>  
+</div>
+<br>
+
+> tcpdump 抓取的是网卡的数据，并非内核协议栈的数据。   
+
+`tcpdump` 抓取的是网卡的数据。具体来说，`tcpdump` 依赖于一个库叫做 `libpcap`（在 Windows 上是 `WinPcap` 或 `Npcap`），该库提供了一个系统独立的接口，用于捕获网络交通。
+
+当你使用 `tcpdump` 时，它会将相关的网络接口置于`混杂模式`（promiscuous mode）。在混杂模式下，网卡会捕获通过它的所有数据包，而不仅仅是那些目标地址与网卡硬件地址匹配的数据包。这允许你捕获到所有的流经该接口的数据包。
+
+这些数据包是从数据链路层（例如，以太网）捕获的，所以你可以看到从 MAC 地址到上层协议（如 IP、TCP、UDP 等）的所有信息。
+
+
+然而，请注意，有些操作系统或驱动可能不完全支持混杂模式，或者在虚拟化环境中的行为可能与在物理硬件上的行为略有不同。
+
+
+> 现在网络连接不同或者被拒绝时，可能影响因素有`限速`和`精准匹配丢弃`  
+
+#### ICMP 
+
+现在有两台设备，`PC1`与`PC2`, 现在`PC1`能够ping通`PC2`, 但是`PC2`无法ping通`PC1`, 通过tcpdump 抓包，查看`PC2`的ICMP包是正常的，有request和reply，但是Ping应用无法收到ICMP的回包，因为被ICMP网络攻击规则拦住了，只到达了网卡，没有到达应用层。  
+
+> icmp type echo-request limit rate over 200/second burst 500 packets log prefix "icmpFlood_nftables" drop  
+
+正常情况，应该怀疑`PC2`的防火墙拦截了ICMP的请求。    
+
+
 
 ## 疑问拓展
 ### 系统依赖库的优先级  

@@ -28,14 +28,12 @@
 [参考文章](https://www.w3cschool.cn/automate_with_ansible/automate_with_ansible-1khc27p1.html)  
 #### 在 Control Machine 上安装 Ansible
 - #### Ubuntu (Apt)
-安装 add-apt-repository 必要套件
-```sh
-sudo apt-get install software-properties-common
-```
-
 使用 Ansible 官方的 PPA 套件来源
 ```sh
-sudo apt-get install software-properties-common; sudo apt-get update
+sudo apt-get install software-properties-common
+sudo apt-add-repository ppa:ansible/ansible
+
+sudo apt-get update
 ```
 
 安装 Ansible
@@ -582,6 +580,38 @@ ansible.posix.firewalld	Manage arbitrary ports/services with firewalld
 ```
 
 `ansible.posix.firewalld`  也是可用的
+
+## 更新组件
+
+https://docs.ansible.com/ansible/latest/collections/community/general/archive_module.html  
+
+比如`community.general.archive` module就需要更新版本到`added in community.general 3.2.0` 才会有路径排除功能  
+
+```sh
+# 查看本地版本
+ansible-galaxy collection list | grep community.general
+community.general         1.3.6  
+
+# 强制更新
+ansible-galaxy collection install community.general --force
+
+Starting galaxy collection install process
+Process install dependency map
+Starting collection install process
+Installing 'community.general:7.5.0' to '/root/.ansible/collections/ansible_collections/community/general'
+Downloading https://galaxy.ansible.com/api/v3/plugin/ansible/content/published/collections/artifacts/community-general-7.5.0.tar.gz to /root/.ansible/tmp/ansible-local-371615zuqeefc/tmpu4ei5ovg
+community.general (7.5.0) was installed successfully
+
+# 离线更新
+cd update
+ansible-galaxy collection download community.general
+
+# 到设备上更新 .tar.gz
+ansible-galaxy collection install -r requirements.yml --force
+
+```
+
+
 
 ## 安装角色组件
 比如我下载一个nginx相关的角色:  
