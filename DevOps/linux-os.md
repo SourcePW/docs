@@ -386,6 +386,216 @@ ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:80 ctstate
 
 正常情况，应该怀疑`PC2`的防火墙拦截了ICMP的请求。    
 
+### nmap 
+
+目前无法连接设备的mysql，通过nmap扫描设备端口
+扫描设备的端口:  
+```sh
+Starting Nmap 7.94 ( https://nmap.org ) at 2023-10-20 15:44 CST
+Nmap scan report for gsud2 (10.25.17.233)
+Host is up (0.0049s latency).
+Not shown: 996 closed tcp ports (conn-refused)
+PORT     STATE SERVICE
+22/tcp   open  ssh
+161/tcp  open  snmp
+443/tcp  open  https
+1443/tcp open  ies-lm
+```
+
+确实无法查看到3306，但是本地可以连接mysql，那就可能是mysql没有开放远程连接接口。
+> 通过wireshark抓包发现，远程连接都是连接拒绝状态  
+> 167	17.241441	10.25.17.233	10.25.17.114	TCP	54	3306 → 54339 [RST, ACK] Seq=1 Ack=1 Win=0 Len=0  
+
+```sh
+netstat -ano | grep -i 3306
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      off (0.00/0/0)
+```
+
+查看mysql配置
+```sh
+ grep "address" /etc/mysql/ -rHn
+/etc/mysql/mysql.conf.d/mysqld.cnf:35:bind-address      = 127.0.0.1
+/etc/mysql/conf.d/mysqld.cnf:39:#bind-address   = 127.0.0.1
+```
+
+修改之后的状态
+```sh
+ netstat -anp | grep -i 3306
+tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN      76852/mysqld  
+```
+
+`nmap`（Network Mapper）是一款强大的网络扫描和安全审计工具。以下是`nmap`的一些常用操作指令：
+
+1. **基本扫描**:
+   ```bash
+   nmap <target>
+   ```
+
+2. **指定端口扫描**:
+   ```bash
+   nmap -p 22,80,443 <target>
+   ```
+
+3. **端口范围扫描**:
+   ```bash
+   nmap -p 20-100 <target>
+   ```
+
+4. **快速扫描**（只检测目标是否在线，不进行端口扫描）:
+   ```bash
+   nmap -sn <target>
+   ```
+
+5. **全端口扫描**:
+   ```bash
+   nmap -p- <target>
+   ```
+
+6. **服务和版本检测**:
+   ```bash
+   nmap -sV <target>
+   ```
+
+7. **操作系统检测**:
+   ```bash
+   nmap -O <target>
+   ```
+
+8. **使用默认脚本扫描**:
+   ```bash
+   nmap -sC <target>
+   ```
+
+9. **组合扫描**（例如：同时进行版本检测和默认脚本扫描）:
+   ```bash
+   nmap -sV -sC <target>
+   ```
+
+10. **使用特定的Nmap脚本扫描**:
+   ```bash
+   nmap --script=<script-name> <target>
+   ```
+
+11. **扫描多个目标**:
+   ```bash
+   nmap <target1> <target2> <target3>
+   ```
+
+12. **从文件中读取目标列表**:
+   ```bash
+   nmap -iL <filename>
+   ```
+
+13. **在输出中增加详细性**:
+   ```bash
+   nmap -v <target>
+   ```
+
+14. **保存扫描结果**（多种格式）:
+   ```bash
+   nmap -oN output.txt <target>       # 保存为常规格式
+   nmap -oX output.xml <target>       # 保存为XML格式
+   nmap -oG output.greppable <target> # 保存为Grep可用格式
+   ```
+
+15. **避免主机发现，直接扫描**:
+   ```bash
+   nmap -Pn <target>
+   ```
+
+16. **指定使用的扫描技术**（例如：SYN扫描、UDP扫描等）:
+   ```bash
+   nmap -sS <target>  # SYN扫描
+   nmap -sU <target>  # UDP扫描
+   ```
+
+这只是`nmap`功能的冰山一角。根据需要，您可能还需要查阅`nmap`的手册或在线文档来获取更多高级和特定的使用情况。
+
+### netstat  
+
+使用手册:
+```sh
+$ netstat -h
+usage: netstat [-vWeenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}
+       netstat [-vWnNcaeol] [<Socket> ...]
+       netstat { [-vWeenNac] -i | [-cnNe] -M | -s [-6tuw] }
+
+        -r, --route              display routing table
+        -i, --interfaces         display interface table
+        -g, --groups             display multicast group memberships
+        -s, --statistics         display networking statistics (like SNMP)
+        -M, --masquerade         display masqueraded connections
+
+        -v, --verbose            be verbose
+        -W, --wide               don't truncate IP addresses
+        -n, --numeric            don't resolve names
+        --numeric-hosts          don't resolve host names
+        --numeric-ports          don't resolve port names
+        --numeric-users          don't resolve user names
+        -N, --symbolic           resolve hardware names
+        -e, --extend             display other/more information
+        -p, --programs           display PID/Program name for sockets
+        -o, --timers             display timers
+        -c, --continuous         continuous listing
+
+        -l, --listening          display listening server sockets
+        -a, --all                display all sockets (default: connected)
+        -F, --fib                display Forwarding Information Base (default)
+        -C, --cache              display routing cache instead of FIB
+        -Z, --context            display SELinux security context for sockets
+
+  <Socket>={-t|--tcp} {-u|--udp} {-U|--udplite} {-S|--sctp} {-w|--raw}
+           {-x|--unix} --ax25 --ipx --netrom
+  <AF>=Use '-6|-4' or '-A <af>' or '--<af>'; default: inet
+  List of possible address families (which support routing):
+    inet (DARPA Internet) inet6 (IPv6) ax25 (AMPR AX.25) 
+    netrom (AMPR NET/ROM) ipx (Novell IPX) ddp (Appletalk DDP) 
+    x25 (CCITT X.25) 
+```
+
+```sh
+netstat -a
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 0.0.0.0:snmp            0.0.0.0:*               LISTEN     
+tcp        0      0 localhost:mysql         0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:6379            0.0.0.0:*               LISTEN     
+tcp        0      0 localhost:domain        0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:ssh             0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:https           0.0.0.0:*               LISTEN     
+tcp        0      0 netvine:ssh             10.25.17.114:54300      ESTABLISHED
+tcp        0    192 netvine:ssh             10.25.17.114:62214      ESTABLISHED
+tcp6       0      0 [::]:1443               [::]:*                  LISTEN     
+tcp6       0      0 [::]:ssh                [::]:*                  LISTEN     
+udp        0      0 localhost:domain        0.0.0.0:*                          
+udp        0      0 netvine:ntp             0.0.0.0:*                          
+udp        0      0 localhost:ntp           0.0.0.0:*                          
+udp        0      0 0.0.0.0:ntp             0.0.0.0:*                          
+udp        0      0 0.0.0.0:snmp            0.0.0.0:*   
+```
+
+显示应用名称
+```sh
+netstat -anp | grep -i mysql
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      1085/mysqld         
+unix  2      [ ACC ]     STREAM     LISTENING     40465    1085/mysqld          /var/run/mysqld/mysqld.sock
+```
+
+路由表
+```sh
+netstat -nr
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+0.0.0.0         10.25.17.1      0.0.0.0         UG        0 0          0 ens33
+10.25.17.0      0.0.0.0         255.255.255.0   U         0 0          0 ens33
+```
+
+## MACOS
+### 查看文件内容
+```sh
+find . -type f -name '**.log*'  -exec grep "error" {} + > output.txt   
+```
+
 
 
 ## 疑问拓展
