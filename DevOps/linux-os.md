@@ -590,6 +590,174 @@ Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
 10.25.17.0      0.0.0.0         255.255.255.0   U         0 0          0 ens33
 ```
 
+### socket 
+
+```sh
+usage: nc [-46CDdFhklNnrStUuvZz] [-I length] [-i interval] [-M ttl]
+          [-m minttl] [-O length] [-P proxy_username] [-p source_port]
+          [-q seconds] [-s source] [-T keyword] [-V rtable] [-W recvlimit] [-w timeout]
+          [-X proxy_protocol] [-x proxy_address[:port]]           [destination] [port]
+```
+
+shell发送socket数据
+```sh
+echo "hello" | nc -U /tmp/my_socket
+```
+
+shell接收socket数据
+```sh
+nc -lU /tmp/my_socket
+```
+
+
+### sar `System Activity Reporter`
+`sar` 是 `System Activity Reporter` 的缩写，它是 sysstat 软件包中的一个工具。sysstat 软件包包含了一组可以用来监控系统性能和进行故障诊断的实用程序。`sar` 提供了对系统的多方面的监控，包括 CPU、内存、I/O、网络、进程和更多的相关信息。
+
+**历史**：
+`sar` 已经有很长的历史了。它最初是为 Unix 系统设计的，随着时间的推移，它也被引入到了 Linux 和其他类 Unix 系统中。
+
+**主要作用**：
+1. **性能监控**：`sar` 可以帮助系统管理员识别系统的性能瓶颈。
+2. **历史数据收集**：`sar` 可以定期收集和存储系统的性能数据，使管理员能够查看历史性能数据。
+3. **故障诊断**：当系统出现性能问题或其他故障时，`sar` 提供的数据可以帮助定位问题的原因。
+
+**常用指令**：
+1. **CPU 使用率**：`sar -u [interval]`
+2. **内存使用率**：`sar -r [interval]`
+3. **I/O 使用率**：`sar -b [interval]`
+4. **网络使用情况**：`sar -n DEV [interval]`
+5. **查看历史数据**：`sar -[option] -f /var/log/sysstat/sa[day]` 
+   例如，查看前一天的 CPU 使用情况，可以使用 `sar -u -f /var/log/sysstat/sa$(date +%d -d yesterday)`
+6. **块设备 I/O**：`sar -d [interval]`
+7. **运行队列和系统负载**：`sar -q [interval]`
+8. **上下文切换**：`sar -w [interval]`
+
+其中，`[interval]` 是指更新频率，以秒为单位。例如，`sar -u 5` 将每5秒提供一次CPU使用情况的更新。
+为了使 `sar` 正常工作并收集历史数据，您需要确保 `sysstat` 服务正在运行，并且已配置为定期收集数据。
+
+
+`sar -n DEV 1`
+```sh
+07:01:11 PM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s   %ifutil
+07:01:12 PM    enp1s0      4.00      1.00      0.24      0.19      0.00      0.00      0.00      0.00
+07:01:12 PM    enp4s0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+07:01:12 PM    enp2s0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+07:01:12 PM    enp5s0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+07:01:12 PM        lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+07:01:12 PM    enp3s0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+07:01:12 PM    enp6s0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+```
+
+`sar -u 5 3`  
+```sh
+Linux 5.4.0-162-generic (netvine)       10/24/2023      _x86_64_        (8 CPU)
+
+07:07:16 PM     CPU     %user     %nice   %system   %iowait    %steal     %idle
+07:07:21 PM     all      0.05      0.00      0.03      0.03      0.00     99.90
+07:07:26 PM     all      0.20      0.00      0.03      0.00      0.00     99.77
+07:07:31 PM     all      0.03      0.00      0.00      0.00      0.00     99.97
+Average:        all      0.09      0.00      0.02      0.01      0.00     99.88
+```
+
+### lsof  `list open files`
+`lsof` 是 `list open files` 的缩写。在 Unix 和 Unix-like 系统中，几乎所有的事物都被视为文件（例如：文件、目录、网络套接字等），因此 `lsof` 是一个非常强大的工具，用于列出由进程打开的文件。
+
+**历史**:
+- `lsof` 最初是在 1987 年由 Victor A. Abell 为 UNIX 系统开发的。
+- 自那时以来，`lsof` 已经被移植到许多 Unix 和 Unix-like 系统上，包括 AIX、FreeBSD、Linux、Solaris 等。
+  
+**主要作用**:
+1. **识别打开文件**：列出系统上所有打开的文件。
+2. **网络诊断**：列出所有打开的网络套接字。
+3. **进程监视**：识别特定进程打开的文件。
+4. **文件系统诊断**：确定哪些进程正在使用某个特定的文件或目录。
+5. **解决 "Resource busy" 问题**：当尝试卸载文件系统或设备时，如果它被进程使用，可以用 `lsof` 确定哪些进程正在使用它。
+
+**常用指令**:
+
+1. **列出所有打开的文件**：`lsof`
+2. **列出特定用户打开的文件**：`lsof -u username`
+3. **列出特定进程打开的文件**：`lsof -p PID`，其中 PID 是进程ID。
+4. **查找谁在使用特定端口**：`lsof -i :port`
+5. **查看所有网络连接**：`lsof -i`
+6. **查找打开特定文件的进程**：`lsof /path/to/file`
+7. **列出指定文件系统或目录中打开的文件**：`lsof +D /path/to/directory`
+
+这只是 `lsof` 能做的事情的冰山一角。由于其强大的功能和灵活性，`lsof` 已成为系统管理员日常工具箱中的一个重要工具。
+
+```sh
+$ lsof -p 1023
+COMMAND    PID USER   FD      TYPE    DEVICE SIZE/OFF    NODE NAME
+redis-ser 1023 root  cwd       DIR       8,2     4096 1835415 /var/lib/redis
+redis-ser 1023 root  rtd       DIR       8,2     4096       2 /
+redis-ser 1023 root  txt       REG       8,2  1029680 7350314 /usr/bin/redis-check-rdb
+redis-ser 1023 root  mem       REG       8,2  3035952 7352049 /usr/lib/locale/locale-archive
+redis-ser 1023 root  mem       REG       8,2   104984 7346287 /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+redis-ser 1023 root  mem       REG       8,2  1956992 7346451 /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28
+redis-ser 1023 root  mem       REG       8,2  2029592 7346240 /usr/lib/x86_64-linux-gnu/libc-2.31.so
+redis-ser 1023 root  mem       REG       8,2   157224 7346424 /usr/lib/x86_64-linux-gnu/libpthread-2.31.so
+redis-ser 1023 root  mem       REG       8,2    71808 7351805 /usr/lib/x86_64-linux-gnu/libhiredis.so.0.14
+redis-ser 1023 root  mem       REG       8,2    35960 7346431 /usr/lib/x86_64-linux-gnu/librt-2.31.so
+redis-ser 1023 root  mem       REG       8,2  1369384 7346355 /usr/lib/x86_64-linux-gnu/libm-2.31.so
+redis-ser 1023 root  mem       REG       8,2   744776 7351896 /usr/lib/x86_64-linux-gnu/libjemalloc.so.2
+redis-ser 1023 root  mem       REG       8,2   196384 7351927 /usr/lib/x86_64-linux-gnu/liblua5.1.so.0.0.0
+redis-ser 1023 root  mem       REG       8,2    10328 7351781 /usr/lib/x86_64-linux-gnu/liblua5.1-bitop.so.0.0.0
+redis-ser 1023 root  mem       REG       8,2    31240 7352008 /usr/lib/x86_64-linux-gnu/liblua5.1-cjson.so.0.0.0
+redis-ser 1023 root  mem       REG       8,2    30968 7351821 /usr/lib/x86_64-linux-gnu/libatomic.so.1.2.0
+redis-ser 1023 root  mem       REG       8,2    18848 7346258 /usr/lib/x86_64-linux-gnu/libdl-2.31.so
+redis-ser 1023 root  mem       REG       8,2   191504 7346199 /usr/lib/x86_64-linux-gnu/ld-2.31.so
+redis-ser 1023 root    0r     FIFO      0,13      0t0   25191 pipe
+redis-ser 1023 root    1w     FIFO      0,13      0t0   25192 pipe
+redis-ser 1023 root    2w     FIFO      0,13      0t0   25192 pipe
+redis-ser 1023 root    3r     FIFO      0,13      0t0   27200 pipe
+redis-ser 1023 root    4w     FIFO      0,13      0t0   27200 pipe
+redis-ser 1023 root    5u  a_inode      0,14        0   10331 [eventpoll]
+redis-ser 1023 root    6u     IPv4     29269      0t0     TCP *:6379 (LISTEN)
+```
+
+### ps `process status`
+`ps` 是一个命令行工具，用于在 UNIX-like 系统中提供关于正在运行的进程的信息。"ps" 的全称是 "process status"，即进程状态。
+
+**历史**:
+- `ps` 命令起源于早期版本的 UNIX，这一版本在 20 世纪 70 年代开发。
+- 在 UNIX 的演进过程中，出现了各种版本和风格的 `ps` 命令，每种命令都针对每个 UNIX 变种的特点进行了定制。
+- 当 POSIX 标准开始定义命令的预期行为时，已经有两种主要的 `ps` 风格：BSD 风格和 System V 风格。
+
+**主要作用**:
+- 显示系统中正在运行的进程的信息。
+- 可以查看进程的 PID（进程ID）、TTY（终端类型）、时间、命令名称等信息。
+
+**常用指令及执行结果展示**:
+1. **基本用法**: `ps`
+   ```
+   PID TTY          TIME CMD
+   1234 pts/1    00:00:00 bash
+   5678 pts/1    00:00:00 ps
+   ```
+
+2. **显示所有进程**: `ps -e` 或 `ps aux` (BSD 风格)
+   ```
+   USER       PID  %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+   root         1  0.0  0.1  16148  5236 ?        Ss   Jan01   0:06 /usr/lib/systemd/systemd
+   root         2  0.0  0.0      0     0 ?        S    Jan01   0:00 [kthreadd]
+   ...
+   ```
+
+3. **显示特定用户的进程**: `ps -u [用户名]`
+   ```
+   PID TTY          TIME CMD
+   1234 pts/1    00:00:00 bash
+   5678 pts/1    00:00:00 ps
+   ```
+
+4. **按进程名筛选**: `ps -C [命令名]`
+   ```
+   PID TTY          TIME CMD
+   1234 pts/1    00:00:00 bash
+   ```
+
+这只是 `ps` 命令的一些基本用法，它还有许多其他的选项和功能。你可以使用 `man ps` 来查看更多的详细信息和用法。
+
 ## MACOS
 ### 查看文件内容
 ```sh
