@@ -197,3 +197,30 @@ done
 <div align=center>
 <img src="../resources/images/centos-boot-edit.png" width="60%"></img>
 </div>
+
+### 双盘挂载  
+
+```sh
+# 停止所有服务
+systemctl stop mysql
+supervisorctl stop all
+
+mv /data/ /data_bak
+
+mkdir /data
+
+#格式化分区，默认回车就行
+mkfs.ext4 /dev/sdb
+
+#挂载   卸载 unmount /data
+mount /dev/sdb /data
+
+# 拷贝数据
+cp -frp /data_bak/* /data/
+
+# 修改fstab
+/dev/sdb /data                 ext4    defaults        0 0
+
+# 重启系统
+reboot  
+```
