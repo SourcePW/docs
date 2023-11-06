@@ -769,3 +769,101 @@ find . -type f -name '**.log*'  -exec grep "error" {} + > output.txt
 ## 疑问拓展
 ### 系统依赖库的优先级  
 
+### 时区修改
+```sh
+# 查看当前时区
+$ timedatectl
+               Local time: Wed 2023-11-01 01:51:29 UTC
+           Universal time: Wed 2023-11-01 01:51:29 UTC
+                 RTC time: Wed 2023-11-01 01:51:29
+                Time zone: Etc/UTC (UTC, +0000)
+System clock synchronized: yes
+              NTP service: active
+          RTC in local TZ: no
+```
+
+系统时区通过链接文件`/etc/localtime`配置，该链接指向`/usr/share/zoneinfo`目录下的一个二进制时区标识文件  
+查看时区
+```sh
+ll /etc/localtime
+lrwxrwxrwx 1 root root 27 Oct  8 10:21 /etc/localtime -> /usr/share/zoneinfo/Etc/UTC
+```
+
+系统的时区同时也被写入`/etc/timezone`文件：
+```sh
+$ cat /etc/timezone
+Etc/UTC
+```
+
+修改时区:
+```sh
+# 查看时区
+timedatectl list-timezones
+
+# 修改
+timedatectl set-timezone Asia/Shanghai
+```
+
+修改后的时间:
+```sh
+ timedatectl 
+               Local time: Wed 2023-11-01 09:56:46 CST
+           Universal time: Wed 2023-11-01 01:56:46 UTC
+                 RTC time: Wed 2023-11-01 01:56:46
+                Time zone: Asia/Shanghai (CST, +0800)
+System clock synchronized: yes
+              NTP service: active
+          RTC in local TZ: no
+```
+
+
+### 安装包管理-包被删除了  
+
+如果 `/usr/sbin/netplan` 在系统中消失了，以下是一些步骤来尝试找出原因：
+
+1. **检查`netplan.io`包是否安装**:
+   通常, `netplan`命令来自`netplan.io`包。你可以检查这个包是否仍然安装：
+   ```bash
+   dpkg -l | grep netplan.io
+   ```
+
+2. **检查系统日志**:
+   系统日志可能包含有关文件或包被删除的信息。你可以查看 `/var/log/apt/history.log` 和 `/var/log/dpkg.log` 来找出关于 `netplan.io` 包的任何操作。
+
+   ```bash
+   grep -i netplan /var/log/apt/history.log
+   grep -i netplan /var/log/dpkg.log
+   ```
+
+查看包的操作日志:  
+```sh
+netplan /var/log/dpkg.log
+2023-11-01 12:16:12 status installed netplan.io:amd64 0.104-0ubuntu2~20.04.2
+2023-11-01 12:16:12 remove netplan.io:amd64 0.104-0ubuntu2~20.04.2 <none>
+2023-11-01 12:16:12 status half-configured netplan.io:amd64 0.104-0ubuntu2~20.04.2
+2023-11-01 12:16:12 status half-installed netplan.io:amd64 0.104-0ubuntu2~20.04.2
+2023-11-01 12:16:12 status config-files netplan.io:amd64 0.104-0ubuntu2~20.04.2
+2023-11-01 12:16:12 status not-installed netplan.io:amd64 <none>
+2023-11-01 12:16:18 upgrade libnetplan0:amd64 0.104-0ubuntu2~20.04.2 0.106.1-7ubuntu0.22.04.2
+2023-11-01 12:16:18 status half-configured libnetplan0:amd64 0.104-0ubuntu2~20.04.2
+2023-11-01 12:16:18 status unpacked libnetplan0:amd64 0.104-0ubuntu2~20.04.2
+2023-11-01 12:16:18 status half-installed libnetplan0:amd64 0.104-0ubuntu2~20.04.2
+2023-11-01 12:16:18 status unpacked libnetplan0:amd64 0.106.1-7ubuntu0.22.04.2
+2023-11-01 12:16:21 configure libnetplan0:amd64 0.106.1-7ubuntu0.22.04.2 <none>
+2023-11-01 12:16:21 status unpacked libnetplan0:amd64 0.106.1-7ubuntu0.22.04.2
+2023-11-01 12:16:21 status half-configured libnetplan0:amd64 0.106.1-7ubuntu0.22.04.2
+2023-11-01 12:16:21 status installed libnetplan0:amd64 0.106.1-7ubuntu0.22.04.2
+```
+
+```sh
+   grep -i netplan /var/log/apt/history.log
+Upgrade: libqmi-proxy:amd64 (1.30.4-1~ubuntu20.04.1, 1.32.0-1ubuntu0.22.04.1), glib-networking-services:amd64 (2.64.2-1ubuntu0.1, 2.72.0-1), libdbus-1-3:amd64 (1.12.16-2ubuntu2.3, 1.12.20-2ubuntu4.1), libproxy1v5:amd64 (0.4.15-10ubuntu1.2, 0.4.17-2), dbus:amd64 (1.12.16-2ubuntu2.3, 1.12.20-2ubuntu4.1), libwrap0:amd64 (7.6.q-30, 7.6.q-31build2), libqmi-glib5:amd64 (1.30.4-1~ubuntu20.04.1, 1.32.0-1ubuntu0.22.04.1), initramfs-tools-bin:amd64 (0.136ubuntu6.7, 0.140ubuntu13.4), glib-networking-common:amd64 (2.64.2-1ubuntu0.1, 2.72.0-1), libudev1:amd64 (245.4-4ubuntu3.20, 249.11-0ubuntu3.11), libblkid1:amd64 (2.34-0.1ubuntu9.3, 2.37.2-4ubuntu3), libblockdev2:amd64 (2.23-2ubuntu3, 2.26-1), libmm-glib0:amd64 (1.18.6-1~ubuntu20.04.1, 1.20.0-1~ubuntu22.04.2), libmbim-proxy:amd64 (1.26.2-1~ubuntu20.04.1, 1.28.0-1~ubuntu20.04.1), libblockdev-utils2:amd64 (2.23-2ubuntu3, 2.26-1), libnetplan0:amd64 (0.104-0ubuntu2~20.04.2, 0.106.1-7ubuntu0.22.04.2), pciutils:amd64 (1:3.6.4-1ubuntu0.20.04.1, 1:3.7.0-6), libudisks2-0:amd64 (2.8.4-1ubuntu2, 2.9.4-1ubuntu2), libcryptsetup12:amd64 (2:2.2.2-3ubuntu2.4, 2:2.4.3-1ubuntu1.1), libappstream4:amd64 (0.12.10-2, 0.15.2-2), libpci3:amd64 (1:3.6.4-1ubuntu0.20.04.1, 1:3.7.0-6), libstdc++6:amd64 (10.5.0-1ubuntu1~20.04, 12.3.0-1ubuntu1~22.04), libmbim-glib4:amd64 (1.26.2-1~ubuntu20.04.1, 1.28.0-1~ubuntu20.04.1), cryptsetup:amd64 (2:2.2.2-3ubuntu2.4, 2:2.4.3-1ubuntu1.1), libsensors5:amd64 (1:3.6.0-2ubuntu1.1, 1:3.6.0-7ubuntu1)
+Remove: cryptsetup-initramfs:amd64 (2:2.2.2-3ubuntu2.4), netplan.io:amd64 (0.104-0ubuntu2~20.04.2), friendly-recovery:amd64 (0.2.41ubuntu0.20.04.1), cloud-initramfs-dyn-netconf:amd64 (0.45ubuntu2), dconf-service:amd64 (0.36.0-1), glib-networking:amd64 (2.64.2-1ubuntu0.1), kpartx:amd64 (0.8.3-1ubuntu2.1), mdadm:amd64 (4.1-5ubuntu1.2), open-iscsi:amd64 (2.0.874-7.1ubuntu6.4), dconf-gsettings-backend:amd64 (0.36.0-1), ubuntu-standard:amd64 (1.450.2), udev:amd64 (245.4-4ubuntu3.20), plymouth-theme-ubuntu-text:amd64 (0.9.4git20200323-0ubuntu6.2), gsettings-desktop-schemas:amd64 (3.36.0-1ubuntu1), ubuntu-server:amd64 (1.450.2), multipath-tools:amd64 (0.8.3-1ubuntu2.1), upower:amd64 (0.99.11-1build2), packagekit-tools:amd64 (1.1.13-2ubuntu1.1), libsoup2.4-1:amd64 (2.70.0-1), sg3-utils-udev:amd64 (1.44-1ubuntu2), ubuntu-minimal:amd64 (1.450.2), udisks2:amd64 (2.8.4-1ubuntu2), libpam-systemd:amd64 (245.4-4ubuntu3.21), packagekit:amd64 (1.1.13-2ubuntu1.1), libnss-systemd:amd64 (245.4-4ubuntu3.21), plymouth:amd64 (0.9.4git20200323-0ubuntu6.2), policykit-1:amd64 (0.105-26ubuntu1.3), modemmanager:amd64 (1.18.6-1~ubuntu20.04.1), dbus-user-session:amd64 (1.12.16-2ubuntu2.3), overlayroot:amd64 (0.45ubuntu2), cloud-initramfs-copymods:amd64 (0.45ubuntu2), initramfs-tools-core:amd64 (0.136ubuntu6.7), initramfs-tools:amd64 (0.136ubuntu6.7), software-properties-common:amd64 (0.99.9.8)
+```
+> Remove: cryptsetup-initramfs:amd64 (2:2.2.2-3ubuntu2.4), netplan.io:amd64 (0.104-0ubuntu2~20.04.2)  netplan 被删除了  
+
+3. **查看文件系统**:
+   使用 `find` 命令在整个系统中查找 `netplan`。尽管这可能需要一些时间，但如果文件被移到了其他地方，这可以帮助你找到它。
+   ```bash
+   sudo find / -name netplan
+   ```

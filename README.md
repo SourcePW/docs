@@ -31,6 +31,7 @@
   - ### [linux 软件安装流程](DevOps/linux-install.md) 
   - ### [git常用操作](DevOps/git.md) 
   - ### [airflow](DevOps/airflow.md) 
+  - ### [QEMU/KVM](DevOps/QEMU-KVM.md) 
 - ## 工具
   - ### [jni](work/jni.md)  
   - ### [加解密](work/Encryption.md)

@@ -13,6 +13,7 @@
 - [jenkins任务构建](#jenkins任务构建)
   - [参数](#参数)
   - [gitlab-token](#gitlab-token)
+  - [git插件](#git插件)
   - [通过脚本获取数据作为参数](#通过脚本获取数据作为参数)
   - [工作空间及编译结果](#工作空间及编译结果)
   - [远程访问](#远程访问)
@@ -22,6 +23,24 @@
   - [jenkins jack(微软)](#jenkins-jack微软)
 - [bash](#bash)
   - [引用脚本](#引用脚本)
+- [jenkins插件](#jenkins插件)
+  - [更改插件URL](#更改插件url)
+  - [`jobConfigHistory`任务找回及配置历史](#jobconfighistory任务找回及配置历史)
+  - [`rebuild`重新构建](#rebuild重新构建)
+  - [AnsiColor](#ansicolor)
+  - [user build vars](#user-build-vars)
+  - [Active Choices Plugin](#active-choices-plugin)
+  - [build-name-setter](#build-name-setter)
+  - [description setter](#description-setter)
+  - [Email Extension Template](#email-extension-template)
+  - [Git Parameter](#git-parameter)
+  - [extended-choice-parameter](#extended-choice-parameter)
+  - [MySQL Database](#mysql-database)
+  - [Configuration Slicing](#configuration-slicing)
+- [疑难杂症](#疑难杂症)
+  - [jenkins插件自动更新了，到时节点连接不上](#jenkins插件自动更新了到时节点连接不上)
+
+
 
 
 ## 增加节点
@@ -514,7 +533,51 @@ https://plugins.jenkins.io/rebuild/
 官方地址: https://plugins.jenkins.io/configurationslicing
 这个插件支持批量修改项目配置  
 
-### 
+## 疑难杂症  
+### jenkins插件自动更新了，到时节点连接不上  
+
+查看jenkins日志
+```sh
+{"log":"2023-11-06 02:57:43.258+0000 [id=84]\u0009INFO\u0009jenkins.InitReactorRunner$1#onAttained: Listed all plugins\r\n","stream":"stdout","time":"2023-11-06T02:57:43.259894055Z"}
+{"log":"2023-11-06 02:57:43.641+0000 [id=95]\u0009SEVERE\u0009jenkins.InitReactorRunner$1#onTaskFailed: Failed Loading plugin Caffeine API Plugin v3.1.8-133.v17b_1ff2e0599 (caffeine-api)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.643349604Z"}
+{"log":"java.io.IOException: Failed to load: Caffeine API Plugin (caffeine-api 3.1.8-133.v17b_1ff2e0599)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.643396129Z"}
+{"log":" - Jenkins (2.361.4) or higher required\r\n","stream":"stdout","time":"2023-11-06T02:57:43.643405621Z"}
+{"log":"\u0009at hudson.PluginWrapper.resolvePluginDependencies(PluginWrapper.java:1018)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.64341305Z"}
+{"log":"\u0009at hudson.PluginManager$2$1$1.run(PluginManager.java:542)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.643420446Z"}
+{"log":"\u0009at org.jvnet.hudson.reactor.TaskGraphBuilder$TaskImpl.run(TaskGraphBuilder.java:175)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.643427332Z"}
+{"log":"\u0009at org.jvnet.hudson.reactor.Reactor.runTask(Reactor.java:305)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.643445611Z"}
+{"log":"\u0009at jenkins.model.Jenkins$5.runTask(Jenkins.java:1158)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.643452734Z"}
+{"log":"\u0009at org.jvnet.hudson.reactor.Reactor$2.run(Reactor.java:222)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.643459122Z"}
+{"log":"\u0009at org.jvnet.hudson.reactor.Reactor$Node.run(Reactor.java:121)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.643465648Z"}
+{"log":"\u0009at jenkins.security.ImpersonatingExecutorService$1.run(ImpersonatingExecutorService.java:68)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.64347225Z"}
+{"log":"\u0009at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.643479014Z"}
+{"log":"\u0009at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.643485594Z"}
+{"log":"\u0009at java.base/java.lang.Thread.run(Thread.java:829)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.643496847Z"}
+{"log":"2023-11-06 02:57:43.644+0000 [id=99]\u0009SEVERE\u0009jenkins.InitReactorRunner$1#onTaskFailed: Failed Loading plugin Script Security Plugin v1275.v23895f409fb_d (script-security)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.645574362Z"}
+{"log":"java.io.IOException: Failed to load: Script Security Plugin (script-security 1275.v23895f409fb_d)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.645610218Z"}
+{"log":" - Failed to load: Caffeine API Plugin (caffeine-api 3.1.8-133.v17b_1ff2e0599)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.645621489Z"}
+{"log":" - Jenkins (2.387.3) or higher required\r\n","stream":"stdout","time":"2023-11-06T02:57:43.645665858Z"}
+{"log":"\u0009at hudson.PluginWrapper.resolvePluginDependencies(PluginWrapper.java:1018)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.645677016Z"}
+{"log":"\u0009at hudson.PluginManager$2$1$1.run(PluginManager.java:542)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.645686777Z"}
+{"log":"\u0009at org.jvnet.hudson.reactor.TaskGraphBuilder$TaskImpl.run(TaskGraphBuilder.java:175)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.645699382Z"}
+{"log":"\u0009at org.jvnet.hudson.reactor.Reactor.runTask(Reactor.java:305)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.645715574Z"}
+{"log":"\u0009at jenkins.model.Jenkins$5.runTask(Jenkins.java:1158)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.645726185Z"}
+{"log":"\u0009at org.jvnet.hudson.reactor.Reactor$2.run(Reactor.java:222)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.645753073Z"}
+{"log":"\u0009at org.jvnet.hudson.reactor.Reactor$Node.run(Reactor.java:121)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.645815625Z"}
+{"log":"\u0009at jenkins.security.ImpersonatingExecutorService$1.run(ImpersonatingExecutorService.java:68)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.645829965Z"}
+{"log":"\u0009at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.646008499Z"}
+{"log":"\u0009at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.646058022Z"}
+{"log":"\u0009at java.base/java.lang.Thread.run(Thread.java:829)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.646069923Z"}
+{"log":"2023-11-06 02:57:43.647+0000 [id=99]\u0009SEVERE\u0009jenkins.InitReactorRunner$1#onTaskFailed: Failed Loading plugin Command Agent Launcher Plugin v1.6 (command-launcher)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.64790055Z"}
+{"log":"java.io.IOException: Failed to load: Command Agent Launcher Plugin (command-launcher 1.6)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.647930544Z"}
+{"log":" - Failed to load: Script Security Plugin (script-security 1275.v23895f409fb_d)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.647944808Z"}
+{"log":"\u0009at hudson.PluginWrapper.resolvePluginDependencies(PluginWrapper.java:1018)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.647966455Z"}
+{"log":"\u0009at hudson.PluginManager$2$1$1.run(PluginManager.java:542)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.647980367Z"}
+{"log":"\u0009at org.jvnet.hudson.reactor.TaskGraphBuilder$TaskImpl.run(TaskGraphBuilder.java:175)\r\n","stream":"stdout","time":"2023-11-06T02:57:43.648009963Z"}
+```
+> 日志显示`Caffeine API`和` Agent Launcher` 插件加载失败，通过界面查看`已安装`插件，发现需要升级jenkins版本。
+
+
 
 
 
