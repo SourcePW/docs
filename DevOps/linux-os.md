@@ -8,8 +8,19 @@
   - [防火墙](#防火墙)
   - [网络报文异常](#网络报文异常)
     - [ICMP](#icmp)
+  - [nmap](#nmap)
+  - [netstat](#netstat)
+  - [socket](#socket)
+  - [sar `System Activity Reporter`](#sar-system-activity-reporter)
+  - [lsof  `list open files`](#lsof--list-open-files)
+  - [ps `process status`](#ps-process-status)
+- [MACOS](#macos)
+  - [查看文件内容](#查看文件内容)
 - [疑问拓展](#疑问拓展)
   - [系统依赖库的优先级](#系统依赖库的优先级)
+  - [时区修改](#时区修改)
+  - [安装包管理-包被删除了](#安装包管理-包被删除了)
+
 
 
 ## 基础知识
@@ -758,6 +769,113 @@ redis-ser 1023 root    6u     IPv4     29269      0t0     TCP *:6379 (LISTEN)
 
 这只是 `ps` 命令的一些基本用法，它还有许多其他的选项和功能。你可以使用 `man ps` 来查看更多的详细信息和用法。
 
+### 密码
+`/etc/shadow`  
+```sh
+ll /etc/shadow
+-rw-r----- 1 root shadow 1238 Nov 10 21:43 /etc/shadow
+```
+
+内容:
+```sh
+root:$6$rzv6TY03SR0129i7$E4jsIJGO5b0syO7FYbSj9xWnVaiK0OzR.W5iVrHewCqctteUzKiycpwr2cTmxJNntOjs8.oIL6UcYyR0hNgMe0:19671:0:99999:7:::
+daemon:*:19235:0:99999:7:::
+bin:*:19235:0:99999:7:::
+sys:*:19235:0:99999:7:::
+sync:*:19235:0:99999:7:::
+games:*:19235:0:99999:7:::
+admin:$6$QWnPN1SXNq5D42Mh$Ir.x3yt3LiPWVUgwl/zh289pWxV1c6yTVeG6csJBXiu7UieXf739cC/
+ntp:*:19510:0:99999:7:::
+redis:*:19510:0:99999:7:::
+mysql:!:19510:0:99999:7:::
+```
+
+密码加密:
+在 `/etc/shadow` 文件中，密码是使用密码哈希函数加密的。在你提供的示例 `root:$6$rzv6TY03SR0129i7$...` 中，密码部分遵循以下格式：
+
+- `$6$`：这表示使用的是SHA-512加密算法。不同的数字代表不同的哈希算法，如 `$1$` 代表MD5, `$5$` 代表SHA-256。
+
+- `rzv6TY03SR0129i7`：这是`盐`（salt），它是随机生成的数据，与用户的密码一起哈希，以增加破解密码的难度。
+
+- 接下来的部分（例如 `E4jsIJGO5b0syO7FYbSj9xWnVaiK0OzR.W5iVrHewCqctteUzKiycpwr2cTmxJNntOjs8.`）是实际的哈希值，即密码和盐结合后的哈希结果。
+
+这种方法使得即使两个用户使用相同的密码，由于盐的随机性，他们在`/etc/shadow`文件中的哈希值也会不同，从而增加了密码的安全性。
+
+另一台服务器相同的密码，但是加密后不一样  
+```sh
+root:$6$J5IZipAwMjMp.jkO$pgWQY5JztqIaDSaL6/tAu10nAE10ECLRuqn7It1EnQbBzV.pn8dNsae7uahaOkafuOCqPB6/YIMf8eSC8hMwP1:19671:0:99999:7:::
+```
+
+如果需要密码一致，可以使用`/etc/shadow`文件覆盖  
+
+## Ubuntu Live System
+### 修改root密码
+```sh
+sudo passwd root
+```
+
+### 磁盘信息
+目前用虚拟机创建了两块硬盘，一块是`20G`,另一个是`30G`. 准备一个做系统盘，另一个作为数据盘。现在的问题就是如何通过脚本自动挂载  
+
+lsblk 
+```sh
+sda   20G    disk
+sda   25G    disk 
+```
+
+`fdisk -l`  也可以查看到
+
+但是系统默认安装到`sdb`盘，如果我更改大小
+```sh
+sda   30G    disk
+sda   20G    disk 
+```
+
+这时会选择`sda`系统进行安装  
+
+配置yaml文件
+```yaml
+```
+
+查看日志:
+
+- 自动复制日志
+在自动安装过程的 `late-commands` 部分，可以添加命令来自动复制日志到指定位置。
+
+```yaml
+autoinstall:
+  # ... 其他配置 ...
+  late-commands:
+    - cp /var/log/installer/* /target/path/to/copy/log
+```
+
+这里，`/target` 是新安装系统的根目录。你可以选择复制到新系统的某个位置或外部媒体。
+
+
+
+
+### cow 根目录
+在 Ubuntu Live System 中，根目录 (`/`) 被挂载为 `/cow`（Copy-On-Write）。`cow` 是一个特殊的临时文件系统，用于实现 Ubuntu Live System 的 "copy-on-write" 功能。这是一个非常重要的概念，尤其是在理解 Ubuntu Live System 的工作方式时。
+
+### Copy-On-Write (COW) 机制
+
+1. **基本概念**：
+   - 在 "copy-on-write" 机制下，当系统文件被读取时，它们直接从只读的 Live 文件系统（通常是从你的 USB 驱动器或 DVD）中读取。
+   - 只有在尝试修改这些文件时，系统才会将它们复制到一个临时区域（通常是 RAM）。这个过程称为 "写时复制"。
+
+2. **作用**：
+   - 这种机制允许 Ubuntu Live System 运行在一个基本上是只读的媒体上，同时仍然可以暂时修改文件和设置，就好像它是一个正常安装的操作系统一样。
+   - 由于这些更改是存储在内存中的，所以它们在重启后会丢失，这就保证了 Live 系统的非持久性和原始状态的保持。
+
+3. **挂载点 `/cow`**：
+   - `/cow` 表示这个特殊的临时文件系统，它是 Ubuntu Live System 用于存储所有 "写时复制" 数据的地方。
+   - 这意味着，当你在 Live 模式下创建或修改文件时，这些更改实际上是在 `/cow` 文件系统中进行的，而不是在原始的只读文件系统上。
+
+因此，`/cow` 是 Ubuntu Live System 的关键组成部分，使其能够在保持原始系统不变的同时提供动态和灵活的用户体验。
+
+
+
+
 ## MACOS
 ### 查看文件内容
 ```sh
@@ -867,3 +985,34 @@ Remove: cryptsetup-initramfs:amd64 (2:2.2.2-3ubuntu2.4), netplan.io:amd64 (0.104
    ```bash
    sudo find / -name netplan
    ```
+### GRUB  
+在启动界面，通过`C`进入grub命令行模式。再次通过`ESC`退出选择界面  
+
+可以通过`ls`查看分区。  
+
+### recover模式
+
+如果您忘记了Linux系统的密码，可以通过以下步骤进行重置：
+
+1. **重启并打开GRUB菜单**：
+   - 重新启动Linux系统。
+   - 在系统启动时，通常需要按住`Shift`键（对于某些系统可能是`Esc`键）来访问GRUB引导菜单。
+
+2. **修改启动参数**：
+   - 在GRUB菜单中，选择要启动的Linux系统，然后按`e`键进入编辑模式。
+   - 找到以`linux`开头的行，通常包含`quiet splash`等字样。
+   - 删掉ro及后面内容，添加rw init=/bin/bash。
+
+3. **重置密码**：
+   - 按`Ctrl + X`或`F10`启动系统。
+   - 系统将以根用户身份进入命令行。
+   - 使用`passwd`命令更改密码，例如：`passwd 用户名`。
+   - 按照提示输入新密码。
+
+4. **重启系统**：
+   - 重置密码后，重启系统以正常模式启动，可以使用`reboot`或`shutdown -r now`命令。
+
+请确保您有合法权限去更改该系统的密码。这种方法适用于大多数基于Linux的操作系统。
+
+> 在单用户模式下，系统不会启动网络服务、多用户环境或图形界面，而是直接提供一个根用户的命令行界面。这使得管理员可以进行系统修复、恢复丢失密码、修复磁盘问题等任务，而不会受到其他系统服务或用户进程的干扰。
+

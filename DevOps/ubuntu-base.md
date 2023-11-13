@@ -1,6 +1,10 @@
 - # Ubuntu基础环境搭建  
 
+- ## 目录
 - [基础配置](#基础配置)
+  - [静态ip配置](#静态ip配置)
+  - [DNS配置](#dns配置)
+- [更改源](#更改源)
 - [ssh](#ssh)
 - [sftp](#sftp)
 - [docker](#docker)
@@ -12,6 +16,7 @@
   - [go环境](#go环境)
   - [shell](#shell)
   - [宿主机安装sftp](#宿主机安装sftp)
+
 
 ## 基础配置
 
@@ -33,7 +38,7 @@ sudo apt install build-essential
 
 > 包括gcc,g++,和make  
 
-静态ip配置
+### 静态ip配置
 ```sh
 # This is the network config written by 'subiquity'
 network:
@@ -47,6 +52,38 @@ network:
           addresses: [8.8.8.8, 114.114.114.114]
   version: 2
 ```
+
+### DNS配置
+在Ubuntu系统中，要永久配置DNS，最常用的方法是通过`systemd-resolved`服务或网络管理器。以下是步骤：
+
+- ### 使用`systemd-resolved`：
+
+1. **编辑`/etc/systemd/resolved.conf`**：
+   - 打开文件：`sudo nano /etc/systemd/resolved.conf`。
+   - 添加或修改以下行：
+     ```
+     [Resolve]
+     DNS=8.8.8.8
+     DNS=114.114.114.114
+     ```
+     将`8.8.8.8 8.8.4.4`替换为你的DNS服务器地址。
+
+2. **重启`systemd-resolved`服务**：
+   ```sh
+   sudo systemctl restart systemd-resolved
+   ```
+
+- ### 使用网络管理器（适用于桌面环境）：
+
+1. **打开网络设置**：在桌面环境中打开网络设置。
+
+2. **编辑网络连接**：选择你要配置的网络连接。
+
+3. **设置DNS**：在IPv4或IPv6设置中输入你的DNS服务器地址。
+
+4. **保存并应用更改**。
+
+确保在每次更改后测试DNS配置以确认它们生效。在对系统配置进行重要更改后，备份当前的配置文件也是一个好习惯。
 
 ## 更改源
 
