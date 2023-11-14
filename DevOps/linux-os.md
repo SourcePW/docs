@@ -809,6 +809,58 @@ root:$6$J5IZipAwMjMp.jkO$pgWQY5JztqIaDSaL6/tAu10nAE10ECLRuqn7It1EnQbBzV.pn8dNsae
 如果需要密码一致，可以使用`/etc/shadow`文件覆盖  
 
 ## Ubuntu Live System
+### 安装器
+在 Ubuntu ISO 镜像中，`.seed` 文件是预置（preseed）文件，用于 Debian 安装器（如 Debian Installer，简称 DI）。然而，从 Ubuntu 18.04 LTS 开始，Ubuntu Server 版本转向了新的安装器——Subiquity，它使用不同的自动化安装配置方法，而不是传统的 Debian preseed。
+
+对于 Subiquity 安装器，自动化安装通常是通过一个 `autoinstall` 配置来实现的。这种配置不是添加到 ISO 镜像中的 `.seed` 文件，而是通过 cloud-init 配置文件（通常命名为 `user-data`）来提供。
+
+- #### 如何使用 Subiquity 的 autoinstall：
+
+1. **准备 `user-data` 文件**：
+   - 创建一个包含自动安装指令的 `user-data` 文件。这个文件是一个 YAML 格式的 cloud-init 配置。
+
+2. **放置 `user-data` 文件**：
+   - 对于物理安装，你可以将 `user-data` 文件放置在引导媒体的根目录。
+   - 对于虚拟机安装，`user-data` 可以通过 cloud-init 的方式注入。
+> 如果不是通过cloud方式注入，`nocloud`用于离线安装  
+
+3. **启动安装**：
+   - 启动安装时，Subiquity 安装器会检查引导媒体的根目录或 `cloud-init` 数据源中是否存在 `user-data` 文件，并根据该文件中的指令执行自动安装。
+
+4. **注意事项**：
+   - 不需要修改 ISO 镜像本身或添加任何文件到 ISO 的 `preseed` 目录。
+   - 确保 `user-data` 文件符合 YAML 格式要求，并且指令正确无误。
+
+- #### 示例 `user-data` 配置：
+
+```yaml
+#cloud-config
+autoinstall:
+  version: 1
+  # ...其他配置...
+```
+
+这种方法使得你可以在不修改原始 ISO 镜像的情况下执行自动化安装。记住，这种配置主要用于 Ubuntu Server 版本，因为它使用 Subiquity 安装器，而不是传统的 Debian Installer。
+
+- #### subiquity 源码  
+https://github.com/canonical/subiquity  
+
+Subiquity 是 Ubuntu 服务器和桌面的现代化图形安装器，它具有以下工作机制：
+
+1. **Graphical Interface**：提供用户友好的图形界面，不同于传统的基于文本的 Debian 安装器。
+
+2. **Curtin as Backend**：使用 Curtin 作为后端来处理磁盘分区和系统安装任务。Curtin 是一个设计用于自动化的快速和灵活的安装器。
+
+3. **Autoinstall Support**：支持通过 `autoinstall` 功能进行自动化安装，允许无人值守的安装并提前定义设置。
+
+4. **Cloud-init Integration**：与 cloud-init 集成，为云环境中的实例初始化提供无缝体验。
+
+5. **Modular Design**：其模块化架构使得易于更新和增强，增加了灵活性和可维护性。
+
+更多细节和功能的深入了解，可以通过查看其在 GitHub 上的源代码和文档来获取。
+
+
+
 ### 修改root密码
 ```sh
 sudo passwd root
@@ -850,6 +902,84 @@ autoinstall:
 ```
 
 这里，`/target` 是新安装系统的根目录。你可以选择复制到新系统的某个位置或外部媒体。
+
+在`subiquity-server-debug.log.2469`可以看到配置合并的过程
+```sh
+2023-11-13 13:35:25,727 DEBUG curtin:1339 Extracted (unmerged) storage config:
+
+2023-11-13 13:35:25,729 DEBUG curtin:1354 Merged storage config:
+storage:
+    config:
+    -   id: disk-sda
+        path: /dev/sda
+        type: disk
+    -   id: disk-sdb
+        path: /dev/sdb
+        ptable: gpt
+        type: disk
+    -   device: disk-sdb
+        flag: bios_grub
+        id: partition-sdb1
+        number: 1
+        offset: 1048576
+        path: /dev/sdb1
+        size: 1048576
+        type: partition
+    -   device: disk-sdb
+        flag: linux
+        id: partition-sdb2
+        number: 2
+        offset: 2097152
+        path: /dev/sdb2
+        size: 32209108992
+        type: partition
+    -   fstype: ext4
+        id: format-partition-sdb2
+        type: format
+        uuid: 651c8dd5-3f07-4db9-8e86-fd8976c7c009
+        volume: partition-sdb2
+    version: 2
+```
+
+最终的配置是:
+```sh
+  storage:
+    config:
+    - ptable: gpt
+      path: /dev/sdb
+      wipe: superblock-recursive
+      preserve: false
+      name: ''
+      grub_device: true
+      type: disk
+      id: disk-sdb
+    - device: disk-sdb
+      size: 1048576
+      flag: bios_grub
+      number: 1
+      preserve: false
+      type: partition
+      id: partition-0
+    - device: disk-sdb
+      size: 32209108992
+      wipe: superblock
+      flag: ''
+      number: 2
+      preserve: false
+      type: partition
+      id: partition-1
+    - fstype: ext4
+      volume: partition-1
+      preserve: false
+      type: format
+      id: format-0
+    - path: /
+      device: format-0
+      type: mount
+      id: mount-0
+```
+
+最终配置和auto yaml配置还是有差异的。  
 
 
 
