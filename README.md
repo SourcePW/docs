@@ -39,7 +39,8 @@
   - ### [vscode 插件开发](notes/vscode-plugin-dev.md)   
   - ### [安装指定版本的macos](notes/macos-install.md)   
 - ## 个人
-  - ### [个性化配置](notes/my.md)  
+  - ### [mac个性化配置](notes/my.md)  
+  - ### [win个性化配置](notes/my-win.md)  
   - ### [刺激与回应的空间](notes/刺激与回应的空间.md) 
   - ### [五天学会绘画](notes/五天学会绘画.md)  
   - ### [健康普及ppt](resources/files/notes/南京市健康普及.pptx)
