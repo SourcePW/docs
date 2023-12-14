@@ -26,6 +26,7 @@ https://www.microsoft.com/software-download/windows11
 - `FileZilla`  开源FTP工具 FileZilla Pro v3.66.2 绿色版.7z  
 
 ### 主题美化  
+- `PowerToys`  用作按键映射
 - `mydockfinder`  https://github.com/mydockfinder/mydockfinder-for-Win10-Win11  
 - `WindowBlinds`  https://www.stardock.com/products/windowblinds/  
 - `RocketDock`  类似于macOS的Dock，用于替换或增强标准的Windows任务栏  https://punklabs.com/rocketdock  
