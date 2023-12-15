@@ -83,6 +83,18 @@ total 1953656
 
 
 ## demo学习  
+### DNS 协议  
+在开启防火墙的状态下，出现了无法访问外网的情况  
+
+<br>
+<div align=center>
+<img src="../resources/images/network/dns-pcap.png" width="80%"></img>  
+</div>
+<br>
+
+> 从报文可以看出，源端口为`53`的为DNS服务，已经返回正确结果回来，但是应用层无法接受解析。  
+
+使用`nslookup baidu.com`  查看dns服务，只显示了`127.0.0.53`  
 
 ### telnet指令
 
