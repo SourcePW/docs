@@ -24,6 +24,7 @@ https://www.microsoft.com/software-download/windows11
 - `Beyond Compare`  Beyond Compare v4.4.7.28397 修改版  
 - `snipaste`  截图、固定工具  https://www.snipaste.com/  
 - `FileZilla`  开源FTP工具 FileZilla Pro v3.66.2 绿色版.7z  
+- `ScreenToGif` 录屏录像转gif，很好用 https://github.com/NickeManarin/ScreenToGif  
 
 ### 主题美化  
 - `PowerToys`  用作按键映射
