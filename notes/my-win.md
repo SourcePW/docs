@@ -40,8 +40,13 @@ https://www.microsoft.com/software-download/windows11
 - `VMware`  离线安装包  
 - `Obsidian`  笔记工具  https://obsidian.md/download  
 - `AutoHotkey`  自动化工具  https://www.autohotkey.com/  
+vscode autohotkey2 插件: https://github.com/thqby/vscode-autohotkey2-lsp  
 
 ## 常用设置及配置  
-### 关闭自动更新及重启  
+### autohotkey 配置  
+#### 使用特定快捷键粘贴  
 
-### 关闭语音助手  
+`test.ahk2`  
+```sh
+
+```
