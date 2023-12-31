@@ -13,6 +13,7 @@ https://www.microsoft.com/software-download/windows11
 ### 常用软件  
 
 - `科学软件`  https://nf.nfcloud.net/  
+- `clash` https://github.com/zzzgydi/clash-verge/tree/main  汉化: https://github.com/Z-Siqi/Clash-for-Windows_Chinese  `Clash for Windows\resources\app.asar`
 - `chrome` https://www.google.com/chrome  
 - `WinRAR`  WinRAR v7.0beta2 汉化版.zip  
 - `sogou输入法`  https://shurufa.sogou.com/  
@@ -50,3 +51,14 @@ vscode autohotkey2 插件: https://github.com/thqby/vscode-autohotkey2-lsp
 ```sh
 
 ```
+
+
+### clash  
+
+增强模式: 
+
+<br>
+<div align=center>
+<img src="../resources/images/notes/clash-增强模式.png" width="80%"></img>  
+</div>
+<br>
