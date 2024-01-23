@@ -1,4 +1,5 @@
-# DIY 羽毛球发球机  
+- # DIY 羽毛球发球机  
+
 - ## 介绍
 [参考资料](../resources/files/notes/Shuttlecock-project-documentation.pdf)  
 

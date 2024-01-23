@@ -1,4 +1,11 @@
-# 虚拟机搭建centos与ubuntu开发环境
+- # 虚拟机搭建centos与ubuntu开发环境
+
+- [parallels安装centos](#parallels安装centos)
+- [vm安装ubuntu](#vm安装ubuntu)
+  - [开发工具](#开发工具)
+  - [依赖库](#依赖库)
+
+
 ## parallels安装centos
 
 ```

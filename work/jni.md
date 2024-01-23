@@ -1,4 +1,10 @@
-# jni
+- # jni
+
+- [jni搭建](#jni搭建)
+  - [java 方法](#java-方法)
+  - [jni实现](#jni实现)
+
+
 ## jni搭建
 ### java 方法
 ```

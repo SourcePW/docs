@@ -1,7 +1,12 @@
 - # portainer=>docker/Kubernetes管理
 
 - [环境搭建](#环境搭建)
+- [docker 服务化](#docker-服务化)
+  - [ubuntu20.04](#ubuntu2004)
 - [docker管理](#docker管理)
+  - [镜像管理](#镜像管理)
+    - [ssh ubuntu](#ssh-ubuntu)
+    - [ssh centos](#ssh-centos)
   - [模版管理](#模版管理)
   - [网络配置](#网络配置)
   - [容器服务管理](#容器服务管理)
@@ -10,6 +15,7 @@
   - [用户管理](#用户管理)
   - [环境配置](#环境配置)
   - [镜像仓库管理](#镜像仓库管理)
+- [docker镜像仓库](#docker镜像仓库)
 
 
 ## 环境搭建

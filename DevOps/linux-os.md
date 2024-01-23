@@ -1,6 +1,5 @@
 - # Linux 系统知识
 
-- ## 目录
 - [基础知识](#基础知识)
   - [逻辑卷](#逻辑卷)
   - [分区](#分区)
@@ -14,12 +13,22 @@
   - [sar `System Activity Reporter`](#sar-system-activity-reporter)
   - [lsof  `list open files`](#lsof--list-open-files)
   - [ps `process status`](#ps-process-status)
+  - [密码](#密码)
+- [Ubuntu Live System](#ubuntu-live-system)
+  - [安装器](#安装器)
+  - [修改root密码](#修改root密码)
+  - [磁盘信息](#磁盘信息)
+  - [cow 根目录](#cow-根目录)
+  - [Copy-On-Write (COW) 机制](#copy-on-write-cow-机制)
 - [MACOS](#macos)
   - [查看文件内容](#查看文件内容)
 - [疑问拓展](#疑问拓展)
   - [系统依赖库的优先级](#系统依赖库的优先级)
   - [时区修改](#时区修改)
   - [安装包管理-包被删除了](#安装包管理-包被删除了)
+  - [GRUB](#grub)
+  - [recover模式](#recover模式)
+
 
 
 

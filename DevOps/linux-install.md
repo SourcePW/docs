@@ -1,5 +1,13 @@
 - # linux 软件安装流程 
 
+- [ubuntu](#ubuntu)
+  - [dpkg](#dpkg)
+  - [apt](#apt)
+  - [工作原理](#工作原理)
+- [安装问题](#安装问题)
+  - [python or pycompile not found in public\_modules.rtinstall hook.](#python-or-pycompile-not-found-in-public_modulesrtinstall-hook)
+
+
 ## ubuntu 
 ### dpkg 
 Debian，以及基于 Debian 的系统，如 Ubuntu 等，所使用的包格式为 deb。以下为操作 deb 包的常用 Dpkg 指令表  

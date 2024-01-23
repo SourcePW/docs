@@ -1,4 +1,12 @@
-# 审计项目Debug记录
+- # 审计项目Debug记录
+
+- [RxPcapeth01 线程段错误](#rxpcapeth01-线程段错误)
+  - [gdb 调试](#gdb-调试)
+- [vscode 导入其他库的源码文件](#vscode-导入其他库的源码文件)
+- [wireshark 搜索的条件](#wireshark-搜索的条件)
+- [vscode flask 调试](#vscode-flask-调试)
+
+
 ## RxPcapeth01 线程段错误  
 
 ```shell

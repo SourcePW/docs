@@ -1,5 +1,11 @@
 - # nftables
 
+- [入门](#入门)
+  - [从 iptables 迁移到 nftables](#从-iptables-迁移到-nftables)
+    - [将 `iptables` 和 `ip6tables` 规则集转换为 `nftables`](#将-iptables-和-ip6tables-规则集转换为-nftables)
+  - [调式](#调式)
+
+
 # 入门
 nftables 框架提供了数据包分类功能。最显著的功能是：
 

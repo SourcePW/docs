@@ -1,4 +1,9 @@
-# minicom 
+- # minicom 
+
+- [macos 使用](#macos-使用)
+  - [设置波特率](#设置波特率)
+
+
 ## macos 使用
 安装`brew install minicom`  
 

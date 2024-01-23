@@ -1,4 +1,9 @@
-# Java调试  
+- # Java调试  
+
+- [vscode 监测JVM状态](#vscode-监测jvm状态)
+- [macos安装VisualVM](#macos安装visualvm)
+
+
 ## vscode 监测JVM状态
 [graalvm](https://www.graalvm.org/)  
 [VisualVM官网](https://visualvm.github.io/)

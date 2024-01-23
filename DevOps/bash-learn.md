@@ -7,6 +7,9 @@
 
 # 目录
 
+- [bash-handbook-zh-CN ](#bash-handbook-zh-cn-)
+    - [github原文bash-handbook](#github原文bash-handbook)
+- [目录](#目录)
 - [前言](#前言)
 - [Shells与模式](#shells与模式)
   - [交互模式](#交互模式)
@@ -43,10 +46,13 @@
   - [`select`循环](#select循环)
   - [循环控制](#循环控制)
 - [函数](#函数)
-- [Debugging](#debugging)
+  - [Debugging](#debugging)
 - [后记](#后记)
+- [想了解更多？](#想了解更多)
 - [其它资源](#其它资源)
 - [License](#license)
+- [译者手记](#译者手记)
+
 
 # 前言
 

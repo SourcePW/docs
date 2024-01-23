@@ -1,4 +1,9 @@
-### linux系统备份
+- ### linux系统备份
+
+- [linux系统还原](#linux系统还原)
+  - [系统盘还原](#系统盘还原)
+
+
 #### 软件安装
 官网地址:http://www.mondorescue.org/downloads.shtml  
 cd /etc/yum.repos.d/ 下载repo文件,注意当前系统版本

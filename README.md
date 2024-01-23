@@ -3,7 +3,7 @@
 - ## 网络  
   - ### [通过gns3模拟器学习网络知识](network/network-learn.md)  
   - ### [snort](./snort/snort.md)  
-  - ### [arp](work/arp-nmap.md) 
+  - ### [arp](work/arp-nmap.md)  
   - ### [nftables](network/nftables.md)  
   - ### [Network Namespace](network/namespace.md)  
   - ### [SSL与HTTPS](network/ssl-https.md)  
@@ -18,7 +18,7 @@
   - ### [linux系统备份及还原](DevOps/linux-backup-restore.md)  
   - ### [Ubuntu 系统自动安装及部署](DevOps/ubuntu-auto.md)  
   - ### [jenkins构建与pipeline调试](DevOps/jenkins-build.md) 
-  - ### [bash learn](DevOps/bash-learn.md) 
+  - ### [bash learn](DevOps/bash-learn.md)  
   - ### [minicom](DevOps/minicom.md) 
   - ### [linux 内存占用分析](DevOps/linux-mem.md) 
   - ### [搭建自动化测试:jenkins+python+allure](DevOps/auto-test.md) 
@@ -32,6 +32,8 @@
   - ### [git常用操作](DevOps/git.md) 
   - ### [airflow](DevOps/airflow.md) 
   - ### [QEMU/KVM](DevOps/QEMU-KVM.md) 
+- ## 设备及驱动  
+  - ### [USB设备](work/usb.md)  
 - ## 工具
   - ### [jni](work/jni.md)  
   - ### [加解密](work/Encryption.md)

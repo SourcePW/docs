@@ -42,7 +42,6 @@
 
 
 
-
 ## 增加节点
 ### 认证方式
 - Launch agents via SSH 使用ssh协议，从master向slave发起连接，由master主动发起请求

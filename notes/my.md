@@ -7,6 +7,8 @@
     - [Import keymaps XML](#import-keymaps-xml)
   - [插件](#插件)
   - [主题](#主题)
+    - [ubuntu bash 主题](#ubuntu-bash-主题)
+  - [快捷键](#快捷键-1)
 - [软件安装](#软件安装)
   - [Homebrew](#homebrew)
   - [git](#git)
@@ -16,9 +18,13 @@
   - [nvm](#nvm)
   - [node/npm](#nodenpm)
   - [Idea](#idea)
-- [Go](#go)
+  - [python](#python)
+  - [Go](#go)
   - [Java](#java)
   - [**BetterTouchTool**](#bettertouchtool)
+- [macos 常用功能](#macos-常用功能)
+  - [磁盘清理](#磁盘清理)
+
 
 
 ## vscode

@@ -1,5 +1,15 @@
 - # Ubuntu 系统自动安装及部署
 
+- [镜像文件](#镜像文件)
+- [启动流程](#启动流程)
+  - [BIOS](#bios)
+  - [UEFI](#uefi)
+- [制作自定义镜像](#制作自定义镜像)
+  - [手动ISO提取及打包](#手动iso提取及打包)
+  - [脚本制作镜像 user-data](#脚本制作镜像-user-data)
+  - [脚本制作镜像 preseed](#脚本制作镜像-preseed)
+
+
 ## 镜像文件  
 `ubuntu-20.04.5-live-server-amd64.iso`镜像文件内容  
 ```sh

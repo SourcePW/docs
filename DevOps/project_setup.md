@@ -1,4 +1,21 @@
-## 审计开发环境搭建
+- ## 审计开发环境搭建
+
+- [平台开发环境搭建](#平台开发环境搭建)
+  - [基础服务搭建(centos7.9)](#基础服务搭建centos79)
+    - [nacos](#nacos)
+    - [docker rabbitmq](#docker-rabbitmq-1)
+    - [redis](#redis-1)
+    - [mysql](#mysql)
+    - [elasticsearch](#elasticsearch)
+    - [MongoDB](#mongodb-1)
+  - [配置](#配置-1)
+    - [springboot nacos配置](#springboot-nacos配置)
+    - [nvsp-web配置](#nvsp-web配置)
+    - [gateway数据库配置](#gateway数据库配置)
+  - [调试](#调试-1)
+    - [必备服务](#必备服务)
+
+
 ### 基础服务搭建(centos6.10)
 centos6安装成功后，需要修改网络配置及更换国内镜像源！
 首先是修改网络，把onboot改成yes重启网络，然后就是修改国内镜像源[国内镜像更换方式](https://mirror.tuna.tsinghua.edu.cn/help/centos-vault/）

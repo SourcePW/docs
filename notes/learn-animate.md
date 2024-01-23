@@ -1,5 +1,15 @@
-# animate学习
+- # animate学习
 [官方指南](https://helpx.adobe.com/cn/animate/user-guide.html)  
+
+- [基础知识](#基础知识)
+  - [动画类型](#动画类型)
+  - [关于帧频](#关于帧频)
+  - [在时间轴中标识动画](#在时间轴中标识动画)
+  - [二维动画制作流程](#二维动画制作流程)
+- [帧动画制作](#帧动画制作)
+  - [传统补间动画](#传统补间动画)
+  - [补间动画](#补间动画)
+
 
 ## 基础知识  
 像 Animate（以前名为 Flash Professional CC）中的大部分工作一样，动画不需要任何 ActionScript。然而，如果您愿意，您可以使用 ActionScript 创建动画。 
