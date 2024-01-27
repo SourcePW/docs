@@ -74,3 +74,10 @@ vscode autohotkey2 插件: https://github.com/thqby/vscode-autohotkey2-lsp
 <img src="../resources/images/notes/clash-增强模式.png" width="80%"></img>  
 </div>
 <br>
+
+
+### macos/windows/iphone 共享文件  
+
+macos在共享中打开文件共享,windows使用`\\:ip` 访问  
+windows打开文件共享,macos或者iphone使用`smb://ip`访问  
+
