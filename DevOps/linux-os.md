@@ -991,7 +991,14 @@ storage:
 最终配置和auto yaml配置还是有差异的。  
 
 
+ubuntu配置系统盘:
+<br>
+<div align=center>
+<img src="../resources/images/devops/autoinstall-layout-disk.png" width="100%"></img>  
+</div>
+<br>
 
+> 默认选择第一个盘  
 
 ### cow 根目录
 在 Ubuntu Live System 中，根目录 (`/`) 被挂载为 `/cow`（Copy-On-Write）。`cow` 是一个特殊的临时文件系统，用于实现 Ubuntu Live System 的 "copy-on-write" 功能。这是一个非常重要的概念，尤其是在理解 Ubuntu Live System 的工作方式时。
