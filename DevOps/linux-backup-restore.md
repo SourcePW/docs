@@ -210,9 +210,9 @@ done
 
 > 无法启动后，编辑启动参数  
 
-<div align=center>
-<img src="../resources/images/centos-boot-edit.png" width="60%"></img>
-</div>
+
+![[../resources/images/centos-boot-edit.png]]
+
 
 ### 双盘挂载  
 

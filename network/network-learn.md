@@ -38,19 +38,19 @@
 
 安装界面
 
-<div align=center>
-  <img src="../resources/images/network/gns3-1.png" width="70%"></img>
-</div>
 
-<div align=center>
-<img src="../resources/images/network/gns3-2.png" width="70%"></img>
-</div>
+![[../resources/images/network/gns3-1.png]]
+
+
+
+![[../resources/images/network/gns3-2.png]]
+
 
 下载GNS3 VM https://www.gns3.com/software/download-vm  
 
-<div align=center>
-<img src="../resources/images/network/gns3-3.png" width="70%"></img>
-</div>
+
+![[../resources/images/network/gns3-3.png]]
+
 
 > 文件名: GNS3.VM.VMware.Workstation.2.2.35.1.zip  
 
@@ -63,15 +63,15 @@ total 1953656
 -rw-r--r--@ 1 ymm  staff    1951744 11 10 22:59 GNS3_VM-disk2.vmdk
 ```
 
-<div align=center>
-<img src="../resources/images/network/gns3-4.png" width="90%"></img>
-</div>
+
+![[../resources/images/network/gns3-4.png]]
+
 
 可以直接访问web界面  
 
-<div align=center>
-<img src="../resources/images/network/gns3-5.png" width="90%"></img>
-</div>
+
+![[../resources/images/network/gns3-5.png]]
+
 
 ### 安装镜像
 华为的需要使用ensp, 指定虚拟机版本，现在更新需要授权，还是使用cisco的镜像吧!  
@@ -80,9 +80,9 @@ total 1953656
 
 ### 添加模版  
 
-<div align=center>
-<img src="../resources/images/network/gns3-66.png" width="90%"></img>
-</div>
+
+![[../resources/images/network/gns3-66.png]]
+
 
 > 选择`update from online registry`
 
@@ -91,11 +91,11 @@ total 1953656
 ### DNS 协议  
 在开启防火墙的状态下，出现了无法访问外网的情况  
 
-<br>
-<div align=center>
-<img src="../resources/images/network/dns-pcap.png" width="80%"></img>  
-</div>
-<br>
+
+
+![[../resources/images/network/dns-pcap.png]]  
+
+
 
 > 从报文可以看出，源端口为`53`的为DNS服务，已经返回正确结果回来，但是应用层无法接受解析。  
 
@@ -253,9 +253,9 @@ FastEthernet0/0            192.168.1.1     YES manual up                    up
 FastEthernet0/1            192.168.2.1     YES manual up                    up   
 ```
 
-<div align=center>
-<img src="../resources/images/network/gns3-13.png" width="90%"></img>
-</div>
+
+![[../resources/images/network/gns3-13.png]]
+
 
 > arp相当于一步一步转发，PC1先通过ARP 广播找到下一跳是否可达，如果可达，就先发送ICMP到R1，R1再根据直连路由，通过ARP广播找192.198.2.2的IP地址  
 
@@ -281,9 +281,9 @@ Internet  192.168.2.2             0   Incomplete      ARPA
 
 #### 默认交换机
 配置界面
-<div align=center>
-<img src="../resources/images/network/gns3-8.png" width="80%"></img>
-</div>
+
+![[../resources/images/network/gns3-8.png]]
+
 
 从图中可以看到交换机的设置，`端口`、`VLAN`、`Type`等  
 
@@ -312,9 +312,9 @@ GNS3 一直都不能使用交换机 IOS 镜像的！如果你想用 GNS3 来模�
 
 > CISCO NM-16ESW是一款思科品牌的局域网模块。1个16端口10/100以太交换网络模块  
 
-<div align=center>
-<img src="../resources/images/network/gns3-9.png" width="90%"></img>
-</div>
+
+![[../resources/images/network/gns3-9.png]]
+
 
 关闭路由功能
 ```shell
@@ -623,9 +623,9 @@ ESW1(config-if)#exit
 
 ### 设备间配置
 
-<div align=center>
-<img src="../resources/images/network/gns3-10.png" width="100%"></img>
-</div>
+
+![[../resources/images/network/gns3-10.png]]
+
 
 
 PC1
@@ -1156,9 +1156,9 @@ c402.0796.0000		Self	      1	    Vlan1
 0050.7966.6801		Dynamic	      1	    FastEthernet1/1
 ```
 
-<div align=center>
-<img src="../resources/images/network/gns3-11.png" width="100%"></img>
-</div>
+
+![[../resources/images/network/gns3-11.png]]
+
 
 
 如果需要设置vlan和模式  
@@ -1210,9 +1210,9 @@ vconfig rem ens39.100
 
 最终使用ovs 
 
-<div align=center>
-<img src="../resources/images/network/gns3-12.png" width="100%"></img>
-</div>
+
+![[../resources/images/network/gns3-12.png]]
+
 
 ```sh
 # 环境安装
@@ -1438,19 +1438,19 @@ ovs-vsctl set port ens38 VLAN_mode=native-untagged trunk=100
 
 ## 虚拟机设置
 ### VMware
-<br>
-<div align=center>
-	<img src="../resources/images/network/vm-connect-gns3.png" width="100%"></img>  
-</div>
-<br>
+
+
+![[../resources/images/network/vm-connect-gns3.png]]  
+
+
 
 ### Virtual Box
 
-<br>
-<div align=center>
-	<img src="../resources/images/network/vb-connect-gns3.png" width="100%"></img>  
-</div>
-<br>
+
+
+![[../resources/images/network/vb-connect-gns3.png]]  
+
+
 
 > 主要是配置网卡类型  
 > 目前还没有解决虚拟机既能上网，宿主机又能访问虚拟机(子网ip)，现在使用的桥接模式。  
@@ -1459,21 +1459,21 @@ ovs-vsctl set port ens38 VLAN_mode=native-untagged trunk=100
 ### 华为交换机操作界面
 [华为官方文档](https://support.huawei.com/hedex/hdx.do?docid=EDOC1100276020&lang=zh&idPath=24030814%7C21782164%7C21782167%7C22318634%7C6635912)  
 设备概览
-<div align=center>
-<img src="../resources/images/network/交换机管理界面-1.png" width="100%"></img>
-</div>
+
+![[../resources/images/network/交换机管理界面-1.png]]
+
 
 进阶配置->镜像口配置
-<br>
-<div align=center>
-<img src="../resources/images/network/交换机管理界面-2.png" width="100%"></img>
-</div>
+
+
+![[../resources/images/network/交换机管理界面-2.png]]
+
 
 辅助配置->Trace Route
-<br>
-<div align=center>
-<img src="../resources/images/network/交换机管理界面-3.png" width="100%"></img>
-</div>
+
+
+![[../resources/images/network/交换机管理界面-3.png]]
+
 
 
 ## 思科指令汇总

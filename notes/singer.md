@@ -3,9 +3,9 @@
 
 ## 音准练习方法  
 
-<div align=center>
-<img src="../resources/images/notes/test.png" width="80%" height="80%" title="刺激与回应"></img>
-</div>  
+
+![[../resources/images/notes/test.png]]
+  
 
 
 

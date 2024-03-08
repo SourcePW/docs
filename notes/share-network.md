@@ -5,28 +5,28 @@
 
 
 首先mac的LAN配置成DHCP,截图如下: 
-<br>
-<div align=center>
-<span>mac中网卡配置</span><br>
-<img src="./../resources/images/notes/mac-lan.png" width="65%" height="65%" title="mac中网卡配置"></img>  
-</div>
-<br>
+
+
+<span>mac中网卡配置</span>
+![[./../resources/images/notes/mac-lan.png]]  
+
+
 
 
 然后在mac笔记本上把wifi的网络共享给LAN:  
-<br>
-<div align=center>
-<span>wifi共享网络给USB LAN</span><br>
-<img src="./../resources/images/notes/wifi-share.png" width="65%" height="65%" title="mac网络共享"></img>  
-</div>
-<br>
+
+
+<span>wifi共享网络给USB LAN</span>
+![[./../resources/images/notes/wifi-share.png]]  
+
+
 
 > 这里需要注意网络顺序的问题，要优先wifi,其次才是LAN才行!  
 > 在网络界面找到"设定服务顺序",wifi要优先与LAN  
-> <div align=center>
-> <img src="./../resources/images/notes/network-sort.png" width="60%" height="60%" title="mac网络共享"></img>  
-> </div>
-> <br>
+> 
+>![[./../resources/images/notes/network-sort.png]]  
+> 
+> 
 
 
 最终把centos配置成dhcp,配置如下:  

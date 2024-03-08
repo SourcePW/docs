@@ -258,25 +258,25 @@ if __name__ == "__main__":
 ```
 
 输入的参数:  
-<br>
-<div align=center>
-<img src="../resources/images/devops/airflow-param1.png" width="65%"></img>  
-</div>
-<br>
+
+
+![[../resources/images/devops/airflow-param1.png]]  
+
+
 
 依赖关系:
-<br>
-<div align=center>
-<img src="../resources/images/devops/airflow-param2.png" width="65%"></img>  
-</div>
-<br>
+
+
+![[../resources/images/devops/airflow-param2.png]]  
+
+
 
 日志
-<br>
-<div align=center>
-<img src="../resources/images/devops/airflow-param3.png" width="65%"></img>  
-</div>
-<br>
+
+
+![[../resources/images/devops/airflow-param3.png]]  
+
+
 
 启动指令:
 ```sh
@@ -319,11 +319,11 @@ if __name__ == "__main__":
 
 Airflow 变量是一种存储静态值的方法，这些值可以在 DAG 运行时被读取。您可以在 Airflow Web UI 中的 `Admin` → `Variables` 部分手动设置变量，也可以通过 Airflow CLI 设置。
 
-<br>
-<div align=center>
-<img src="../resources/images/devops/airflow-variable.png" width="65%"></img>  
-</div>
-<br>
+
+
+![[../resources/images/devops/airflow-variable.png]]  
+
+
 
 - #### 在 Web UI 设置变量：
 
@@ -476,11 +476,11 @@ class MyAirflowPlugin(AirflowPlugin):
 
 ### ssh连接
 
-<br>
-<div align=center>
-<img src="../resources/images/devops/airflow-connect.png" width="65%"></img>  
-</div>
-<br>
+
+
+![[../resources/images/devops/airflow-connect.png]]  
+
+
 
 全局连接:
 如果多个 operators 需要使用到相同的 SSH 连接信息，确实可以考虑把它作为全局变量来管理。最佳的做法是设置一个 Airflow connection，然后在多个 operators 中复用这个 connection。

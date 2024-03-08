@@ -11,9 +11,9 @@ macos 的串口设备`/dev/tty.usbserial-AB0NEHVD`
 
 启动`minicom -D /dev/tty.usbserial-AB0NEHVD`  
 
-<div align=center>
-<img src="../resources/images/minicom-1.png" width="80%"></img>
-</div>
+
+![[../resources/images/minicom-1.png]]
+
 
 > ` Meta-Z`就是esc+z  
 

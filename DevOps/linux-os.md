@@ -378,11 +378,11 @@ ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:80 ctstate
 
 `[TCP ACKed unseen segment]`  
 
-<br>
-<div align=center>
-<img src="../resources/images/devops/tcp%E6%8A%A5%E6%96%87%E5%BC%82%E5%B8%B81.png" width="80%"></img>  
-</div>
-<br>
+
+
+![[../resources/images/devops/tcp%E6%8A%A5%E6%96%87%E5%BC%82%E5%B8%B81.png]]  
+
+
 
 > tcpdump 抓取的是网卡的数据，并非内核协议栈的数据。   
 
@@ -992,11 +992,11 @@ storage:
 
 
 ubuntu配置系统盘:
-<br>
-<div align=center>
-<img src="../resources/images/devops/autoinstall-layout-disk.png" width="100%"></img>  
-</div>
-<br>
+
+
+![[../resources/images/devops/autoinstall-layout-disk.png]]  
+
+
 
 > 默认选择第一个盘  
 
