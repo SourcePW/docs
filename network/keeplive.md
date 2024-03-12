@@ -314,11 +314,11 @@ Aug 10 10:16:25 matrix Keepalived_vrrp[1448]: (EXT) Entering BACKUP STATE
 
 > 交换机所有的接口都在一个广播域中  
 
-
-
-![[../resources/images/network/组播.png]]  
-
-
+<br>
+<div align=center>
+	<img src="../resources/images/network/组播.png" width="100%"></img>  
+</div>
+<br>
 
 简单地说，单播->组播->广播，是通信数量不断增加的通信方式。当然，通信数量的增多，带来的是通信设备的资源消耗更大，整体网络环境的复杂度更高。
 

@@ -93,11 +93,11 @@
 
 https://www.ssleye.com/ssltool/cer_check.html  
 
-
-
-![[../resources/images/network/%E7%AD%BE%E5%90%8D%E5%9C%A8%E7%BA%BF%E6%9F%A5%E7%9C%8B.png]]  
-
-
+<br>
+<div align=center>
+<img src="../resources/images/network/%E7%AD%BE%E5%90%8D%E5%9C%A8%E7%BA%BF%E6%9F%A5%E7%9C%8B.png" width="80%"></img>  
+</div>
+<br>
 
 
 ## Nginx 

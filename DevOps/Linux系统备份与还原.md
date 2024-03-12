@@ -10,7 +10,7 @@ cd /etc/yum.repos.d/ 下载repo文件,注意当前系统版本
 wget ftp://ftp.mondorescue.org/centos/7/x86_64/mondorescue.repo  
 
 修改gpgcheck为0  
-![[./../resources/images/mondo/res-mondo-1.png]]
+<img src="./../resources/images/mondo/res-mondo-1.png" width="60%" height="60%" title="dpdk dap模块流程图"></img>
 
 
 安装软件  
@@ -42,11 +42,11 @@ nohup restore.sh > restore.log 2>&1 &
 ```
 
 制作完成后信息(一定要确保完成) :sob:  
-![[./../resources/images/mondo/res-mondo-2.png]]  
+<img src="./../resources/images/mondo/res-mondo-2.png" width="60%" height="60%" title="制作完成信息"></img>  
   
 ### linux系统还原
 插入USB制作的备份及启动盘，在启动界面多次点击Del键，进入BIOS界面，通过BIOS界面选择USB盘启动，也可以禁用硬盘启动，等还原完成后再恢复。启动界面如下  
-![[./../resources/images/mondo/res-mondo-3.png]]  
+<img src="./../resources/images/mondo/res-mondo-3.png" width="60%" height="60%" title="启动界面"></img>  
 
 目前平台的系统备份分为两部分，一部分是系统盘，另一部分是数据盘。**需要先还原系统盘，再还原数据盘。**  
 > 后来发现，逻辑盘的也可以备份还原，就只需要一个备份盘，一个指令:nuke 就可以搞定 :ghost:
@@ -63,13 +63,13 @@ nohup restore.sh > restore.log 2>&1 &
 
 1. 重启指令界面  
   
-![[./../resources/images/mondo/res-mondo-4.png]] 
+<img src="./../resources/images/mondo/res-mondo-4.png" width="60%" height="60%" title="重启指令界面"></img> 
 
 这时可以进入BIOS界面禁用系统盘启动，禁用后，设备重启，数据盘的还原界面可以直接打开了。等到数据盘还原后再恢复就行了  
 
-![[./../resources/images/mondo/res-mondo-5.png]] 
+<img src="./../resources/images/mondo/res-mondo-5.png" width="60%" height="60%" title=""></img> 
 
-![[./../resources/images/mondo/res-mondo-6.png]] 
+<img src="./../resources/images/mondo/res-mondo-6.png" width="60%" height="60%" title=""></img> 
 
 2. 逻辑分区的制作  
   

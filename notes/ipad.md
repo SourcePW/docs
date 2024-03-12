@@ -7,22 +7,22 @@
 
 双指紧捏可以缩小  
 
-
-
-![[../resources/images/notes/ipad 九宫格键盘.png]]  
-
-
+<br>
+<div align=center>
+<img src="../resources/images/notes/ipad 九宫格键盘.png" width="65%"></img>  
+</div>
+<br>
 
 ### 外接蓝牙键盘  
 
 
 ## GTD工具  
 
-
-
-![[../resources/images/notes/滴答待办.png]]  
-
-
+<br>
+<div align=center>
+<img src="../resources/images/notes/滴答待办.png" width="65%"></img>  
+</div>
+<br>
 
 > 支持日历，记忆曲线提醒  
 

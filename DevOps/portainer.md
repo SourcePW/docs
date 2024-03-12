@@ -38,17 +38,17 @@ docker volume rm portainer_data
 
 ```
 
-
-![[./../resources/images/devops/pointainer-1.png]]
-
+<div align=center>
+  <img src="./../resources/images/devops/pointainer-1.png" width="95%" ></img>
+</div>
 
 [官方文档](https://docs.portainer.io/)  
 
 
 整体架构:  
-
-![[./../resources/images/devops/portainer-architecture-detailed.png]]
-
+<div align=center>
+  <img src="./../resources/images/devops/portainer-architecture-detailed.png" width="95%" ></img>
+</div>
 
 ## docker 服务化
 目前的想法是把docker镜像当做虚拟机用，想启用以下服务，比如ssh、systemctl、supervisor等
@@ -81,9 +81,9 @@ sed -i 's+PermitRootLogin prohibit-password+PermitRootLogin yes' /etc/ssh/sshd-c
 ## docker管理
 ### 镜像管理
 
-
-![[./../resources/images/devops/docker-build-image.png]]
-
+<div align=center>
+  <img src="./../resources/images/devops/docker-build-image.png" width="85%" ></img>
+</div>
 
 #### ssh ubuntu
 比如构建ubuntu:20.04，拥有ssh服务并且以`/usr/sbin/init`启动的

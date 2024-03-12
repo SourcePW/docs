@@ -156,9 +156,9 @@ vscode sftp配置
 
 
 如图:  
-
-![[../resources/images/sftp-config.png]]
-
+<div align=center>
+<img src="../resources/images/sftp-config.png" width="100%"></img>
+</div>
 
 ### 指令提示补全
 ```shell
@@ -211,17 +211,17 @@ node –version  # node v12.22.12 , npm 6.14.16
 [官方文档](https://plugins.jenkins.io/uno-choice/) 
 
 多选参数，需要安装`Extended Choice Parameter` 插件
-
-![[../resources/images/jenkins-params.jpg]]
-
+<div align=center>
+<img src="../resources/images/jenkins-params.jpg" width="70%"></img>
+</div>
 
 这里分隔符使用空格，方便把参数传递给脚本
 
 ### gitlab-token
 
-
-![[../resources/images/jenkins-gitlab-token.png]]
-
+<div align=center>
+<img src="../resources/images/jenkins-gitlab-token.png" width="70%"></img>
+</div>
 
 使用凭据
 git 插件支持Jenkins 凭证插件提供的`用户名/密码凭证`和`私钥凭证`。它不支持其他凭证类型，如秘密文本、秘密文件或证书。  
@@ -241,9 +241,9 @@ https://plugins.jenkins.io/git/
 ### 工作空间及编译结果  
 每个Jenkins都有工作空间`WorkSpace`, 可以通过编译后的操作`Archive the artifacts`,过滤出自己需要展示并下载的文件 
 
-
-![[../resources/images/jenkins-workspace.png]]
-
+<div align=center>
+<img src="../resources/images/jenkins-workspace.png" width="60%"></img>
+</div>
 
 > jenkins执行结果，需要依赖脚本返回值，只要返回值为非0就是失败的。  
 
@@ -335,9 +335,9 @@ token = 116f25bd335afcbaf7e183890fa4c37634
 url =  http://localhost:8080/pipeline-model-converter/validate
 ```
 
-
-![[../resources/images/devops/jenkins-pipeline-1.png]]
-
+<div align=center>
+<img src="../resources/images/devops/jenkins-pipeline-1.png" width="90%"></img>
+</div>
 
 在Jenkins JACK中打开脚本，编写完后，直接运行  
 
@@ -374,9 +374,9 @@ pipeline {
 可以在vscode的中管理jenkins，比如创建流水线，运行及调试等。  
 另外文件是保存到本地的，会上传到jenkins中，另外也可以下载jenkins任务的脚本，保存到本地，还是挺方便的。  
 
-
-![[../resources/images/devops/jenkins-pipeline-2.png]]
-
+<div align=center>
+<img src="../resources/images/devops/jenkins-pipeline-2.png" width="100%"></img>
+</div>
 
 > 脚本运行错误，需要允许。系统管理—>In-process Script Approval
 
@@ -482,11 +482,11 @@ https://plugins.jenkins.io/rebuild/
 安装方式：在Jenkins插件当中直接搜索即可安装。
 功能说明：通过这个插件，可以动态更改项目构建的名称。不要小瞧这个功能，有时候合理应用对于工作的效率提升，可是非常高的。比如，常用的钉钉插件推送的信息过于简单，有一些信息无法从中得知，其实它推送的就是项目构建的名称，这个时候我们可以通过更改项目名称，来直接将一些构建的变量进行传递。
 
-
-
-![[../resources/images/devops/jenkins-build-param.png]]  
-
-
+<br>
+<div align=center>
+<img src="../resources/images/devops/jenkins-build-param.png" width="65%"></img>  
+</div>
+<br>
 
 全局变量参考: http://localhost:9898/job/ansible-deploy/pipeline-syntax/globals
 
@@ -499,11 +499,11 @@ https://plugins.jenkins.io/rebuild/
 功能说明：可以在构建名称下，定义一些描述信息的插件，也是非常好用的插件。
 
 
-
-
-![[../resources/images/devops/build-name-setter-1.png]]  
-
-
+<br>
+<div align=center>
+<img src="../resources/images/devops/build-name-setter-1.png" width="65%"></img>  
+</div>
+<br>
 
 ### Email Extension Template
 官方地址：https://wiki.jenkins.io/display/JENKINS/Email-ext+plugin

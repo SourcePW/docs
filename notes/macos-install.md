@@ -14,17 +14,17 @@
 
 [如何下载MacOS](https://support.apple.com/zh-cn/HT211683)  
 
-
-![[../resources/images/network/macos-install-1.png]]
-
+<div align=center>
+  <img src="../resources/images/network/macos-install-1.png" width="70%"></img>
+</div>
 
 ## 条件  
 - USB 闪存驱动器或其他备用宗卷（格式化为 Mac OS 扩展格式），至少有 14GB 可用储存空间。
 - OS X El Capitan 或更高版本的安装器。要获取完整的安装器，Mac 必须使用最新版本的 OS X El Capitan、最新版本的 macOS Sierra 或任何更高版本的 macOS。下载时所用的 Mac 必须与你要下载的 macOS 兼容  
 
-
-![[../resources/images/network/macos-install-2.png]]
-
+<div align=center>
+  <img src="../resources/images/network/macos-install-2.png" width="70%"></img>
+</div>
 
 ## 使用`终端`创建可引导安装器
 

@@ -475,9 +475,9 @@ bash -x setup.sh
 对于在编辑器窗口中打开的 `Ansible` 文件，请确保将语言模式设置为`Ansible`（VS 代码窗口的右下角）  
 
 插件信息:
-
-![[../resources/images/devops/ansible-plugin.png]]
-
+<div align=center>
+<img src="../resources/images/devops/ansible-plugin.png" width="75%"></img>
+</div>
 
 安装`ansible-lint`  
 ```sh
@@ -487,9 +487,9 @@ brew install ansible-lint
 提示错误:  
 > Ansible-lint is not available. Kindly check the path or disable validation using ansible-lint  
 
-
-![[../resources/images/devops/ansible-lint.png]]
-
+<div align=center>
+<img src="../resources/images/devops/ansible-lint.png" width="75%"></img>
+</div>
 
 ## 常用模块
 
@@ -784,21 +784,22 @@ http {
 
 # 疑问拓展
 ## 使用场景  
-
-
-![[../resources/images/devops/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E5%B7%A5%E5%85%B7.png]]  
-
-
+<br>
+<div align=center>
+<img src="../resources/images/devops/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E5%B7%A5%E5%85%B7.png" width="50%"></img>  
+</div>
+<br>
 
 公司计划在年底做一次大型市场促销活动全面冲刺下交易额，为明年的上市做准备。公司要求各业务组对年底大促做准备，运维部要求所有业务容量进行三倍的扩容，并搭建出多套环境可以共开发和测试人员做测试，运维老大为了在年底有所表现，要求运维部门同学尽快实现，当你接到这个任务时，有没有更快的解决方案 ?  
 
+<br>
+<div align=center>
+<img src="../resources/images/devops/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E5%B7%A5%E5%85%B71.png" width="65%"></img>  
+</div>
+<br>
 
-
-![[../resources/images/devops/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E5%B7%A5%E5%85%B71.png]]  
-
-
-
-
-
-![[../resources/images/devops/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E5%B7%A5%E5%85%B72.png]]  
-
+<br>
+<div align=center>
+<img src="../resources/images/devops/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E5%B7%A5%E5%85%B72.png" width="65%"></img>  
+</div>
+<br>

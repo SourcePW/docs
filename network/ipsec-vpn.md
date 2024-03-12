@@ -168,11 +168,11 @@ PC2 ping PC1 的报文
 > 公网加密的报文显示为`ESP`协议  
 
 ### 拓扑  
-
-
-![[../resources/images/network/VPN%E6%B5%8B%E8%AF%95.png]]  
-
-
+<br>
+<div align=center>
+<img src="../resources/images/network/VPN%E6%B5%8B%E8%AF%95.png" width="100%"></img>  
+</div>
+<br>
 
 > 客户端配置`rightsubnet=192.168.250.0/24,192.168.150.0/24` 这是客户端那些流量走隧道  
 > 服务端配置`rightsourceip=192.168.150.0/24  # 分配给VPN服务器和客户端的虚拟地址，通常可以选择VPN服务器的私网地址`  这时服务器也要增加一个同网段ip  

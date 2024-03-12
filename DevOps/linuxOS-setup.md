@@ -14,38 +14,38 @@
 2. 在安装系统的界面中，选择"INSTALLATION DESTINATION"，进入到系统的分区界面  
 3. 选择如何分区硬盘的方式"Standard Partition"，并点击下方"+"符号创建自定义磁盘空间  
 
-
-
-![[../resources/images/devops/linux-setup-1.png]]
-
+<br>
+<div align=center>
+<img src="../resources/images/devops/linux-setup-1.png" width="70%"></img>
+</div>
 
 4. 第一步：创建/boot空间，大小设置为2000，单位默认为MB，在实际的工作中可针对服务器的作用和性能调节此值的大小  
 
-
-
-![[../resources/images/devops/linux-setup-2.png]]
-
+<br>
+<div align=center>
+<img src="../resources/images/devops/linux-setup-2.png" width="50%"></img>
+</div>
 
 5. 第二步：创建swap的使用量，大小设置为2048，单位默认为MB，在实际的工作中可针对服务器的作用和性能调节此值的大小
 
-
-
-![[../resources/images/devops/linux-setup-3.png]]
-
+<br>
+<div align=center>
+<img src="../resources/images/devops/linux-setup-3.png" width="50%"></img>
+</div>
 
 6. 最后一步：创建/空间，大小设置为空，将划分余下的所有空间给/分区，在实际的工作中可针对服务器的作用和性能调节此值的大小  
 
-
-
-![[../resources/images/devops/linux-setup-4.png]]
-
+<br>
+<div align=center>
+<img src="../resources/images/devops/linux-setup-4.png" width="50%"></img>
+</div>
 
 7. 设置完成后可检查最后的设置情况，最后点击“Done”进入安装系统的下一步  
 
-
-
-![[../resources/images/devops/linux-setup-5.png]]
-
+<br>
+<div align=center>
+<img src="../resources/images/devops/linux-setup-5.png" width="70%"></img>
+</div>
 
 ### 定制分区
 

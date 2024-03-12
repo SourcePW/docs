@@ -166,9 +166,9 @@ Linux 上存在一个默认的网络命名空间，Linux 中的 `1` 号进程初
 到底归属那个 `netns`，这是由创建这个 `socket` 的进程所属的 `netns` 来决定。当在某个进程里创建 `socket` 的时候，内核就会把当前进程的 `nsproxy->net_ns` 找出来，并把它赋值给 socket 上的网络命名空间成员 `skc_net`
 
 
-
-![[../resources/images/network/net-namespace-1.png]]
-
+<div align=center>
+<img src="../resources/images/network/net-namespace-1.png" width="70%"></img>
+</div>
 
 在 clone 里可以指定创建新进程时的 flag，都是 CLONE_ 开头的。和 namespace 有的的标志位有 CLONE_NEWIPC、`CLONE_NEWNET`、CLONE_NEWNS、CLONE_NEWPID 等等。如果在创建进程时指定了 `CLONE_NEWNET` 标记位，那么该进程将会创建并使用新的 netns。  
 

@@ -2,9 +2,9 @@
 
 参考文章: https://www.cnblogs.com/xdyixia/p/11610102.html  
 
-
-![[../resources/images/network/https-tls.png]]
-
+<div align=center>
+<img src="../resources/images/network/https-tls.png" width="80%"></img>
+</div>
 
 ## SSL
 

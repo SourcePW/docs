@@ -59,11 +59,11 @@ Git中的`git patch`操作通常用于创建、应用和管理补丁文件。补
 
    如果git打补丁出错，可以手动修改补丁包后再应用  
 
-
-
-![[../resources/images/devops/git-patch修改.png]]  
-
-
+<br>
+<div align=center>
+<img src="../resources/images/devops/git-patch修改.png" width="55%"></img>  
+</div>
+<br>
 
 
 3. **查看补丁信息**：

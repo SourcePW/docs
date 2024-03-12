@@ -69,11 +69,11 @@ vscode autohotkey2 插件: https://github.com/thqby/vscode-autohotkey2-lsp
 
 增强模式: 
 
-
-
-![[../resources/images/notes/clash-增强模式.png]]  
-
-
+<br>
+<div align=center>
+<img src="../resources/images/notes/clash-增强模式.png" width="80%"></img>  
+</div>
+<br>
 
 
 ### macos/windows/iphone 共享文件  

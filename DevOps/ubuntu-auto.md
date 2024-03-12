@@ -35,9 +35,9 @@ drwxr-xr-x   13 ymm  staff    416  4 19 18:08 preseed
 ## 启动流程  
 
 
-
-![[./../resources/images/devops/bios_vs_uefi.png]]
-
+<div align=center>
+  <img src="./../resources/images/devops/bios_vs_uefi.png" width="85%" ></img>
+</div>
 
 ### BIOS 
 

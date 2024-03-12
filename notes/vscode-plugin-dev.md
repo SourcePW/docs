@@ -203,50 +203,50 @@ Do you want to continue? [y/N] y
 
 在插件管理中找到`从VSIX安装`  
 
-
-![[../resources/images/notes/vsix-install.png]]
-
+<div align=center>
+    <img src="../resources/images/notes/vsix-install.png" width="50%"></img>
+</div>
 
 #### 使用 
 可以在插件中`@installed hello` 查看插件信息
 
-
-![[../resources/images/notes/vscode-test-plugin.png]]
-
+<div align=center>
+    <img src="../resources/images/notes/vscode-test-plugin.png" width="50%"></img>
+</div>
 
 在文件目录窗口，右击，选择`获取文件信息`，即可使用  
+<br>
+<div align=center>
+    <img src="../resources/images/notes/vscode-plugin-test-1.png" width="50%"></img>
+</div>
 
-
-![[../resources/images/notes/vscode-plugin-test-1.png]]
-
-
-
-
-![[../resources/images/notes/vscode-plugin-test-2.png]]
-
-
+<br>
+<div align=center>
+    <img src="../resources/images/notes/vscode-plugin-test-2.png" width="30%"></img>
+</div>
+<br>
 
 也可以在文件内容区域右击，选择`获取文件信息`
-
-
-![[../resources/images/notes/vscode-plugin-test-4.png]]
-
-
+<br>
+<div align=center>
+    <img src="../resources/images/notes/vscode-plugin-test-4.png" width="50%"></img>
+</div>
+<br>
 
 #### 命令面板中调用  
 
-
-
-![[../resources/images/notes/vscode-plugin-test-3.png]]
-
-
+<br>
+<div align=center>
+    <img src="../resources/images/notes/vscode-plugin-test-3.png" width="50%"></img>
+</div>
+<br>
 
 但是报错
-
-
-![[../resources/images/notes/vscode-plugin-test-5.png]]
-
-
+<br>
+<div align=center>
+    <img src="../resources/images/notes/vscode-plugin-test-5.png" width="30%"></img>
+</div>
+<br>
 
 查看vscode的`日志(拓展宿主)`  
 
@@ -300,11 +300,11 @@ Do you want to continue? [y/N] y
 }
 ```
 
-
-
-![[../resources/images/notes/vscode-plugin-test-6.png]]
-
-
+<br>
+<div align=center>
+    <img src="../resources/images/notes/vscode-plugin-test-6.png" width="70%"></img>
+</div>
+<br>
 
 
 

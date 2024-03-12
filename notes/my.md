@@ -199,9 +199,9 @@ export BASH_IT_THEME='powerline-plain'
 
 这说明编辑markdown是，默认编辑器是`yzhang.markdown-all-in-one`, 但是目前加粗`ctrl+B`，和右键中的`Go to Renferences`冲突, 那我们先查看快捷键`Keyboard Shortcuts`
 
-
-![[./../resources/images/notes/vscode-key-1.png]]
-
+<div align=center>
+  <img src="./../resources/images/notes/vscode-key-1.png" width="90%" ></img>
+</div>
 
 > Intellij IDEA的快捷键是全局的，没有限制  
 
